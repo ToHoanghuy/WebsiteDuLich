@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import '../styles/Detail.css';
 import GalleryPopUp from '../components/GalleryPopUp';
 import BookingSearchBar from '../components/BookingSearchBar';
@@ -151,6 +152,9 @@ function Detail() {
     const detail = detailData[0];
     return (
         <div className='root_detail'>
+            <Helmet>
+                <title>Travel Social | {detail.name}</title>
+            </Helmet>
             <div
                 ref={scrollBoundaryRef}
                 className="scroll_boundary"

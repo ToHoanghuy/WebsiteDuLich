@@ -10,7 +10,7 @@ function MenuBar() {
                     <img src="/images/logo.png" />
                 </div>
                 <Link to='/' className="menu_bar_text current_page">Trang Chủ</Link>
-                <Link to='/detail' className="menu_bar_text">Địa điểm</Link>
+                <Link className="menu_bar_text">Địa điểm</Link>
                 <span className="menu_bar_text">Giới thiệu</span>
             </div>
             <div className="right_side">
