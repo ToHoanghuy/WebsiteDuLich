@@ -4,7 +4,7 @@ import './App.css';
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import NewsPage from './pages/News';
+import SearchPage from './pages/SearchPage';
 import ContactPage from './pages/Contact';
 import Detail from './pages/Detail';
 import User from './pages/User';
@@ -89,7 +89,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/news" element={<NewsPage />} />
+        <Route path="/search" element={<SearchPage/>} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<Login />} />
         <Route path='/register' element={<Register />} />

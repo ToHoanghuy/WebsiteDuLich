@@ -1,12 +1,15 @@
 .root_detail
 {
     background-color: #F5F5F5;
+    height: auto;
+    margin-top: 6%;
 }
 
 .detail_bar_container
 {
     width: 100%;
     height: auto;
+    padding-top: 5px;
     /* margin-top: 6%; */
     border-bottom: 1.5px solid #327DC2;
     background-color: white;
@@ -16,39 +19,9 @@
     margin-top: 30px;
     /* margin-left: 2.5%; */
 }
-.breadcrumb_container
-{
-    width: 70%;
-    height: 60px;
-    margin-left: 6%;
-    margin-top: 80px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-}
-.breadcrumb_ele
-{
-    color: #626262;
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    margin-right: 10px;
-    font-weight: 500;
-    cursor: pointer;
-}
-.breadcrumb_ele:hover
-{
-    color: #327DC2;
-}
-.breadcrumb_angle
-{
-    color: #626262;
-    margin-right: 10px;
-    font-size: 12px;
-}
-.current_breadcumb
-{
-    color: #327DC2;
-}
+
+
+
 .boundary_container
 {
     width: 88%;
