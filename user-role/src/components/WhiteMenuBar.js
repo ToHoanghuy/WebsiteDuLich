@@ -9,6 +9,17 @@ function WhiteMenuBar() {
     const noneMenu = location.pathname === "/login" || location.pathname === "/register";
     const menubar = useRef(null);
 
+    // const path = location.pathname.split('/').slice(0, 3).join('/'); // Lấy các phần đầu tiên của URL
+    const userPage = location.pathname.split('/')[1] ==="user";
+    // alert(userSegment)
+
+    // const path = location.pathname.split('/').slice(0, 3).join('/');
+    // useEffect(() => {
+    //     if (path === "/user/account") {
+    //         setActiveSubMenu(0);
+    //     }
+    // }, [location.pathname]);
+
     useEffect(() => {
         const screenHeight = window.innerHeight;
 
@@ -17,6 +28,10 @@ function WhiteMenuBar() {
             if (isHomePage) {
                 if (window.scrollY >= screenHeight) menu.style.transform = `translateY(0)`
                 else menu.style.transform = `translateY(-100%)`
+                menubar.current.style.position="fixed"
+            }
+            else if(userPage)
+            {
                 menubar.current.style.position="fixed"
             }
             else if(noneMenu)

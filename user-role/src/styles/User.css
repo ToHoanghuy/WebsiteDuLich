@@ -2,10 +2,7 @@ ul,li
 {
     list-style-type: none;
 }
-.white_menu_bar
-{
-    position: fixed!important;
-}
+
 .user_bar
 {
     height: 100%;
