@@ -11,6 +11,9 @@ import User from './pages/User';
 import UserInfo from './pages/UserInfo';
 import UserPasswork from './pages/UserPasswork';
 import Booking from './pages/Booking';
+import ChatPage from './pages/ChatPage';
+import Notification from './pages/Notification';
+import Favorite from './pages/Favorite';
 
 import './styles/styleForAll.css';
 
@@ -99,7 +102,10 @@ function App() {
           <Route index element={<Navigate to="account/info" replace />} />
           <Route path="account/info" element={<UserInfo />} />
           <Route path="account/passwork" element={<UserPasswork />} />
-          <Route path="booking" element={<Booking />} />
+          <Route path="notification" element={<Notification />} />
+          <Route path="booking/history" element={<Booking />} />
+          <Route path="booking/chat" element={<ChatPage />} />
+          <Route path="booking/favorite" element={<Favorite />} />
           {/* <Route path="settings" element={<UserSettings />} /> */}
         </Route>
       </Routes>

@@ -2,6 +2,10 @@ ul,li
 {
     list-style-type: none;
 }
+.white_menu_bar
+{
+    position: fixed!important;
+}
 .user_bar
 {
     height: 100%;
@@ -215,6 +219,8 @@ ul,li
     float: right;
     width: 75%;
     height: 100%;
+    min-height: 100vh;
+
     background-color: #FBFBFB;
 }
 
@@ -253,6 +259,7 @@ ul,li
 {
     margin-top: 1.5%;
     height: auto;
+    min-height: 70vh;
 }
 
 .button_user_frame,.input_user_frame
