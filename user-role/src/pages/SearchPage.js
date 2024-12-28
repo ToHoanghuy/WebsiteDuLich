@@ -13,14 +13,14 @@ import { formatPrice } from '../function/formatPrice';
 
 function SearchPage() {
     const element = [
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false,path:"Ho-Coc-Camping-Vung-Tau-Ho-Coc-Camping-Vung-Tau" },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:true },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
+        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false, path: "Ho-Coc-Camping-Vung-Tau-Ho-Coc-Camping-Vung-Tau" },
+        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: true },
+        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
     ];
 
     const [cost, setCost] = useState([500000, 3000000]);
@@ -39,7 +39,7 @@ function SearchPage() {
         if (starClick === 0) {
             setStarValue(index + 1); // Thay đổi giá trị sao khi hover
         }
-        setRaiting(index+1);
+        setRaiting(index + 1);
     };
 
     const renderStars = () => {
@@ -112,9 +112,9 @@ function SearchPage() {
                                 {/* <div className='service_filter_row'><i class="fa-regular fa-square"></i><span>Wifi miễn phí</span></div>
                                 <div className='service_filter_row'><i class="fa-regular fa-square"></i><span>Hủy phòng hoàn tiền 24h</span></div>
                                 <div className='service_filter_row'><i class="fa-regular fa-square"></i><span>Hệ thống cách âm</span></div> */}
-                                <ServiceFilter name='Wifi miễn phí'/>
-                                <ServiceFilter name='Hủy phòng hoàn tiền 24h'/>
-                                <ServiceFilter name='Hệ thống cách âm'/>
+                                <ServiceFilter name='Wifi miễn phí' />
+                                <ServiceFilter name='Hủy phòng hoàn tiền 24h' />
+                                <ServiceFilter name='Hệ thống cách âm' />
                             </div>
                         </div>
                         <div className='filter_row'>
@@ -127,24 +127,23 @@ function SearchPage() {
                     </div>
                     <div className='place_container'>
                         <div className='place_frame'>
-
                             {element.map((ele, index) => (
-                            <PlaceEle
-                                key={index}
-                                name={ele.name}
-                                imgSrc={ele.imgSrc}
-                                pro={ele.pro}
-                                rating={ele.rating}
-                                reviews={ele.reviews}
-                                discount={ele.discount}
-                                originalPrice={ele.originalPrice}
-                                discountPrice={ele.discountPrice}
-                                favrorited={ele.favrorited}
-                                path={ele.path}
+                                <PlaceEle
+                                    key={index}
+                                    name={ele.name}
+                                    imgSrc={ele.imgSrc}
+                                    pro={ele.pro}
+                                    rating={ele.rating}
+                                    reviews={ele.reviews}
+                                    discount={ele.discount}
+                                    originalPrice={ele.originalPrice}
+                                    discountPrice={ele.discountPrice}
+                                    favrorited={ele.favrorited}
+                                    path={ele.path}
                                 // ref={(el) => (cardRefs.current[index] = el)}
-                            />
+                                />
 
-                        ))}
+                            ))}
                         </div>
                     </div>
                 </div>
