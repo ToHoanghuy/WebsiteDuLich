@@ -1,12 +1,15 @@
 .root_detail
 {
     background-color: #F5F5F5;
+    height: auto;
+    margin-top: 6%;
 }
 
 .detail_bar_container
 {
     width: 100%;
     height: auto;
+    padding-top: 5px;
     /* margin-top: 6%; */
     border-bottom: 1.5px solid #327DC2;
     background-color: white;
@@ -16,39 +19,9 @@
     margin-top: 30px;
     /* margin-left: 2.5%; */
 }
-.breadcrumb_container
-{
-    width: 70%;
-    height: 60px;
-    margin-left: 6%;
-    margin-top: 80px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-}
-.breadcrumb_ele
-{
-    color: #626262;
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    margin-right: 10px;
-    font-weight: 500;
-    cursor: pointer;
-}
-.breadcrumb_ele:hover
-{
-    color: #327DC2;
-}
-.breadcrumb_angle
-{
-    color: #626262;
-    margin-right: 10px;
-    font-size: 12px;
-}
-.current_breadcumb
-{
-    color: #327DC2;
-}
+
+
+
 .boundary_container
 {
     width: 88%;
@@ -1090,4 +1063,31 @@
     mask-image:none;
     /* border: 3px solid #7DB9EE; */
     outline: 3px solid #7DB9EE;
+}
+
+.chat_button
+{
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    z-index: 2;
+    right: 12.5px;
+    border-radius: 30px;
+    bottom: 6.5%;
+    display: flex;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid #f9c082;
+    /* background: linear-gradient(45deg, #AAD6FF, #5BA3E2); */
+    background: linear-gradient(45deg, #FCD08F,  #FFAB5E);
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    color: white;
+    cursor: pointer;
+}
+
+.chat_button:hover
+{
+    background: linear-gradient(45deg, #25f0f0, #00BABA);
+    border-color: #0bcfcf;
 }

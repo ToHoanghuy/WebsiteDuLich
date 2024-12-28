@@ -1,4 +1,5 @@
 import { Routes, Route, Link, useLocation, Outlet } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/User.css';
 import UserInfoFile from '../components/UserInfoFile';
@@ -67,6 +68,9 @@ function UserInfo() {
 
     return (
         <div class="user_section">
+            <Helmet>
+                <title>Travel Social | Thông Tin Cá Nhân</title>
+            </Helmet>
             <div className="user_title_section user_section_frame">
                 <span className="OpacityEffect">Thông tin cá nhân</span>
             </div>

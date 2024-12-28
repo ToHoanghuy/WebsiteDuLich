@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import '../styles/Detail.css';
 import GalleryPopUp from '../components/GalleryPopUp';
 import BookingSearchBar from '../components/BookingSearchBar';
@@ -8,11 +9,15 @@ import Boundary from '../components/Boundary';
 import RatingBar from '../components/RatingBar';
 import YourComment from '../components/YourComment';
 import Comment from '../components/Comment';
+// import ChatFrame from '../components/ChatFrame';
+import ChatPopUp from '../components/ChatPopUp';
 
 function Detail() {
 
     const [isFavorited, setIsFavorited] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
+    const [showChatPopUp, setChatPopUp] = useState(false);
+
     const [clickImg, setClickImg] = useState(0);
     const overviewInfoRef = useRef(null);
     const bookingRef = useRef(null);
@@ -80,6 +85,14 @@ function Detail() {
         },
         // Thêm các bình luận khác ở đây
     ];
+    const tongleChatPopUp = () => {
+        setChatPopUp(!showChatPopUp);
+        // document.body.style.overflow = 'hidden';
+    };
+    const closeChatPopUp = () => {
+        setChatPopUp(false);
+        // document.body.style.overflow = 'auto';
+    };
 
     const closePopup = () => {
         setShowPopup(false);
@@ -151,6 +164,14 @@ function Detail() {
     const detail = detailData[0];
     return (
         <div className='root_detail'>
+            <Helmet>
+                <title>Travel Social | {detail.name}</title>
+            </Helmet>
+            <div class="chat_button" 
+            onClick={() => tongleChatPopUp()}
+            >
+                <i class="fa-solid fa-comment-dots"></i>
+            </div>
             <div
                 ref={scrollBoundaryRef}
                 className="scroll_boundary"
@@ -161,6 +182,7 @@ function Detail() {
                 <Boundary boundary={boundary} onBoundaryClick={handleBoundaryClick} />
             </div>
             {showPopup && <GalleryPopUp images={detail.images} closePopup={closePopup} clickImg={clickImg} />}
+            {showChatPopUp && <ChatPopUp closeChatPopUp={closeChatPopUp}/>}
             <div class="detail_bar_container">
                 <div class="breadcrumb_container">
                     <a class="breadcrumb_ele">Trang Chủ</a>

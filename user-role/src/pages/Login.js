@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import TypeWritting from '../components/TypeWritting';
 import FileInputEmail from '../components/FileInputEmail';
@@ -21,6 +22,9 @@ function Login() {
 
     return (
         <div class="root">
+            <Helmet>
+                <title>Travel Social | Đăng Nhập</title>
+            </Helmet>
             <Link to="/" class="comeback">
                 <i class="fa-solid fa-angles-left"></i>
                 <span class="comeback_text"> Quay lại</span>

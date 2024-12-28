@@ -18,7 +18,12 @@ export const getIconClass = (id) => {
 };
 
 
-export const toggleFavorite = (currentState, setState) => {
+export const toggleFavorite = (currentState, setState, event) => {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
     const action = currentState ? 'Xóa khỏi yêu thích' : 'Thêm vào yêu thích';
     const message = currentState
         ? 'Xóa địa điểm khỏi yêu thích thành công!'
@@ -29,7 +34,7 @@ export const toggleFavorite = (currentState, setState) => {
         text: message,
         icon: 'success',
         // confirmButtonText: 'Tiếp tục',
-        timer: 1500, // Tự động đóng sau 2 giây
+        timer: 1300, // Tự động đóng sau 2 giây
         showConfirmButton: false, // Ẩn nút xác nhận
         customClass: {
             confirmButton: 'custom_swal_button',

@@ -1,21 +1,10 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../function/formatPrice';
+import { toggleFavorite } from '../function/functionEffect';
 
 const CardInfo = forwardRef(({ name, imgSrc, pro, rating, reviews, discount, originalPrice, discountPrice, favrorited,path }, ref) => {
-
     const [isFavorited, setIsFavorited] = useState(favrorited);
-
-    const handleHeartClick = (event) => {
-        event.stopPropagation();
-        event.preventDefault();
-
-        setIsFavorited(!isFavorited);
-    };
-
-    // const formatPrice = (price) => {
-    //     return new Intl.NumberFormat('vi-VN').format(price);
-    // };
 
     return (
         <Link to={`/detail/${path}`} className="card_ele OpacityEffect" ref={ref}>
@@ -25,7 +14,7 @@ const CardInfo = forwardRef(({ name, imgSrc, pro, rating, reviews, discount, ori
                         <span className="card_discount_symbol">-</span>{discount}<span class="card_discount_symbol">%</span>
                     </span>
                 </span>
-                <button className="card_prefer" onClick={handleHeartClick}>
+                <button className="card_prefer" onClick={(e) => toggleFavorite(isFavorited, setIsFavorited,e)}>
                     <i className={`fa-heart ${isFavorited ? 'fa-solid' : 'fa-regular'}`}></i>
                 </button>
                 <img className="card_info_img" src={imgSrc} />
