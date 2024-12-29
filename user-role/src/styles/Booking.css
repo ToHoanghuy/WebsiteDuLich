@@ -1,194 +1,278 @@
-.user_booking_frame {
-    min-width: 100%;
-    min-height: 100%;
-    background-color: white;
-    display: flex; /* Để sử dụng flexbox */
-    flex-direction: column; /* Định hướng theo chiều dọc */
-    justify-content: center; /* Căn giữa các phần tử ngang */
-    align-items: center; /* Căn giữa các phần tử dọc */
-    gap: 30px; /* Khoảng cách giữa các booking_ele (có thể điều chỉnh theo ý muốn) */
-    padding: 30px;
-}
-.filter_section
-{
-    height: 10%;
-    min-height: 7vh;
-    width: 100%;
-    border-bottom: 1.5px solid #eaeaea;
-    display: flex;
-    align-items: center;
-}
-.filter
-{
-    margin-left: auto;
-    padding-right: 15px;
-    color: #395668;
-}
-.filter span
-{
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 19px;
-    margin-right: 10px;
-}
-.filter i
-{
-    font-size: 20px;
-}
-.filter i:hover
-{
-    background: linear-gradient(45deg,#00dede, #00BABA);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    cursor: pointer;
-}
-.booking_filter_selection
-{
-    position: absolute;
-    background-color: #f9f9f9;
-    width: 220px;
-    /* border: 2px solid #5BA3E2; */
-    border: 2px solid #eaeaea;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    height: auto;
-    cursor: pointer;
-    z-index: 2;
-    overflow: hidden;
-    right: 60px;
-    margin-top: 233px;
-}
-.filter_option{
-    margin-bottom: 8px;
-    background-color: #ffffff;
-    color: #47687D;
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    border-radius: 0px 0px 0px 0px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding-left: 10px;
-}
-.filter_option:hover{
-    background-color: #f9f9f9;
-}
-
-.booking_ele {
-    width: 90%; /* Chiều rộng của booking_ele */
-    height: 160px; /* Chiều cao của booking_ele */
-    background-color: #FAFAFA;
-    border-radius: 15px;
-    border: 1px solid #dadada;
-    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1);
-    display: grid;
-    grid-template-columns: 30% 70%;
-    cursor: pointer;
-    transition: all 0.3s ease; /* Hiệu ứng chuyển động */
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Thêm shadow khi hover */
-}
-.booking_ele:hover {
-    transform: scale(1.01); /* Phóng to lên khi hover */
-    
-}
-
-.booking_ele_left, .booking_ele_right
-{
-    width: 100%;
-    height: 100%;
-
-}
-
-.booking_ele_left
-{
+.booking_section{
     /* background-color: aquamarine; */
+    width: 100%;
+    height: auto;
+    /* top:11%; */
+    margin-top: 11vh;
     display: flex;
     justify-content: center;
+    background-color: #FBFBFB;
+    min-height: 100vh;
+}
+
+.step_circle_frame{
+    width: 100%;
+    padding-top: 45px;
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    /* position: fixed; */
+}
+
+.step_circle_div{
+    display: flex;
     align-items: center;
+    gap: 10px;
 }
-.booking_ele_left img
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 50% 100%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    75% {
+        background-position: 50% 0%;
+    } 
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.step_circle {
+    width: 60px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+.step_circle_div span{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.taken_step .step_circle{
+    background: linear-gradient(45deg,#c4e4fe, #a7d6ff, #68a9e6, #1e78cd,#00529f); 
+    background-size: 200% 200%;
+    animation: gradientMove 4s infinite;
+}
+.taken_step span{
+    background: linear-gradient(#84b5e2, #5BA3E2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.untaken_step .step_circle{
+    background-color: transparent;
+    border: 3.5px solid rgb(131, 159, 177);
+}
+.untaken_step span{
+    /* background: linear-gradient(#798e9b, #446174); */
+    background: linear-gradient( rgb(131 156 173), rgb(98, 122, 139));
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+}
+
+.step_circle i {
+    font-size: 28px;
+    
+}
+.taken_step i{
+    color: white;
+}
+.untaken_step i{
+    background: linear-gradient(45deg, rgb(131 156 173), rgb(121 151 172));
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+}
+
+.angles{
+    display: flex;
+    align-items: center;
+    margin-left: 60px;
+    margin-right: 60px;
+}
+.angles i{
+    font-size: 40px;
+    cursor: pointer;
+    
+}
+.current_step i{
+    background: linear-gradient(45deg,#c4e4fe, #a7d6ff, #68a9e6, #1e78cd,#1572ca); 
+    background-size: 200% 200%;
+    animation: gradientMove 4s infinite;
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+}
+.next_step i{
+    background: linear-gradient(45deg, rgb(131 156 173),rgb(135, 164, 183), rgb(121 151 172));
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+}
+
+.booking_step1_frame{
+    width: 100%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: aqua;
+    display: flex;
+    justify-content: space-between;
+}
+
+.booking_info
 {
-    width: 81%;
-    aspect-ratio: 3 / 2;
+    background-color: white;
+    border: 2.5px solid #68a9e6;
+    border-radius: 12px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.booking_location_info
+{
+    width: 55%;
+}
+.booking_location_top{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 27% 73%;
+    /* border-bottom: 2px solid #FBFBFB; */
+    padding-bottom: 20px;
+    /* height: 30vh; */
+}
+.booking_location_bottom{
+    border-top: 2px solid #ebebeb;
+    width: 100%;
+    height: 10vh;
+}
+/* .booking_location_top_left{
+    background-color: aqua;
+} */
+.booking_location_top_left img{
+    width: 98%;
+    /* aspect-ratio: 1; */
     border-radius: 10px;
-    object-fit: cover;
+    aspect-ratio: 2.3 / 2;
 }
-.booking_ele_right
-{
-    /* padding: 10px 10px 10px 10px; */
-    padding-top: 13px;
-    padding-bottom: 13px;
-    padding-left: 2px;
+.booking_location_top_right{
+    padding-left: 17px;
+    padding-right: 17px;
     position: relative;
 }
-.history_booking_name
+.booking_title
 {
-    font-family: 'Montserrat', sans-serif; /* Sử dụng font Montserrat */
-    font-weight: 600; /* Semi Bold */
-    font-size: 23px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 0.3px;
     color: #424242;
-    /* margin-bottom: 15px; */
+    display: inline-block;
+    max-width: 95%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
-.history_booking_date{
-    margin-top: 3px;
+.booking_location_price{
+    position: absolute;
+    bottom: 0px;
+    right: 3px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    background: linear-gradient(#2DD7A4, #1bdca2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-.history_booking_date span
-{
 
-    font-family: 'Fira Sans', sans-serif; /* Sử dụng font Fira Sans */
-    font-weight: 400; /* Regular weight */
-    color: #3A544F;
-    font-size: 17px;
+
+.booking_detail_info
+{
+    width: 43%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.history_booking_status {
-    position: absolute;
-    background-color: white;
-    font-size: 12px;
-    border-radius: 25px; 
-    padding: 7px 12px 7px 12px;
-    box-shadow: 0px 1px 5px rgba(47, 116, 228, 0.383);
-    display: inline-block; /* Điều chỉnh kích thước vừa với nội dung */
-    white-space: nowrap; /* Đảm bảo nội dung không xuống dòng (nếu cần) */
-    margin-top: auto;
-    bottom: 17px;
+
+.booking_detail_top_title{
+    /* display: inline-block; 
+    text-align: center;
+    width: 100%; */
+    margin-bottom: 15px;
+}
+.booking_detail_time
+{
+    display: flex;
+    justify-content: space-between;
+    /* gap: 10px; */
+    font-size: 16px;
+    margin-bottom: 7px;
+    /* background-color: #2DD7A4; */
+    width: 65%;
+}
+.type_date{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500; 
+    color: #424242;
+}
+.date_value{
     font-family: 'Inter', sans-serif;
-    font-weight: 500; 
-    color: #1F6CB4;
+    font-weight: 500; /* Medium */
+    color: #327DC2;
 }
-.status_processing
+.booking_detail
 {
-    color: #DAB249;
+    width: 95%;
+    border-bottom: 2px solid #ebebeb;
+    padding-top: 17px;
+    padding-bottom: 17px;
+    display: flex;
+    align-items: center;
+    gap: 10px
 }
-.status_completed
-{
-    color: #F24B4B;
+.booking_detail span{
+    font-size: 16px;
 }
-.history_booking_btn
-{
-    position: absolute;
-    bottom: 17px;
-    right: 20px;
-    width: 100px;
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
-    font-size: 15px;
+.booking_value{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500; /* Medium */
+    color: #424242;
+}
+
+
+.booking_total_price{
+    width: 95%;
+    padding-top: 17px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #2DD7A4; */
     font-weight: bold;
-    color: white;
-    font-family: 'Fira Sans', sans-serif;
-    font-weight: 500; 
-    transition: all 0.3s ease;
+    font-size: 23px;
+
 }
-.history_booking_btn:hover {
-    transform: scale(1.03); /* Phóng to lên khi hover */
-    background: linear-gradient(45deg,#00dede, #00BABA); 
-}
-.btn_cancel
+.booking_total_title
 {
-    background: linear-gradient(45deg,#FB8484,#EA5655, #D92726);
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(#4b87bf, #1F6CB4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
 }
-.btn_rebook
-{
-    background: linear-gradient(45deg,#6EED59,#44C32F, #31d219);
+.booking_total_value{
+
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(#2DD7A4, #1bdca2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
 }

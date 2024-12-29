@@ -1,5 +1,5 @@
-import { Routes, Route, Link, useLocation, Outlet } from 'react-router-dom';
 import React, { useState, useRef, useEffect } from 'react';
+import EmojiPicker from 'emoji-picker-react';
 import '../styles/ChatPage.css';
 import '../styles/Chat.css';
 
@@ -7,18 +7,26 @@ function ChatPage() {
     const [selectedHotel, setSelectedHotel] = useState(null);
     const [message, setMessage] = useState('');
     const [isSending, setIsSending] = useState(false);
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false); // State để hiển thị emoji picker
     const chatBodyRef = useRef(null);
     const inputRef = useRef(null);
+    const emojiPickerRef = useRef(null);
 
     const hotels = [
-        { id: 1, name: 'Hoàng Huy', messages: [{ text: 'Hello', type: 'hotel' }, { text: 'Call API chưa HN ơi', type: 'hotel' }, ] },
-        { id: 2, name: 'Phúc Thịnh iuuuu', messages: [{ text: 'Phúc Thịnh ngủ quên', type: 'hotel' },] },
+        { id: 1, name: 'Hoàng Huy', messages: [{ text: 'Hello', type: 'hotel' }, { text: 'Call API chưa HN ơi', type: 'hotel' }] },
+        { id: 2, name: 'Phúc Thịnh iuuuu', messages: [{ text: 'Phúc Thịnh ngủ quên', type: 'hotel' }] },
         { id: 3, name: 'Trúc Ngân', messages: [{ text: 'Chết rồi', type: 'hotel' }, { text: 'Bé quên nộp deadline', type: 'hotel' }] },
     ];
+
     const handleIconClick = () => {
         if (inputRef.current) {
             inputRef.current.focus(); // Tự động focus vào input
         }
+    };
+
+    const handleEmojiClick = (emojiObject) => {
+        setMessage((prevMessage) => prevMessage + emojiObject.emoji); // Thêm emoji vào nội dung tin nhắn
+        setShowEmojiPicker(false); // Ẩn emoji picker sau khi chọn
     };
 
     useEffect(() => {
@@ -32,16 +40,15 @@ function ChatPage() {
 
     const handleHotelClick = (hotel) => {
         setSelectedHotel(hotel);
-        // window.location.href = `/chat/${hotel.id}`;
     };
 
     const handleSendMessage = () => {
         if (message.trim() === '') return;
 
-            if (selectedHotel) {
-                selectedHotel.messages.push({ text: message, type: 'user' });
-                setMessage('');
-            }
+        if (selectedHotel) {
+            selectedHotel.messages.push({ text: message, type: 'user' });
+            setMessage('');
+        }
     };
 
     const handleKeyDown = (e) => {
@@ -50,16 +57,34 @@ function ChatPage() {
         }
     };
 
+    // Khi click ra ngoài thì đóng emojicontainer
+    const handleOutsideClick = (event) => {
+        if (
+            emojiPickerRef.current &&
+            !emojiPickerRef.current.contains(event.target) &&
+            !inputRef.current.contains(event.target)
+        ) {
+            setShowEmojiPicker(false);
+        }
+    };
+    useEffect(() => {
+        // Add event listener to close emoji picker on outside click
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+    
+
     return (
         <div className="user_section">
             <div className="user_title_section user_section_frame">
                 <span className="OpacityEffect">Lịch sử trao đổi</span>
             </div>
             <div className="user_content_section user_section_frame">
-                <div className='user_chat_frame OpacityEffect'>
+                <div className="user_chat_frame OpacityEffect">
                     {/* Danh sách khách sạn */}
-                    <div className='user_chat_frame_left'>
-                        
+                    <div className="user_chat_frame_left">
                         {hotels.map((hotel) => (
                             <div
                                 key={hotel.id}
@@ -72,16 +97,16 @@ function ChatPage() {
                     </div>
 
                     {/* Chi tiết tin nhắn */}
-                    <div className='user_chat_frame_right'>
+                    <div className="user_chat_frame_right">
                         {selectedHotel ? (
                             <div className="chat_container">
                                 <div className="chat_header">
-                                    <h3>  
-                                        <i class="fa-solid fa-comment-dots" onClick={handleIconClick}></i>
+                                    <h3>
+                                        <i className="fa-solid fa-comment-dots" onClick={handleIconClick}></i>
                                         {selectedHotel.name}
                                     </h3>
                                 </div>
-                                <div className="chat_body"  ref={chatBodyRef}>
+                                <div className="chat_body" ref={chatBodyRef}>
                                     {selectedHotel.messages.map((msg, index) => (
                                         <div
                                             key={index}
@@ -92,20 +117,35 @@ function ChatPage() {
                                     ))}
                                 </div>
                                 <div className="chat_footer">
-                                    <input
-                                        type="text"
-                                        placeholder="Nhập nội dung..."
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
-                                        onKeyDown={handleKeyDown}
-                                        ref={inputRef}
-                                    />
+                                    {/* Nút Emoji */}
+                                    <div className='chat_footer_input'>
+                                        <input
+                                            className='chat_input'
+                                            type="text"
+                                            placeholder="Nhập nội dung..."
+                                            value={message}
+                                            onChange={(e) => setMessage(e.target.value)}
+                                            onKeyDown={handleKeyDown}
+                                            ref={inputRef}
+                                        />
+                                        <button
+                                            className="emoji_button"
+                                            onClick={() => setShowEmojiPicker((prev) => !prev)}
+                                        >
+                                            <i class="fa-solid fa-face-smile"></i>
+                                        </button>
+                                    </div>
+                                    {showEmojiPicker && (
+                                        <div className="emoji_picker_container" ref={emojiPickerRef}>
+                                            <EmojiPicker locale="vi" onEmojiClick={handleEmojiClick} />
+                                        </div>
+                                    )}
                                     <button
-                                        className={isSending ? 'sending' : ''}
+                                        className='send_mess_btn'
                                         onClick={handleSendMessage}
                                         disabled={isSending}
                                     >
-                                        {isSending ? 'Đang gửi...' : 'Gửi'}
+                                        <i class="fa-solid fa-paper-plane"></i>
                                     </button>
                                 </div>
                             </div>
@@ -120,6 +160,3 @@ function ChatPage() {
 }
 
 export default ChatPage;
-
-
-// export default ChatPage;

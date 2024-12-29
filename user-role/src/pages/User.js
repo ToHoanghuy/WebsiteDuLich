@@ -84,7 +84,7 @@ function User() {
                     {/* Menu với submenu 2 */}
                     <li className="li_row_angle">
                         <div
-                            className={`user_menu_row row_angle ${path === "/user/booking" ? "current_user_row" : ""}`}
+                            className={`user_menu_row row_angle ${path === "/user/storage" ? "current_user_row" : ""}`}
                             onClick={() => toggleSubMenu(1)}
                         >
                             <i className="fa-solid fa-layer-group user_menu_icon"></i>
@@ -93,24 +93,24 @@ function User() {
                         </div>
                         <ul className={`user_sub_menu ${activeSubMenu === 1 ? "active" : ""}`}>
                             <li>
-                                <Link to="/user/booking/history"
-                                     className={`user_sub_menu_row ${location.pathname === "/user/booking/history" ? "current_user_row" : ""}`}
+                                <Link to="/user/storage/historybooking"
+                                     className={`user_sub_menu_row ${location.pathname === "/user/storage/historybooking" ? "current_user_row" : ""}`}
                                 >
                                      <i className="fa-regular fa-clipboard user_sub_menu_icon"></i>
                                      <span className="user_sub_menu_title">Lịch sử đặt phòng</span>
                                  </Link>
                             </li>
                             <li>
-                                 <Link to="/user/booking/chat"
-                                     className={`user_sub_menu_row ${location.pathname === "/user/booking/chat" ? "current_user_row" : ""}`}
+                                 <Link to="/user/storage/chat"
+                                     className={`user_sub_menu_row ${location.pathname === "/user/storage/chat" ? "current_user_row" : ""}`}
                                  >
                                      <i class="fa-solid fa-comment-dots user_sub_menu_icon"></i>
                                      <span className="user_sub_menu_title">Lịch sử trao đổi</span>
                                  </Link>
                             </li>
                             <li>
-                                 <Link to="/user/booking/favorite"
-                                     className={`user_sub_menu_row ${location.pathname === "/user/booking/favorite" ? "current_user_row" : ""}`}
+                                 <Link to="/user/storage/favorite"
+                                     className={`user_sub_menu_row ${location.pathname === "/user/storage/favorite" ? "current_user_row" : ""}`}
                                  >
                                      <i class="fa-solid fa-heart user_sub_menu_icon"></i>
                                      <span className="user_sub_menu_title">Yêu thích</span>

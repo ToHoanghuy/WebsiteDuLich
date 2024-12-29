@@ -10,10 +10,11 @@ import Detail from './pages/Detail';
 import User from './pages/User';
 import UserInfo from './pages/UserInfo';
 import UserPasswork from './pages/UserPasswork';
-import Booking from './pages/Booking';
+import HistoryBooking from './pages/HistoryBooking';
 import ChatPage from './pages/ChatPage';
 import Notification from './pages/Notification';
 import Favorite from './pages/Favorite';
+import Booking from './pages/Booking';
 
 import './styles/styleForAll.css';
 
@@ -103,11 +104,12 @@ function App() {
           <Route path="account/info" element={<UserInfo />} />
           <Route path="account/passwork" element={<UserPasswork />} />
           <Route path="notification" element={<Notification />} />
-          <Route path="booking/history" element={<Booking />} />
-          <Route path="booking/chat" element={<ChatPage />} />
-          <Route path="booking/favorite" element={<Favorite />} />
+          <Route path="storage/historybooking" element={<HistoryBooking />} />
+          <Route path="storage/chat" element={<ChatPage />} />
+          <Route path="storage/favorite" element={<Favorite />} />
           {/* <Route path="settings" element={<UserSettings />} /> */}
         </Route>
+        <Route path="/booking" element={<Booking/>} />
       </Routes>
 
     </div>

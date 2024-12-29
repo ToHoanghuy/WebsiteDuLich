@@ -1,210 +1,85 @@
-// import React, { useState, useRef, useEffect }  from 'react';
-// import '../styles/Booking.css';
-// import BookingHistoryEle from '../components/BookingHistoryEle.js';
-
-// function Booking() {
-//     const [isFilterOpen, setIsFilterOpen] = useState(false);
-//     const bookingHistory = [
-//         {
-//             id: 1,
-//             name: "Ho Coc Camping, Vung Tau",
-//             imgSrc: "/images/detail/detail2.jpg",
-//             startDate: "26/07/2024",
-//             endDate: "30/07/2024",
-//             status: "Đang xử lý",
-//             path: "ho-coc-camping-vung-tau",
-//         },
-//         {
-//             id: 2,
-//             name: "Mui Ne Resort, Phan Thiet",
-//             imgSrc: "/images/detail/detail3.jpg",
-//             startDate: "15/08/2024",
-//             endDate: "18/08/2024",
-//             status: "Hoàn thành",
-//             path: "mui-ne-resort-phan-thiet",
-//         },
-//         {
-//             id: 3,
-//             name: "Saigon Pearl, Ho Chi Minh City",
-//             imgSrc: "/images/detail/detail4.jpg",
-//             startDate: "01/09/2024",
-//             endDate: "05/09/2024",
-//             status: "Đang xử lý",
-//             path: "saigon-pearl-ho-chi-minh-city",
-//         },
-//         {
-//             id: 4,
-//             name: "Da Lat Flower Hotel, Da Lat",
-//             imgSrc: "/images/detail/detail5.jpg",
-//             startDate: "10/10/2024",
-//             endDate: "15/10/2024",
-//             status: "Đang xử lý",
-//             path: "da-lat-flower-hotel-da-lat",
-//         },
-//     ];
-//     const toggleFilter = () => {
-//         setIsFilterOpen(!isFilterOpen);
-//     };
-
-//     // Handle clicking outside to close the filter
-//     const handleClickOutside = (e) => {
-//         if (isFilterOpen && !e.target.closest('.filter')) {
-//             setIsFilterOpen(false);
-//         }
-//     };
-
-//     React.useEffect(() => {
-//         document.addEventListener('click', handleClickOutside);
-//         return () => {
-//             document.removeEventListener('click', handleClickOutside);
-//         };
-//     }, [isFilterOpen]);
-
-//     return (
-//         <div className="user_section">
-//             <div className="user_title_section user_section_frame">
-//                 <span className="OpacityEffect">Lịch sử đặt phòng</span>
-//             </div>
-//             <div className="user_content_section user_section_frame">
-//                 <div className="filter_section">
-//                     <div className='filter'>
-//                         <span>Lọc trạng thái</span>
-//                         <i class="fa-solid fa-list" onClick={toggleFilter}></i>
-//                     </div>
-//                     {isFilterOpen && (
-//                         <div className='booking_filter_selection'>
-//                             <div className='filter_option status_processing'>Đang xử lý</div>
-//                             <div className='filter_option status_completed'>Hoàn thành</div>
-//                             <div className='filter_option'>Tất cả</div>
-//                         </div>
-//                     )}
-//                 </div>
-//                 <div className="user_booking_frame">
-//                     {bookingHistory.map((booking,index) => (
-//                         <BookingHistoryEle 
-//                             key={index}
-//                             name={booking.name}
-//                             imgSrc={booking.imgSrc}
-//                             startDate={booking.startDate}
-//                             endDate={booking.endDate}
-//                             status={booking.status}
-//                             path={booking.path}
-//                         />
-//                     ))}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default Booking;
-
+import { Routes, Route, Link, useLocation, Outlet } from 'react-router-dom';
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/Booking.css';
-import BookingHistoryEle from '../components/BookingHistoryEle.js';
 
 function Booking() {
-    const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [filterStatus, setFilterStatus] = useState('Tất cả');
-    const bookingHistory = [
-        {
-            id: 1,
-            name: "Ho Coc Camping, Vung Tau",
-            imgSrc: "/images/detail/detail2.jpg",
-            startDate: "26/07/2024",
-            endDate: "30/07/2024",
-            status: "Đang xử lý",
-            path: "ho-coc-camping-vung-tau",
-        },
-        {
-            id: 2,
-            name: "Mui Ne Resort, Phan Thiet",
-            imgSrc: "/images/detail/detail3.jpg",
-            startDate: "15/08/2024",
-            endDate: "18/08/2024",
-            status: "Hoàn thành",
-            path: "mui-ne-resort-phan-thiet",
-        },
-        {
-            id: 3,
-            name: "Saigon Pearl, Ho Chi Minh City",
-            imgSrc: "/images/detail/detail4.jpg",
-            startDate: "01/09/2024",
-            endDate: "05/09/2024",
-            status: "Đang xử lý",
-            path: "saigon-pearl-ho-chi-minh-city",
-        },
-        {
-            id: 4,
-            name: "Da Lat Flower Hotel, Da Lat",
-            imgSrc: "/images/detail/detail5.jpg",
-            startDate: "10/10/2024",
-            endDate: "15/10/2024",
-            status: "Đang xử lý",
-            path: "da-lat-flower-hotel-da-lat",
-        },
-    ];
-
-    // Filter data based on selected status
-    const filteredBookings = bookingHistory.filter((booking) => {
-        if (filterStatus === 'Tất cả') return true;
-        return booking.status === filterStatus;
-    });
-
-    // Toggle filter dropdown
-    const toggleFilter = () => {
-        setIsFilterOpen(!isFilterOpen);
-    };
-
-    // Handle clicking outside to close the filter
-    const handleClickOutside = (e) => {
-        if (isFilterOpen && !e.target.closest('.filter')) {
-            setIsFilterOpen(false);
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('click', handleClickOutside);
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, [isFilterOpen]);
-
     return (
-        <div className="user_section">
-            <div className="user_title_section user_section_frame">
-                <span className="OpacityEffect">Lịch sử đặt phòng</span>
-            </div>
-            <div className="user_content_section user_section_frame">
-                <div className="filter_section">
-                    <div className='filter'>
-                        <span>
-                        { filterStatus} 
-                        </span>
-                        <i className="fa-solid fa-list" onClick={toggleFilter}></i>
+        <div className='booking_section'>
+            <div className='display_frame'>
+                <div className='step_circle_frame'>
+                    <div className='step_circle_div taken_step'>
+                        <div className='step_circle'><i class="fa-solid fa-book"></i></div>
+                        <span>Chi tiết đặt phòng</span>
                     </div>
-                    {isFilterOpen && (
-                        <div className='booking_filter_selection'>
-                            <div className='filter_option' onClick={() => setFilterStatus('Đang xử lý')}>Đang xử lý</div>
-                            <div className='filter_option' onClick={() => setFilterStatus('Hoàn thành')}>Hoàn thành</div>
-                            <div className='filter_option' onClick={() => setFilterStatus('Tất cả')}>Tất cả</div>
-                        </div>
-                    )}
+                    <div className='angles current_step'>
+                        <i class="fa-solid fa-angles-right"></i>
+                    </div>
+                    <div className='step_circle_div taken_step'>
+                        <div className='step_circle p'><i class="fa-regular fa-id-card"></i></div>
+                        <span>Thông tin cá nhân</span>
+                    </div>
+                    <div className='angles next_step'>
+                        <i class="fa-solid fa-angles-right"></i>
+                    </div>
+                    <div className='step_circle_div untaken_step'>
+                        <div className='step_circle '><i class="fa-solid fa-money-check-dollar"></i></div>
+                        <span>Thanh toán</span>
+                    </div>
                 </div>
-                <div className="user_booking_frame">
-                    {filteredBookings.map((booking, index) => (
-                        <BookingHistoryEle
-                            key={index}
-                            name={booking.name}
-                            imgSrc={booking.imgSrc}
-                            startDate={booking.startDate}
-                            endDate={booking.endDate}
-                            status={booking.status}
-                            path={booking.path}
-                        />
-                    ))}
+                <div className='booking_step1_frame'>
+                    <div className='booking_info booking_location_info'>
+                        <div className='booking_location_top'>
+                            <div className='booking_location_top_left'>
+                                <img src='/images/detail/detail2.jpg'/>
+                            </div>
+                            <div className='booking_location_top_right'>
+                                <span className='booking_title'>Ho Coc, Vung Tau</span>
+                                <div className='booking_location_price'>VNĐ 5.000.000</div>
+                            </div>
+                        </div>
+                        <div className='booking_location_bottom'>
+                            {/* <div className='booking_location_top_left'>
+                                <img src='/images/detail/detail2.jpg'/>
+                            </div>
+                            <div className='booking_location_top_right'>
+                                <span className='booking_location_name'>Ho Coc, Vung Tau</span>
+                                <div className='booking_location_price'>VNĐ 5.000.000</div>
+                            </div> */}
+                        </div>
+                    </div>
+                    <div className='booking_info booking_detail_info'>
+                        {/* <div className='booking_detail_top'> */}
+                            <span className='booking_title booking_detail_top_title'>Chi tiết phòng của bạn</span>
+                            <div className='booking_detail_time'>
+                                <span className='type_date'>Nhận phòng: </span>
+                                <span className='date_value'>T7, 17 tháng 10 năm 2024</span>
+                            </div>
+                            <div className='booking_detail_time'>
+                                <span className='type_date'>Trã phòng: </span>
+                                <span className='date_value'>CN, 18 tháng 10 năm 2024</span>
+                            </div>
+                            <div className='booking_detail'>
+                                <span className='booking_title'>Tổng thời gian:</span>
+                                <span className='booking_value'>1 đêm</span>
+                            </div>
+                            <div className='booking_detail'>
+                                <span className='booking_title'>Số lượng phòng:</span>
+                                <span className='booking_value'>1</span>
+                            </div>
+                            <div className='booking_total_price'>
+                                <span className='booking_total_title'>Tổng cộng</span>
+                                <span className='booking_total_value'>VNĐ 500.000</span>
+                            </div>
+                            {/* <span className='booking_title'>yeu</span> */}
+                        {/* </div>
+                        <div className='booking_detail_bottom'>
+
+                        </div> */}
+                    </div>
                 </div>
             </div>
+            {/* <i class="fa-solid fa-address-book"></i>
+            <i class="fa-regular fa-id-card"></i> */}
         </div>
     );
 }

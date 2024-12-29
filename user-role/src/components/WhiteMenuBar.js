@@ -8,45 +8,35 @@ function WhiteMenuBar() {
     const isHomePage = location.pathname === "/";
     const noneMenu = location.pathname === "/login" || location.pathname === "/register";
     const menubar = useRef(null);
-
-    // const path = location.pathname.split('/').slice(0, 3).join('/'); // Lấy các phần đầu tiên của URL
-    const userPage = location.pathname.split('/')[1] ==="user";
-    // alert(userSegment)
-
-    // const path = location.pathname.split('/').slice(0, 3).join('/');
-    // useEffect(() => {
-    //     if (path === "/user/account") {
-    //         setActiveSubMenu(0);
-    //     }
-    // }, [location.pathname]);
+    const path = location.pathname.split('/')[1];
+    const userPage = path === "user";
+    // alert(userPage)
 
     useEffect(() => {
         const screenHeight = window.innerHeight;
 
-        const handleScroll = () => {
-            var menu = menubar.current;
-            if (isHomePage) {
-                if (window.scrollY >= screenHeight) menu.style.transform = `translateY(0)`
-                else menu.style.transform = `translateY(-100%)`
-                menubar.current.style.position="fixed"
-            }
-            else if(userPage)
+        var menu = menubar.current;
+        if (noneMenu) {
+            menu.style.transform = `translateY(-100%)`
+        }
+        else {
+            if (!isHomePage)
             {
-                menubar.current.style.position="fixed"
-            }
-            else if(noneMenu)
-            {
-                menu.style.transform = `translateY(-100%)`
-            }
-            else
-            {//trường hợp là những trang khác
                 menu.style.transform = `translateY(0)`
-                menubar.current.style.position="absolute"
+                menubar.current.style.position = "fixed"
             }
-        };
 
-        handleScroll();
-        window.addEventListener('scroll', handleScroll);// Thêm sự kiện cuộn
+        }
+        const handleScroll = () => {
+            if (window.scrollY >= screenHeight) menu.style.transform = `translateY(0)`
+            else menu.style.transform = `translateY(-100%)`
+            menubar.current.style.position = "fixed"
+        };
+        if(isHomePage){ 
+            handleScroll();
+            window.addEventListener('scroll', handleScroll);// Thêm sự kiện cuộn
+        }
+       
 
         return () => {// Cleanup sự kiện khi component unmount
             window.removeEventListener('scroll', handleScroll);
@@ -54,9 +44,9 @@ function WhiteMenuBar() {
     }, [location]);
 
     return (
-        <div 
-        //className={`white_menu_bar ${isHomePage ? "scroll_menu" : ""}`}
-        className="white_menu_bar scroll_menu" 
+        <div
+            //className={`white_menu_bar ${isHomePage ? "scroll_menu" : ""}`}
+            className="white_menu_bar scroll_menu"
             ref={menubar}
         >
             <div className="left_side">

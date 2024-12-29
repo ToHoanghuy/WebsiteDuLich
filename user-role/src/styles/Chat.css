@@ -12,7 +12,7 @@
     margin-left: auto;
     right: 6%;
     border-radius: 8px 8px 0px 0px;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .chat_header {
@@ -90,6 +90,7 @@
 .chat_footer {
     display: flex;
     align-items: center;
+    justify-content: center;
     /* padding: 10px; */
     padding: 11px 12px 11px 12px;
     border-top: 1px solid #ddd;
@@ -98,22 +99,31 @@
     bottom: 0px;
 }
 
-.chat_footer input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
+.chat_footer_input {
+    width: 87%;
+    background-color: white;
+    border: 1.25px solid #ddd;
+    margin-right: 2%;
+    display: flex;
+    align-items: center; /* Căn giữa các thành phần */
     border-radius: 5px;
-    margin-right: 10px;
+}
+
+.chat_input {
+    flex: 1;
+    padding: 8px;
     font-size: 16px;
+    background-color: transparent;
+    border: none;
+    outline: none;
 }
-.chat_footer input:focus {
-    outline: 0.5px solid #5BA3E2; /* Hiển thị outline khi tập trung vào input */
+
+.chat_footer_input:focus-within{
     border: 1px solid #5BA3E2;
+    outline: 0.5px solid #5BA3E2; 
 }
-
-
-.chat_footer button {
-    padding: 10px 20px;
+.send_mess_btn {
+    padding: 8px 16px;
     /* background-color: #007bff; */
     color: white;
     border: none;
@@ -121,9 +131,60 @@
     cursor: pointer;
     background: linear-gradient(#AAD6FF, #5BA3E2);
     font-weight: bold;
+    /* font-size: 18px; */
+
 }
 
-.chat_footer button:hover {
+.send_mess_btn:hover {
     /* background-color: #0056b3; */
     background: linear-gradient(#00dede, #00BABA);
+}
+
+.emoji_picker_container {
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    position: absolute;   
+}
+
+.user_chat_frame_right .emoji_picker_container 
+{
+    bottom: 10%;
+    right: 10%;
+    transform: scale(0.9); /* Phóng to lên khi hover */
+}
+.chat_pop_up .emoji_picker_container 
+{
+    bottom: 8%;
+    right: 25%;
+    transform: scale(0.88); /* Phóng to lên khi hover */
+}
+
+.emoji_button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin-right: 5.5px;
+}
+
+.emoji_button i{
+    background: linear-gradient( 45deg, #AAD6FF, #5BA3E2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.emoji_button i:hover{
+    background: linear-gradient(45deg, #00dede, #00BABA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.user_chat_frame_right .emoji_button i{
+    font-size: 20px;
+}
+.chat_pop_up .emoji_button i{
+    font-size: 19px;
 }
