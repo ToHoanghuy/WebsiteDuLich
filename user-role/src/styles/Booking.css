@@ -12,8 +12,8 @@
 
 .step_circle_frame{
     width: 100%;
-    padding-top: 45px;
-    padding-bottom: 40px;
+    padding-top: 40px;
+    padding-bottom: 35px;
     display: flex;
     justify-content: center;
     /* position: fixed; */
@@ -22,7 +22,7 @@
 .step_circle_div{
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 13px;
 }
 
 @keyframes gradientMove {
@@ -44,7 +44,7 @@
 }
 
 .step_circle {
-    width: 60px;
+    width: 58px;
     aspect-ratio: 1;
     border-radius: 50%;
     display: flex;
@@ -56,7 +56,7 @@
 .step_circle_div span{
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .taken_step .step_circle{
@@ -122,11 +122,11 @@
     height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: aqua;
+}
+.booking_info_frame{
     display: flex;
     justify-content: space-between;
 }
-
 .booking_info
 {
     background-color: white;
@@ -275,4 +275,30 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
+}
+
+.booking_btn_frame{
+    display: block;
+    margin-top: 33px;
+    display: flex;
+    justify-content: right;
+}
+.booking_btn_frame button{
+    background: linear-gradient(45deg, #AAD6FF, #5BA3E2);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 35px;
+    padding-right: 35px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 500; /* Medium */
+    color: white;
+    font-size: 17px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+.booking_btn_frame button:hover{
+    background: linear-gradient(45deg,#00dede, #00BABA); 
 }
