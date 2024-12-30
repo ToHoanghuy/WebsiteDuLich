@@ -9,9 +9,8 @@ import ProposeContainer from '../components/ProposeContainer';
 import '../styles/HomePage.css';
 import '../styles/SearchBar.css';
 
-
-
 function HomePage() {
+
     return (
         <div>
             <Helmet>

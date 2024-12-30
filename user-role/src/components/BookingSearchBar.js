@@ -2,11 +2,92 @@ import React, { useState, useRef, useEffect } from 'react';
 import DateTimeBar from '../components/DateTimeBar';
 import QuantityBar from '../components/QuantityBar';
 
-function BookingSearchBar() {
+// const room = {
+//     _id: "12345",
+//     name: "Deluxe Room",
+//     bedType: "King",
+//     area: 35,
+//     quantity: 2,
+//     price: 120,
+//     nights: 3,
+//     image: ["image1.jpg", "image2.jpg"],
+//     description: "A luxurious room with ocean view.",
+//     checkinDate: new Date(),
+//     checkoutDate: new Date(),
+//     facility: [
+//       { id: "f1", name: "WiFi", icon: "wifi.png" },
+//       { id: "f2", name: "Pool", icon: "pool.png", description: "Outdoor swimming pool." }
+//     ],
+//     bed: [
+//       { category: "King", icon: "king_bed.png", quantity: 1 },
+//       { category: "Sofa", icon: "sofa.png", quantity: 1 }
+//     ]
+//   };
+
+function BookingSearchBar({ onSearch }) {
 
     const [showOptions, setShowOptions] = useState([false, false]); // Mảng trạng thái cho các dropdown
     const selectionOptionRefs = useRef([]); // Mảng ref cho selectionOption
     const selectionBtnRefs = useRef([]); // Mảng ref cho selectionBtn
+    
+    const [searchTerm, setSearchTerm] = useState([]);
+    const handleSearch = () => {
+        onSearch(searchTerm); // Gửi dữ liệu lên component cha
+    };
+
+    // useEffect(() => {
+    //     const fetchAvailableRooms = async () => {
+    //       try {
+    //         const bookingResponse = await fetch(
+    //           ${API_BASE_URL}/booking/getall
+    //         );
+    //         const bookingData = await bookingResponse.json();
+      
+    //         if (Array.isArray(bookingData.data)) {
+    //           const bookings = bookingData.data;
+    //           console.log(bookings);
+
+    //           const roomResponse = await fetch(
+    //             ${API_BASE_URL}/room/getbylocationid/${id}
+    //           );
+    //           const roomData = await roomResponse.json();
+      
+    //           if (Array.isArray(roomData.data)) {
+    //             const rooms = roomData.data;
+
+
+    //             const availableRooms = rooms.filter((room: any) => {
+    //               const isBooked = bookings.some((booking: any) => {
+    //                 const bookingCheckin = new Date(booking.checkInDate).getTime();
+    //                 const bookingCheckout = new Date(booking.checkOutDate).getTime();
+    //                 const userCheckin = new Date(checkinDate).getTime();
+    //                 const userCheckout = new Date(checkoutDate).getTime();
+    //                 console.log('booking checkin: ',bookingCheckin);
+    //                 console.log('booking checkout: ',bookingCheckout);
+    //                 console.log('user checkin: ',userCheckin);
+    //                 console.log('user checkout: ',userCheckout);
+                    
+    //                 return (
+    //                   room._id === booking.roomId &&
+    //                   ((userCheckin >= bookingCheckin && userCheckin <= bookingCheckout) ||
+    //                     (userCheckout >= bookingCheckin && userCheckout <= bookingCheckout))
+    //                 );
+    //               });
+      
+    //               return !isBooked; 
+    //             });
+      
+    //             setRooms(availableRooms); 
+    //           }
+    //         }
+    //       } catch (error) {
+    //         console.error('eError fetching rooms or bookings:', error);
+    //       }
+    //     };
+      
+    //     fetchAvailableRooms();
+    // }, [id, checkinDate, checkoutDate]);
+
 
     const toggleOption = (index) => {
         setShowOptions(prevState => {

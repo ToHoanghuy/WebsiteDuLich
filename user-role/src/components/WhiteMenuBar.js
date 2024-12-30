@@ -6,11 +6,12 @@ import { useLocation } from 'react-router-dom';
 function WhiteMenuBar() {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
+    const detail = location.pathname.split('/')[1]=== "detail";
+
     const noneMenu = location.pathname === "/login" || location.pathname === "/register";
     const menubar = useRef(null);
-    const path = location.pathname.split('/')[1];
-    const userPage = path === "user";
-    // alert(userPage)
+    // const path = location.pathname.split('/')[1];
+    // const userPage = path === "user";
 
     useEffect(() => {
         const screenHeight = window.innerHeight;
@@ -23,7 +24,12 @@ function WhiteMenuBar() {
             if (!isHomePage)
             {
                 menu.style.transform = `translateY(0)`
-                menubar.current.style.position = "fixed"
+                if(!detail)
+                {
+                    menubar.current.style.position = "fixed"
+                }
+                
+                // menubar.current.style.position = "fixed"
             }
 
         }
@@ -36,7 +42,6 @@ function WhiteMenuBar() {
             handleScroll();
             window.addEventListener('scroll', handleScroll);// Thêm sự kiện cuộn
         }
-       
 
         return () => {// Cleanup sự kiện khi component unmount
             window.removeEventListener('scroll', handleScroll);
