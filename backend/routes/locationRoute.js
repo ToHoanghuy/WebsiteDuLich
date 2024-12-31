@@ -1,7 +1,8 @@
 const {Router} = require('express');
 const locationController = require('../controllers/locationController');
 const {checkLocationOwner} = require('../middleware/authMiddleware');
-const upload = require('../middleware/cloudinaryMiddleware')
+const uploadMiddleware = require('../middleware/cloudinaryMiddleware')
+const upload = uploadMiddleware('travel-social')
 const router = Router();
 //create
 //router.post('/createlocation', checkLocationOwner, locationController.createNewLocation);

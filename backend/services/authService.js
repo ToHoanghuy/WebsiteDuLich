@@ -38,6 +38,17 @@ const updateUser = async (id, userData) => {
         throw new NotFoundException('Can not update specific user');
 };
 
+const upadtAvt = async (id, userData) => {
+    const result = await User.findByIdAndUpdate(
+        id, 
+        {userAvatar: image},
+        {new: true, runValidators: true})
+    if(result)
+        return result
+    else
+        throw new NotFoundException('Can not update specific user');
+}
+
 const deleteUser = async (id) => {
     const result = await User.findByIdAndDelete(id)
     if(result)
