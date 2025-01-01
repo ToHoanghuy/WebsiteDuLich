@@ -59,7 +59,7 @@ function MenuBar() {
                     </div>
                     <div className="user_frame">
                         <img className="user_avt_bar" src="/image/avt.jpg"/>
-                        <a href="personalinfo.html" className="user_name_bar">{user.userName}</a>
+                        <Link to='/user/account/info' className="user_name_bar">{user.userName}</Link>
                         <i className="fa-solid fa-angle-down"></i>
                     </div>
                 </div> 

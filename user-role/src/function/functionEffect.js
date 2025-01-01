@@ -1,18 +1,7 @@
 import Swal from "sweetalert2";
 
 export const getIconClass = (name) => {
-    console.log('name: ',name)
     switch (name) {
-        // case 1:
-        //     return 'fa-solid fa-wifi';
-        // case 2:
-        //     return 'fa-solid fa-utensils';
-        // case 3:
-        //     return 'fa-solid fa-bath fa-flip-horizontal';
-        // case 4:
-        //     return 'fa-solid fa-water-ladder';
-        // case 5:
-        //     return 'fa-solid fa-water';
         case 'Dọn dẹp phòng':
             return 'fa-solid fa-broom';
         case 'Bữa sáng buffet':
@@ -33,14 +22,6 @@ export const getIconClass = (name) => {
             return 'fa-solid fa-spa';
         case 'Yoga buổi sáng':
             return 'fa-solid fa-om';
-        // case 'Thuê xe đạp':
-        //     return 'fa-solid fa-water';
-        // case 'Thuê xe đạp':
-        //     return 'fa-solid fa-water';
-        // case 'Thuê xe đạp':
-        //     return 'fa-solid fa-water';
-
-        
         default:
             return ''; // Nếu không có id hợp lệ, trả về chuỗi rỗng
     }
