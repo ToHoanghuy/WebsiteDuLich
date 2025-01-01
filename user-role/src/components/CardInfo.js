@@ -12,9 +12,7 @@ const CardInfo = forwardRef(({ ele, favrorited }, ref) => {
 
     const image="/images/detail/detail1.jpg";
     const getRooms = async () => {
-        // alert(ele._id);
         try {
-            // alert(ele._id);
             const response = await fetch(`http://localhost:3000/room/getbylocationid/${ele._id}`);
             const data = await response.json();
             
@@ -34,7 +32,6 @@ const CardInfo = forwardRef(({ ele, favrorited }, ref) => {
 
     useEffect(() => {
         getRooms();
-        // return;
     }, []);
 
     useEffect(() => {

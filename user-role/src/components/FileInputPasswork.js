@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-function FileInputPasswork({labelInput="Mật khẩu"}) {
-    const [inputContent, setInputContent] = useState();
+function FileInputPasswork({labelInput="Mật khẩu", value, onChange}) {
+    const [inputContent, setInputContent] = useState(value);
     const [inputNote, setInputNote] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
@@ -16,6 +16,7 @@ function FileInputPasswork({labelInput="Mật khẩu"}) {
         } else {
             setInputNote("");
         }
+        onChange(e.target.value);
     };
 
     const handleEyeClick = () => {

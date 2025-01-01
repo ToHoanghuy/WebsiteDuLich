@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 function RoomInfo({ services }) {
     const [quantity, setQuantity] = useState(0);
     const maxRooms = 3; // Số phòng trống
-    const price= 7500000
+    const price=  ''
 
     const increment = () => {
         if (quantity < maxRooms) {

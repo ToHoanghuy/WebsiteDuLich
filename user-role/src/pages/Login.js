@@ -7,8 +7,49 @@ import FileInputPasswork from '../components/FileInputPasswork';
 import '../styles/Login.css';
 
 function Login() {
-
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [showSecondText, setShowSecondText] = useState(false);
+    // const [errorMessage, setErrorMessage] = useState("");
+    // const [successMessage, setSuccessMessage] = useState("");
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        console.log('email: ', email)
+        console.log('password: ', password)
+
+        try {
+            const response = await fetch("http://localhost:3000/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userEmail: email,
+                    userPassword: password,
+                }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                // setSuccessMessage("Login successful!");
+                console.log("Login response:", data);
+                // Lưu token nếu cần thiết (ví dụ, trong localStorage)
+                if (data.data) {
+                    localStorage.setItem("authToken", data.data);
+                    // console.log("authToken", data.data);
+                }
+            } else {
+                const errorData = await response.json();
+                console.error(errorData.message||"Login failed!");
+                // setErrorMessage(errorData.message || "Login failed!");
+            }
+        } catch (error) {
+            // setErrorMessage("An error occurred. Please try again.");
+            console.error("Login error: An error occurred. Please try again");
+        }
+        console.log(localStorage.getItem("authToken"));
+    };
+
 
     useEffect(() => {
         // Đặt độ trễ 65 giây để hiển thị văn bản thứ hai
@@ -29,7 +70,8 @@ function Login() {
                 <i class="fa-solid fa-angles-left"></i>
                 <span class="comeback_text"> Quay lại</span>
             </Link>
-            <div className="login_container">
+            <form onSubmit={handleLogin} className="login_container">
+                {/* <div className="login_container"> */}
                 <div class="login_title OpacityEffect">
                     <img class="login_logo" src="/images/logo.png" />
                     <span class="login_title_text">Đăng nhập</span>
@@ -39,8 +81,8 @@ function Login() {
                 {showSecondText && (
                     <TypeWritting classNameValue={'login_desc_text'} content={'Vui lòng đăng nhập để tiếp tục'} />
                 )}
-                <FileInputEmail />
-                <FileInputPasswork />
+                <FileInputEmail value={email} onChange={setEmail} />
+                <FileInputPasswork value={password} onChange={setPassword} />
                 <div class="sub_input OpacityEffect">
                     <div class="remember_password">
                         <input type="checkbox" class="remember_password_checkbox" />
@@ -50,9 +92,9 @@ function Login() {
                         <a class="forgot_password_text">Quên mật khẩu?</a>
                     </div>
                 </div>
-                <Link to="/user" class="button_frame login_button Water_Drop_Effect OpacityEffect" onmouseover="createRipple(event)" onclick="createRipple(event)"> Đăng nhập ngay</Link>
+                <button class="button_frame login_button Water_Drop_Effect OpacityEffect" onmouseover="createRipple(event)" onclick="createRipple(event)"> Đăng nhập ngay</button>
                 <div class="input_other OpacityEffect">
-                    <hr/>Hoặc<hr />
+                    <hr />Hoặc<hr />
                 </div>
                 <Link to="/register" class="button_frame register_button Water_Drop_Effect OpacityEffect" onmouseover="createRipple(event)" onclick="createRipple(event)"> Tạo tài khoản</Link>
                 <button class="button_frame platform_button google_btn Water_Drop_Effect OpacityEffect" onmouseover="createRipple(event)" onclick="createRipple(event)">
@@ -63,7 +105,8 @@ function Login() {
                     <img src="/images/logo/facebook_logo.png" />
                     <span>Đăng nhập bằng Facebook</span>
                 </a>
-            </div>
+                {/* </div> */}
+            </form>
         </div>
     );
 }
