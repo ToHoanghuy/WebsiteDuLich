@@ -3,6 +3,40 @@ import CardInfo from '../components/CardInfo';
 // import HomePage from '../pages/HomePage';
 
 function ProposeContainer({ title }) {
+    const [locations, setLocations] = useState([]);
+    const [randomLocations, setRandomLocations] = useState([]); // State để lưu 16 location ngẫu nhiên
+    const [loading, setLoading] = useState(true);
+
+    const getAllLocations = async () => {
+        try {
+            const response = await fetch("http://localhost:3000/alllocation");
+            const data = await response.json();
+
+            if (data.isSuccess) {
+                setLocations(data.data); // Set data locations
+            } else {
+                console.error(data.error);
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false); // Đặt loading về false sau khi hoàn tất
+        }
+    };
+
+    useEffect(() => {
+        getAllLocations();
+    }, []);
+
+    // Lấy 16 location ngẫu nhiên
+    useEffect(() => {
+        if (locations.length > 0) {
+            const randomLocations = locations
+                .sort(() => 0.5 - Math.random()) // Trộn ngẫu nhiên
+                .slice(0, 8); // Lấy 16 phần tử đầu tiên
+            setRandomLocations(randomLocations);
+        }
+    }, [locations]);
 
     const sliderRef = useRef(null);
     const cardRefs = useRef([]);
@@ -47,38 +81,39 @@ function ProposeContainer({ title }) {
         }
     }
 
-    const element = [
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false,path:"Ho-Coc-Camping-Vung-Tau-Ho-Coc-Camping-Vung-Tau" },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:true },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited:false },
-    ];
+    // const element = [
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false, path: "Ho-Coc-Camping-Vung-Tau-Ho-Coc-Camping-Vung-Tau" },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: true },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/vungtau.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    // ];
 
     return (
         <div className='propose_container'>
             <div className="display_frame">
                 <h2 className="container_tilte OpacityEffect">{title}</h2>
                 <div className="card_ele_slider" ref={sliderRef}>
-                    {element.map((ele, index) => (
+                    {randomLocations.map((ele, index) => (
                         <CardInfo
                             key={index}
-                            name={ele.name}
-                            imgSrc={ele.imgSrc}
-                            pro={ele.pro}
-                            rating={ele.rating}
-                            reviews={ele.reviews}
-                            discount={ele.discount}
-                            originalPrice={ele.originalPrice}
-                            discountPrice={ele.discountPrice}
-                            favrorited={ele.favrorited}
-                            path={ele.path}
+                            ele={ele}
+                            // id={ele._id}
+                            // name={ele.name}
+                            // imgSrc={ele.imgSrc}
+                            // pro={ele.address}
+                            // rating={ele.rating}
+                            // reviews={ele.reviews}
+                            // discount={ele.discount}
+                            // originalPrice={ele.originalPrice}
+                            // discountPrice={ele.discountPrice}
+                            favrorited={false}
+                            // path={ele.path}
                             ref={(el) => (cardRefs.current[index] = el)}
                         />
-
                     ))}
                 </div>
                 <div className="card_button OpacityEffect">

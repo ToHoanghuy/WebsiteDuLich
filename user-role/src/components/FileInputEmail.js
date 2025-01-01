@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-function FileInputEmail() {
-    const [inputContent, setInputContent] = useState();
+function FileInputEmail({value, onChange}) {
+    const [inputContent, setInputContent] = useState(value);
     const inputRef = useRef(null);
 
     const handleChange = (e) => {
         setInputContent(e.target.value);
+        onChange(e.target.value);
     };
+
     const handleDelete = (e) => {
         if (inputContent) {
             setInputContent('');
