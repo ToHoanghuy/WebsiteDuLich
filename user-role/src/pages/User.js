@@ -1,10 +1,32 @@
-import { Routes, Route, Link, useLocation, Outlet, Location } from 'react-router-dom';
+import { Routes, Route, Link, useLocation, Outlet, Locationm, useNavigate } from 'react-router-dom';
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/User.css';
 
 function User() {
     const [activeSubMenu, setActiveSubMenu] = useState(null);
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const LogOut = async () => {
+        // alert('hi')
+        // try {
+        //     const response = await fetch("http://localhost:3000/logout", {
+        //       method: "GET", // hoặc "GET" tùy thuộc vào API
+        //     });
+      
+        //     if (response.ok) {
+        //       alert('hi')
+        //       console.log("Đăng xuất thành công!");
+        //       navigate("/"); // Điều hướng về trang chủ
+        //       localStorage.removeItem('authToken');
+        //     } else {
+        //       console.error("Đăng xuất thất bại!");
+        //     }
+        //   } catch (error) {
+        //     console.error("Lỗi:", error);
+        //   }
+        // setActiveSubMenu((prev) => (prev === index ? null : index));
+    };
 
     const toggleSubMenu = (index) => {
         setActiveSubMenu((prev) => (prev === index ? null : index));
@@ -123,7 +145,7 @@ function User() {
                     <li className="li_row_logout">
                          <a href="Login.html" className="user_menu_row logout">
                              <i className="fa-solid fa-angles-left user_menu_icon"></i>
-                             <span className="user_menu_title">Đăng xuất</span>
+                             <span className="user_menu_title" onClick={LogOut}>Đăng xuất</span>
                          </a>
                          
                     </li>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import '../styles/Detail.css';
 import GalleryPopUp from '../components/GalleryPopUp';
@@ -10,17 +10,17 @@ import Boundary from '../components/Boundary';
 import RatingBar from '../components/RatingBar';
 import YourComment from '../components/YourComment';
 import Comment from '../components/Comment';
-// import ChatFrame from '../components/ChatFrame';
 import ChatPopUp from '../components/ChatPopUp';
 
 function Detail() {
     // const { id } = useParams();
     const { detailId } = useParams();
-    // console.log('detailId: ',detailId) // Lấy ID từ đường dẫn
+    const link = useLocation();
 
     const [location, setLocation] = useState([]);
     const [availableRooms, setaAvailableRooms] = useState([]);
     const [services, setServices] = useState([]);
+    const [reviews, setReviews] = useState([]);
 
     const getDetailLocation = async () => {
         try {
@@ -28,7 +28,7 @@ function Detail() {
             const result = await response.json();
  
             if (response.ok && result.isSuccess) {
-                console.log('data: ', result.data);
+                console.log('Location: ', result.data);
                 setLocation(result.data);  // Gán dữ liệu vào state
             } else {
                 console.error(result.error || 'Failed to fetch data');
@@ -44,7 +44,7 @@ function Detail() {
             const result = await response.json();
  
             if (response.ok && result.isSuccess) {
-                console.log('data: ', result.data);
+                console.log('AvailableRoom: ', result.data);
                 setaAvailableRooms(result.data);  // Gán dữ liệu vào state
             } else {
                 console.error(result.error || 'Failed to fetch data');
@@ -68,15 +68,32 @@ function Detail() {
             console.error('Error fetching data:', error);
         }
     };
+
+    const getReviews = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/review/location/${detailId}`);
+            const result = await response.json();
+            
+            if (response.ok && result.isSuccess) {
+                console.log('Review: ', result.data);
+                setReviews(result.data);  // Gán dữ liệu vào state
+            } else {
+                console.error(result.error || 'Failed to fetch data');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     
     useEffect(() => {
+        alert('hi')
         // alert('detailId:'+ detailId);  // In giá trị detailId
         getDetailLocation();
-        getAvailableRooms();
+        // getAvailableRooms();
+        getReviews();
         getService();
-       
-    }, [detailId]);
-    console.log('Service: ', services)
+    }, []);
     
     // useEffect(() => {
     //     alert(room.length);  // Đảm bảo room đã cập nhật
@@ -390,13 +407,23 @@ function Detail() {
                         </div>
                         <div class="comment_container">
                             <YourComment />
-                            {comments.map((comment, index) => (
+                            {/* {comments.map((comment, index) => (
                                 <Comment
                                     key={index}
                                     userName={comment.userName}
                                     userRating={comment.userRating}
                                     commentContent={comment.commentContent}
                                     avatarSrc={comment.avatarSrc}
+                                />
+                            ))} */}
+                            {reviews.map((review, index) => (
+                                <Comment
+                                    key={index}
+                                    review={review}
+                                    // userName={comment.userName}
+                                    // userRating={comment.userRating}
+                                    // commentContent={comment.commentContent}
+                                    // avatarSrc={comment.avatarSrc}
                                 />
                             ))}
                             <button class="show_more_comment OpacityEffect">Xem thêm đánh giá khác

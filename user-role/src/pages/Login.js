@@ -5,6 +5,8 @@ import TypeWritting from '../components/TypeWritting';
 import FileInputEmail from '../components/FileInputEmail';
 import FileInputPasswork from '../components/FileInputPasswork';
 import '../styles/Login.css';
+// import Cookies from "js-cookie";
+
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -21,32 +23,112 @@ function Login() {
         try {
             const response = await fetch("http://localhost:3000/signin", {
                 method: "POST",
+                body: JSON.stringify({
+                    "userEmail": email,
+                    "userPassword": password,
+                }),
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    userEmail: email,
-                    userPassword: password,
-                }),
+                // credentials: "include",
+                // credentials: "include",
             });
-            if (response.ok) {
-                const data = await response.json();
-                // setSuccessMessage("Login successful!");
-                console.log("Login response:", data);
-                // Lưu token nếu cần thiết (ví dụ, trong localStorage)
-                if (data.data) {
-                    localStorage.setItem("authToken", data.data);
-                    // console.log("authToken", data.data);
-                }
-            } else {
-                const errorData = await response.json();
-                console.error(errorData.message||"Login failed!");
-                // setErrorMessage(errorData.message || "Login failed!");
+            const data = await response.json();
+            console.log("data", data)
+            if(data.data){
+                alert('thành công')
             }
-        } catch (error) {
-            // setErrorMessage("An error occurred. Please try again.");
-            console.error("Login error: An error occurred. Please try again");
+            // if (response.ok) {
+            //     const data = await response.json();
+            //     // setSuccessMessage("Login successful!");
+            //     console.log("Login response:", data);
+            //     // Lưu token nếu cần thiết (ví dụ, trong localStorage)
+            //     if (data.data) {
+            //         localStorage.setItem("authToken", data.data);
+            //         // console.log("authToken", data.data);
+            //     }
+            // } else {
+            //     const errorData = await response.json();
+            //     console.error(errorData.message || "Login failed!");
+            //     // setErrorMessage(errorData.message || "Login failed!");
+            // }
         }
+        catch (error) {
+            //     // setErrorMessage("An error occurred. Please try again.");
+                console.error("Login error: An error occurred. Please try again");
+        }
+        // try {
+        //     // const response = await fetch('http://localhost:3000/signin', {
+        //     //   method: 'POST',
+        //     //   headers: {
+        //     //     'Content-Type': 'application/json',
+        //     //   },
+        //     //   body: JSON.stringify({
+        //     //     userEmail: email,
+        //     //     userPassword: password,
+        //     //   }),
+        //     // });
+
+        //     const response = await fetch("http://localhost:3000/signin", {
+        //         method: "POST",
+        //         headers: {
+        //           "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify({
+        //           userEmail: email,
+        //           userPassword: password,
+        //         }),
+        //         credentials: "include", // Để gửi và nhận cookie từ máy chủ
+        //       });
+
+        //     const data = await response.json();
+
+        //     if (data.isSucess) {
+        //       // Lưu JWT vào cookie
+        //     //   document.cookie = `jwt=${data.data}; path=/;`;
+        //     alert('thành công')
+        //       console.log('Đăng nhập thành công!');
+        //     } else {
+        //         console.log('Đăng nhập thất bại!');
+        //     }
+        //   } catch (error) {
+        //     console.error('Lỗi khi gọi API:', error);
+        //     console.log('Có lỗi xảy ra khi đăng nhập!');
+        //   }
+        // fetch("http://localhost:3000/signin", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         userEmail: email,
+        //         userPassword: password,
+        //     }),
+        //     // credentials: "include", // Để gửi cookie
+        // })
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             alert('hi')
+        //             throw new Error('Failed to fetch');
+        //         }
+        //         else alert('yeah');
+        //         alert('hi')
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         if (data.isSucess) {
+        //             const jwt = data.data; // Lấy JWT từ response
+        //             document.cookie = `jwt=${jwt}; path=/; expires=1d; secure; samesite=strict`;
+        //         } else {
+        //             throw new Error('Login failed');
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('Error:', error);
+        //     });
+
+
+
         console.log(localStorage.getItem("authToken"));
     };
 
