@@ -1,6 +1,5 @@
 const Location = require('../models/Location');
-const NotFoundException = require('../errors/exception');
-const { findById } = require('../models/User');
+const { NotFoundException } = require('../errors/exception');
 const cloudinary =  require("../config/cloudinaryConfig") 
 const emailSvc = require('./emailSvc')
 
