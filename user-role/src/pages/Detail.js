@@ -13,12 +13,14 @@ import Comment from '../components/Comment';
 import ChatPopUp from '../components/ChatPopUp';
 
 function Detail() {
-    // const { id } = useParams();
     const { detailId } = useParams();
     const link = useLocation();
 
     const [location, setLocation] = useState([]);
-    const [availableRooms, setaAvailableRooms] = useState([]);
+    const [rooms, setRooms] = useState([]);
+    const [availableRooms, setAvailableRooms] = useState([]);
+    const [roomStatus, setRoomStatus] = useState('');
+
     const [services, setServices] = useState([]);
     const [reviews, setReviews] = useState([]);
 
@@ -26,7 +28,7 @@ function Detail() {
         try {
             const response = await fetch(`http://localhost:3000/locationbyid/${detailId}`);
             const result = await response.json();
- 
+
             if (response.ok && result.isSuccess) {
                 console.log('Location: ', result.data);
                 setLocation(result.data);  // Gán dữ liệu vào state
@@ -38,14 +40,14 @@ function Detail() {
         }
     };
 
-    const getAvailableRooms = async () => {
+    const getRooms = async () => {
         try {
             const response = await fetch(`http://localhost:3000/room/getbylocationid/${detailId}`);
             const result = await response.json();
- 
+
             if (response.ok && result.isSuccess) {
-                console.log('AvailableRoom: ', result.data);
-                setaAvailableRooms(result.data);  // Gán dữ liệu vào state
+                console.log('Room: ', result.data);
+                setRooms(result.data);  // Gán dữ liệu vào state
             } else {
                 console.error(result.error || 'Failed to fetch data');
             }
@@ -73,7 +75,7 @@ function Detail() {
         try {
             const response = await fetch(`http://localhost:3000/review/location/${detailId}`);
             const result = await response.json();
-            
+
             if (response.ok && result.isSuccess) {
                 console.log('Review: ', result.data);
                 setReviews(result.data);  // Gán dữ liệu vào state
@@ -85,19 +87,13 @@ function Detail() {
         }
     };
 
-    
+
     useEffect(() => {
-        alert('hi')
-        // alert('detailId:'+ detailId);  // In giá trị detailId
         getDetailLocation();
-        // getAvailableRooms();
         getReviews();
         getService();
+        getRooms();
     }, []);
-    
-    // useEffect(() => {
-    //     alert(room.length);  // Đảm bảo room đã cập nhật
-    // }, [room]);
 
     const [isFavorited, setIsFavorited] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
@@ -152,23 +148,6 @@ function Detail() {
         { value: 1, percentage: 0 },
     ];
 
-    const comments = [
-        {
-            userName: "Bé Nghĩa nè",
-            userRating: 3,
-            commentContent:
-                "adssssssssssssssssssss fdsfdssdfsdf",
-            avatarSrc: "/images/avt.jpg",
-        },
-        {
-            userName: "Bé Nghĩa nè",
-            userRating: 4,
-            commentContent:
-                "The location was perfect. The staff was friendly. Our bed was comfy. The pool was fresh with a great view. The breakfast was delicious! We had a hot tub on our balcony which was awesome.",
-            avatarSrc: "/images/avt.jpg",
-        },
-        // Thêm các bình luận khác ở đây
-    ];
     const tongleChatPopUp = () => {
         setChatPopUp(!showChatPopUp);
         // document.body.style.overflow = 'hidden';
@@ -214,17 +193,9 @@ function Detail() {
     const [isVisible, setIsVisible] = useState(false);
 
     //Tác vụ search
-    const handleSearch = (searchTerm) => {
-        // if (searchTerm) {
-        //   const filtered = rooms.filter((room) =>
-        //     room.name.toLowerCase().includes(searchTerm.toLowerCase())
-        //   );
-        //   setFilteredRooms(filtered);
-        // } else {
-        //   setFilteredRooms(rooms); // Reset dữ liệu khi searchTerm rỗng
-        // }
-        console.log('filter_data',searchTerm )
-      };
+    // const handleSearch = (searchTerm) => {
+    //     console.log('filter_data', searchTerm)
+    // };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -268,10 +239,10 @@ function Detail() {
                 <Helmet>
                     <title>Travel Social | {location.name || ''} </title>
                 </Helmet>
-                <div class="chat_button"
+                <div className="chat_button"
                     onClick={() => tongleChatPopUp()}
                 >
-                    <i class="fa-solid fa-comment-dots"></i>
+                    <i className="fa-solid fa-comment-dots"></i>
                 </div>
                 <div
                     ref={scrollBoundaryRef}
@@ -282,63 +253,80 @@ function Detail() {
                     }}>
                     <Boundary boundary={boundary} onBoundaryClick={handleBoundaryClick} />
                 </div>
-                {showPopup && <GalleryPopUp images={location.image} closePopup={closePopup} clickImg={clickImg} />}
+                {showPopup && <GalleryPopUp name={location.name} images={location?.image} closePopup={closePopup} clickImg={clickImg} />}
                 {showChatPopUp && <ChatPopUp closeChatPopUp={closeChatPopUp} />}
-                <div class="detail_bar_container">
-                    <div class="breadcrumb_container">
-                        <a class="breadcrumb_ele">Trang Chủ</a>
-                        {/* <i class="fa-solid fa-angle-right breadcrumb_angle"></i>
-                    <a class="breadcrumb_ele">{detail.province}</a> */}
-                        <i class="fa-solid fa-angle-right breadcrumb_angle current_breadcumb"></i>
-                        <a class="breadcrumb_ele current_breadcumb">{location.name}</a>
+                <div className="detail_bar_container">
+                    <div className="breadcrumb_container">
+                        <a className="breadcrumb_ele">Trang Chủ</a>
+                        {/* <i className="fa-solid fa-angle-right breadcrumb_angle"></i>
+                    <a className="breadcrumb_ele">{detail.province}</a> */}
+                        <i className="fa-solid fa-angle-right breadcrumb_angle current_breadcumb"></i>
+                        <a className="breadcrumb_ele current_breadcumb">{location.name}</a>
                     </div>
                     <Boundary boundary={boundary} onBoundaryClick={handleBoundaryClick} />
                 </div>
-                <div class="overview_info_container" ref={overviewInfoRef}>
-                    <div class="display_frame">
-                        <div class="travel_title_container OpacityEffect">
-                            <span class="place_name">{location.name}</span>
-                            <div class="travel_title_info">
+                <div className="overview_info_container" ref={overviewInfoRef}>
+                    <div className="display_frame">
+                        <div className="travel_title_container OpacityEffect">
+                            <span className="place_name">{location.name}</span>
+                            <div className="travel_title_info">
                                 <img src="/images/logo/Location.png" />
-                                <span class="detail_text">{location.address}</span>
+                                <span className="detail_text">{location.address}</span>
                             </div>
-                            <div class="travel_title_info">
-                                <i class="fa-solid fa-star"></i>
-                                <span class="detail_text">{formatRating(location.rating)} ({detail.reviews} Reviews)</span>
+                            <div className="travel_title_info">
+                                <i className="fa-solid fa-star"></i>
+                                <span className="detail_text">{formatRating(location.rating)} ({detail.reviews} Reviews)</span>
                             </div>
-                            <div class="overview_function_btn">
+                            <div className="overview_function_btn">
                                 <button className="heart_btn" onClick={() => toggleFavorite(isFavorited, setIsFavorited)}>
                                     <i className={`fa-heart ${isFavorited ? 'fa-solid' : 'fa-regular'}`}></i>
                                 </button>
-                                <button class="booking_btn" onClick={() => handleBoundaryClick(2)}>Đặt ngay</button>
+                                <button className="booking_btn" onClick={() => handleBoundaryClick(2)}>Đặt ngay</button>
                             </div>
                         </div>
-                        <div class="gallery_container">
-                            
-                            <div class="main_pic">
-                                <img class="place_img OpacityEffect" src={location?.image || ''} onClick={() => openPopup(0)} />
+                        <div className="gallery_container">
+
+                            <div className="main_pic">
+                                <img className="place_img OpacityEffect" src={location?.image?.[0]?.url || '/images/default_location_img.jpg'}
+                                    // onClick={() => openPopup(0)} 
+                                    onClick={location?.image?.[0]?.url ? () => openPopup(0) : undefined}
+                                />
                             </div>
-                            <div class="side_pic">
-                                <img class="place_img OpacityEffect" src={location?.image || ''} onClick={() => openPopup(1)} />
-                                <img class="place_img OpacityEffect" src={location?.image || ''} onClick={() => openPopup(2)} />
+                            <div className="side_pic">
+                                <img className="place_img OpacityEffect" src={location?.image?.[1]?.url || '/images/default_location_img.jpg'}
+                                    onClick={location?.image?.[1]?.url ? () => openPopup(1) : undefined}
+                                />
+                                <img className="place_img OpacityEffect" src={location?.image?.[2]?.url || '/images/default_location_img.jpg'}
+                                    onClick={location?.image?.[2]?.url ? () => openPopup(2) : undefined}
+                                />
                             </div>
-                            <div class="below_pic">
-                                <img class="place_img OpacityEffect" src={location?.image || ''} onClick={() => openPopup(3)} />
-                                <img class="place_img OpacityEffect" src={location?.image || ''} onClick={() => openPopup(4)} />
-                                <img class="place_img OpacityEffect" src={location?.image || ''} onClick={() => openPopup(5)} />
-                                <img class="place_img OpacityEffect" src={location?.image || ''} onClick={() => openPopup(6)} />
-                                <img class="place_img OpacityEffect" src={location?.image || ''} onClick={() => openPopup(7)} />
+                            <div className="below_pic">
+                                <img className="place_img OpacityEffect" src={location?.image?.[3]?.url || '/images/default_location_img.jpg'}
+                                    onClick={location?.image?.[3]?.url ? () => openPopup(3) : undefined}
+                                />
+                                <img className="place_img OpacityEffect" src={location?.image?.[4]?.url || '/images/default_location_img.jpg'}
+                                    onClick={location?.image?.[4]?.url ? () => openPopup(4) : undefined}
+                                />
+                                <img className="place_img OpacityEffect" src={location?.image?.[5]?.url || '/images/default_location_img.jpg'}
+                                    onClick={location?.image?.[5]?.url ? () => openPopup(5) : undefined}
+                                />
+                                <img className="place_img OpacityEffect" src={location?.image?.[6]?.url || '/images/default_location_img.jpg'}
+                                    onClick={location?.image?.[6]?.url ? () => openPopup(6) : undefined}
+                                />
+                                <img className="place_img OpacityEffect" src={location?.image?.[7]?.url || '/images/default_location_img.jpg'}
+                                    onClick={location?.image?.[7]?.url ? () => openPopup(7) : undefined}
+                                />
                             </div>
                         </div>
-                        <div class="other_info_container OpacityEffect">
-                            <div class="top_other_info_container">
+                        <div className="other_info_container OpacityEffect">
+                            <div className="top_other_info_container">
 
                             </div>
-                            <div class="map_container">
+                            <div className="map_container">
                                 <img src="/images/map.png" />
                             </div>
                         </div>
-                        <div class="overview_service_container OpacityEffect">
+                        <div className="overview_service_container OpacityEffect">
                             {/* {detail.services.map((service, index) => (
                                 <div key={index} className="overview_service_item service_ele">
                                     <i className={getIconClass(service.id)}></i>
@@ -367,45 +355,54 @@ function Detail() {
                         </div>
                     </div>
                 </div>
-                <div class="booking_container" ref={bookingRef}>
-                    <div class="display_frame">
-                        <h2 class="detail_container_tilte OpacityEffect">Thông tin phòng trống</h2>
-                        <BookingSearchBar onSearch={handleSearch}/>
+                <div className="booking_container" ref={bookingRef}>
+                    <div className="display_frame">
+                        <h2 className="detail_container_tilte OpacityEffect">Thông tin phòng trống</h2>
+                        <BookingSearchBar setRooms={setAvailableRooms} setRoomStatus={setRoomStatus} />
 
-                        <div class="room_status OpacityEffect">
-                            <span class="room_status_text">Tình trạng:</span>
-                            <span className="room_status_value" style={{ color: status?.color }}>
-                                {status?.text}
-                            </span>
-                        </div>
-                        <div class="room_info_container">
-                            <RoomInfo services={detail.services} />
-                            <RoomInfo services={detail.services} />
+                        {roomStatus &&
+                            <div className="room_status">
+                                <span className="room_status_text">Tình trạng:</span>
+                                <span className={roomStatus === 'Còn phòng' ? 'available' : 'sold_out'}>
+                                    {roomStatus}
+                                </span>
+                            </div>
+                        }
+                        <div className="room_info_container">
+                            {/* <RoomInfo services={detail.services} />
+                            <RoomInfo services={detail.services} /> */}
+                            {availableRooms.map((room, index) => (
+                                <RoomInfo
+                                    key={index}
+                                    room={room}
+                                    services={detail.services}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
-                <div class="customer_reviews_container" ref={customerReviewsRef}>
-                    <div class="display_frame">
-                        <h2 class="detail_container_tilte OpacityEffect">Đánh giá của khách hàng</h2>
-                        <div class="rating_container OpacityEffect">
-                            <div class="rating_overview OpacityEffect">
-                                <span class="raiting_value">4.0</span>
-                                <div class="raiting_star">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
+                <div className="customer_reviews_container" ref={customerReviewsRef}>
+                    <div className="display_frame">
+                        <h2 className="detail_container_tilte OpacityEffect">Đánh giá của khách hàng</h2>
+                        <div className="rating_container OpacityEffect">
+                            <div className="rating_overview OpacityEffect">
+                                <span className="raiting_value">4.0</span>
+                                <div className="raiting_star">
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-regular fa-star"></i>
                                 </div>
-                                <span class="number_of_reviews">100 lượt đánh giá</span>
+                                <span className="number_of_reviews">100 lượt đánh giá</span>
                             </div>
-                            <div class="rating_detail">
+                            <div className="rating_detail">
                                 {ratings.map((rating, index) => (
                                     <RatingBar key={index} value={rating.value} percentage={rating.percentage} />
                                 ))}
                             </div>
                         </div>
-                        <div class="comment_container">
+                        <div className="comment_container">
                             <YourComment />
                             {/* {comments.map((comment, index) => (
                                 <Comment
@@ -420,13 +417,9 @@ function Detail() {
                                 <Comment
                                     key={index}
                                     review={review}
-                                    // userName={comment.userName}
-                                    // userRating={comment.userRating}
-                                    // commentContent={comment.commentContent}
-                                    // avatarSrc={comment.avatarSrc}
                                 />
                             ))}
-                            <button class="show_more_comment OpacityEffect">Xem thêm đánh giá khác
+                            <button className="show_more_comment OpacityEffect">Xem thêm đánh giá khác
                             </button>
                         </div>
                     </div>
@@ -434,9 +427,11 @@ function Detail() {
             </div>
         )
     }
-    else {return (
-        <div></div>
-    )}
+    else {
+        return (
+            <div></div>
+        )
+    }
 }
 
 export default Detail;
