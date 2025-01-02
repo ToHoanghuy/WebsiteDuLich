@@ -274,7 +274,7 @@ body {
 
 .card_ele
 {   
-    transition: transform 0.7s ease, opacity  1s ease-out !important;
+    transition: transform 2s ease, opacity  1s ease-out !important;
 }
 
 .discover_container .card_ele

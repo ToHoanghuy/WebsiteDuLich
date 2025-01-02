@@ -26,6 +26,22 @@ export const getIconClass = (name) => {
             return ''; // Nếu không có id hợp lệ, trả về chuỗi rỗng
     }
 };
+export const getFacilityIconClass = (name) => {
+    switch (name) {
+        case 'WiFi':
+            return 'fa-solid fa-wifi';
+        case 'Wifi miễn phí':
+            return 'fa-solid fa-wifi';
+        case 'Air Conditioning':
+            return 'fa-solid fa-wind';
+        case 'Máy lạnh':
+            return 'fa-solid fa-wind';
+        case 'Tủ lạnh':
+            return 'fa-regular fa-snowflake';
+        default:
+            return ''; // Nếu không có id hợp lệ, trả về chuỗi rỗng
+    }
+};
 
 
 export const toggleFavorite = (currentState, setState, event) => {

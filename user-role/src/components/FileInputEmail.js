@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-function FileInputEmail({value, onChange}) {
+function FileInputEmail({ value, onChange, checkNull, setCheckEmail }) {
     const [inputContent, setInputContent] = useState(value);
     const inputRef = useRef(null);
 
     const handleChange = (e) => {
         setInputContent(e.target.value);
         onChange(e.target.value);
+        setCheckEmail(true);
     };
 
     const handleDelete = (e) => {
@@ -15,6 +16,11 @@ function FileInputEmail({value, onChange}) {
             inputRef.current.focus();
         }
     };
+    // console.log(checkNull)
+
+    // useEffect(() => {
+        
+    // }, []);
 
     return (
         <div className="input_frame OpacityEffect">
@@ -26,7 +32,7 @@ function FileInputEmail({value, onChange}) {
                     ref={inputRef} />
                 <span className="icon_frame"><i className="fa-solid fa-x" onClick={handleDelete}></i></span>
             </div>
-            <span className="login_note"></span>
+            <span className={`login_note ${!checkNull ? 'error_text' : ''}`}>{!checkNull && 'Email không được để trống'}</span>
         </div>
     );
 }

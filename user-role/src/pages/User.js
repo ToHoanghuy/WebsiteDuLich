@@ -7,13 +7,35 @@ function User() {
     const location = useLocation();
     const navigate = useNavigate();
 
+    const [user, setUser] = useState([]);
+    const getUser = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
+            const data = await response.json();
+            // console.log('User :',data.data)
+            if (data.isSuccess) {
+                setUser(data.data);
+            } else {
+                console.error(data.error);
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            // setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
     const LogOut = async () => {
         // alert('hi')
         // try {
         //     const response = await fetch("http://localhost:3000/logout", {
         //       method: "GET", // hoặc "GET" tùy thuộc vào API
         //     });
-      
+
         //     if (response.ok) {
         //       alert('hi')
         //       console.log("Đăng xuất thành công!");
@@ -26,6 +48,8 @@ function User() {
         //     console.error("Lỗi:", error);
         //   }
         // setActiveSubMenu((prev) => (prev === index ? null : index));
+        localStorage.removeItem("authToken");
+        navigate("/");
     };
 
     const toggleSubMenu = (index) => {
@@ -48,12 +72,12 @@ function User() {
             <div className="user_bar">
                 <div className="avt_container">
                     <div className="avt_frame">
-                        <img className="user_avt_img" src="/images/avt.jpg" alt="User Avatar" />
+                        <img className="user_avt_img" src={user.userAvatar||"/images/default_avt.jpg"} alt="User Avatar" />
                         <div className="edit_avt_btn">
                             <i className="fa-solid fa-pen-to-square"></i>
                         </div>
                     </div>
-                    <span className="user_name">Hiếu Nghĩa cute</span>
+                    <span className="user_name">{user.userName}</span>
                 </div>
                 <ul className="user_menu">
                     {/* Menu với submenu 1 */}
@@ -70,9 +94,8 @@ function User() {
                             <li>
                                 <Link
                                     to="/user/account/info"
-                                    className={`user_sub_menu_row ${
-                                        location.pathname === "/user/account/info" ? "current_user_row" : ""
-                                    }`}
+                                    className={`user_sub_menu_row ${location.pathname === "/user/account/info" ? "current_user_row" : ""
+                                        }`}
                                 >
                                     <i className="fa-solid fa-pencil user_sub_menu_icon"></i>
                                     <span className="user_sub_menu_title">Thông tin cá nhân</span>
@@ -81,9 +104,8 @@ function User() {
                             <li>
                                 <Link
                                     to="/user/account/passwork"
-                                    className={`user_sub_menu_row ${
-                                        location.pathname === "/user/account/passwork" ? "current_user_row" : ""
-                                    }`}
+                                    className={`user_sub_menu_row ${location.pathname === "/user/account/passwork" ? "current_user_row" : ""
+                                        }`}
                                 >
                                     <i className="fa-solid fa-lock user_sub_menu_icon"></i>
                                     <span className="user_sub_menu_title">Thay đổi mật khẩu</span>
@@ -94,9 +116,8 @@ function User() {
                     <li>
                         <Link
                             to="/user/notification"
-                            className={`user_menu_row ${
-                                location.pathname === "/user/notification" ? "current_user_row" : ""
-                            }`}
+                            className={`user_menu_row ${location.pathname === "/user/notification" ? "current_user_row" : ""
+                                }`}
                             onClick={() => closeAllSubMenus()}
                         >
                             <i className="fa-regular fa-bell user_menu_icon"></i>
@@ -116,38 +137,38 @@ function User() {
                         <ul className={`user_sub_menu ${activeSubMenu === 1 ? "active" : ""}`}>
                             <li>
                                 <Link to="/user/storage/historybooking"
-                                     className={`user_sub_menu_row ${location.pathname === "/user/storage/historybooking" ? "current_user_row" : ""}`}
+                                    className={`user_sub_menu_row ${location.pathname === "/user/storage/historybooking" ? "current_user_row" : ""}`}
                                 >
-                                     <i className="fa-regular fa-clipboard user_sub_menu_icon"></i>
-                                     <span className="user_sub_menu_title">Lịch sử đặt phòng</span>
-                                 </Link>
+                                    <i className="fa-regular fa-clipboard user_sub_menu_icon"></i>
+                                    <span className="user_sub_menu_title">Lịch sử đặt phòng</span>
+                                </Link>
                             </li>
                             <li>
-                                 <Link to="/user/storage/chat"
-                                     className={`user_sub_menu_row ${location.pathname === "/user/storage/chat" ? "current_user_row" : ""}`}
-                                 >
-                                     <i class="fa-solid fa-comment-dots user_sub_menu_icon"></i>
-                                     <span className="user_sub_menu_title">Lịch sử trao đổi</span>
-                                 </Link>
+                                <Link to="/user/storage/chat"
+                                    className={`user_sub_menu_row ${location.pathname === "/user/storage/chat" ? "current_user_row" : ""}`}
+                                >
+                                    <i class="fa-solid fa-comment-dots user_sub_menu_icon"></i>
+                                    <span className="user_sub_menu_title">Lịch sử trao đổi</span>
+                                </Link>
                             </li>
                             <li>
-                                 <Link to="/user/storage/favorite"
-                                     className={`user_sub_menu_row ${location.pathname === "/user/storage/favorite" ? "current_user_row" : ""}`}
-                                 >
-                                     <i class="fa-solid fa-heart user_sub_menu_icon"></i>
-                                     <span className="user_sub_menu_title">Yêu thích</span>
-                                 </Link>
+                                <Link to="/user/storage/favorite"
+                                    className={`user_sub_menu_row ${location.pathname === "/user/storage/favorite" ? "current_user_row" : ""}`}
+                                >
+                                    <i class="fa-solid fa-heart user_sub_menu_icon"></i>
+                                    <span className="user_sub_menu_title">Yêu thích</span>
+                                </Link>
                             </li>
                         </ul>
                     </li>
 
                     {/* Menu không có submenu */}
                     <li className="li_row_logout">
-                         <a href="Login.html" className="user_menu_row logout">
-                             <i className="fa-solid fa-angles-left user_menu_icon"></i>
-                             <span className="user_menu_title" onClick={LogOut}>Đăng xuất</span>
-                         </a>
-                         
+                        <div className="user_menu_row logout">
+                            <i className="fa-solid fa-angles-left user_menu_icon"></i>
+                            <span className="user_menu_title" onClick={LogOut}>Đăng xuất</span>
+                        </div>
+
                     </li>
                 </ul>
             </div>

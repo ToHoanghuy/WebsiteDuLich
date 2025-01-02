@@ -77,7 +77,7 @@
 
 .booking_ele {
     width: 90%; /* Chiều rộng của booking_ele */
-    height: 160px; /* Chiều cao của booking_ele */
+    height: 180px; /* Chiều cao của booking_ele */
     background-color: #FAFAFA;
     border-radius: 15px;
     border: 1px solid #dadada;
@@ -109,8 +109,8 @@
 }
 .booking_ele_left img
 {
-    width: 81%;
-    aspect-ratio: 3.1 / 2;
+    width: 80%;
+    aspect-ratio: 2.7 / 2;
     border-radius: 10px;
     object-fit: cover;
 }

@@ -6,22 +6,18 @@ import { toggleFavorite, formatRating, formatPrice } from '../function/functionE
 // const CardInfo = forwardRef(({ name, imgSrc, pro, rating, reviews, discount, originalPrice, discountPrice, favrorited,path }, ref) => {
 const CardInfo = forwardRef(({ ele, favrorited }, ref) => {
     const [isFavorited, setIsFavorited] = useState(favrorited);
-    const [minPrice, setMinPrice] = useState(null)
+    const [minPrice, setMinPrice] = useState('')
     const [rooms, setRooms] = useState([]);
-    // const [loading, setLoading] = useState(true);
 
     const image="/images/detail/detail1.jpg";
     const getRooms = async () => {
         try {
             const response = await fetch(`http://localhost:3000/room/getbylocationid/${ele._id}`);
             const data = await response.json();
-            
             if (data.isSuccess) {
                 setRooms(data.data);
-               
             } else {
-                
-                console.error(data.error);
+                // console.error(data.error);
             }
         } catch (error) {
             console.error(error);
@@ -29,16 +25,19 @@ const CardInfo = forwardRef(({ ele, favrorited }, ref) => {
             // setLoading(false);
         }
     };
-
     useEffect(() => {
         getRooms();
     }, []);
 
     useEffect(() => {
-        if (rooms.length > 0) {
-            const minPriceValue = Math.min(...rooms.map(room => room.price));
-            setMinPrice(minPriceValue);
+        if(rooms)
+        {
+            if (rooms.length > 0) {
+                const minPriceValue = Math.min(...rooms.map(room => room.pricePerNight));
+                setMinPrice(minPriceValue);
+            }
         }
+
     }, [rooms]);
 
     return (
@@ -52,7 +51,7 @@ const CardInfo = forwardRef(({ ele, favrorited }, ref) => {
                 <button className="card_prefer" onClick={(e) => toggleFavorite(isFavorited, setIsFavorited, e)}>
                     <i className={`fa-heart ${isFavorited ? 'fa-solid' : 'fa-regular'}`}></i>
                 </button>
-                <img className="card_info_img" src={image} />
+                <img className="card_info_img" src={ele?.image?.[0]?.url || '/images/default_location_img.jpg'} />
                 <span className="card_info_name">{ele.name}</span>
                 <span className="card_info_dst"><i className="fa-solid fa-location-dot"></i>{ele.address}</span>
                 <div className="card_info_race">

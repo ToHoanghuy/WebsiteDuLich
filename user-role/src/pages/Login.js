@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
+import Swal from "sweetalert2";
 import TypeWritting from '../components/TypeWritting';
 import FileInputEmail from '../components/FileInputEmail';
 import FileInputPasswork from '../components/FileInputPasswork';
@@ -12,123 +13,75 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showSecondText, setShowSecondText] = useState(false);
-    // const [errorMessage, setErrorMessage] = useState("");
-    // const [successMessage, setSuccessMessage] = useState("");
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+    const [checkEmail, setCheckEmail] = useState(true);
+    const [checkPassword, setCheckPassword] = useState(true);
+    const navigate = useNavigate();
+
+    // const handleLogin2 = async () => {
+    //     alert('hi')
+    // }
+    const handleLogin = async () => {
         console.log('email: ', email)
         console.log('password: ', password)
 
-        try {
-            const response = await fetch("http://localhost:3000/signin", {
-                method: "POST",
-                body: JSON.stringify({
-                    "userEmail": email,
-                    "userPassword": password,
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                // credentials: "include",
-                // credentials: "include",
-            });
-            const data = await response.json();
-            console.log("data", data)
-            if(data.data){
-                alert('thành công')
+        if (!email) setCheckEmail(false)
+        else setCheckEmail(true)
+
+        if (!password) setCheckPassword(false);
+        else setCheckPassword(true)
+        if (email && password) 
+        {
+            try {
+                const response = await fetch("http://localhost:3000/signin", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "userEmail": email,
+                        "userPassword": password,
+                    }),
+                });
+                const data = await response.json();
+                console.log("data", data)
+                
+                if (response.ok)
+                {
+                    
+                    if (data.data) {
+                        localStorage.setItem('authToken', data.data);
+                    }
+                    Swal.fire({
+                        title: 'Đăng nhập',
+                        text: 'Thành công',
+                        icon: 'success',
+                        // confirmButtonText: 'Tiếp tục',
+                        timer: 1500, // Tự động đóng sau 2 giây
+                        showConfirmButton: false, // Ẩn nút xác nhận
+                    });
+                    navigate("/");
+                }
+                // if (response.ok) {
+                //     const data = await response.json();
+                //     // setSuccessMessage("Login successful!");
+                //     console.log("Login response:", data);
+                //     // Lưu token nếu cần thiết (ví dụ, trong localStorage)
+                //     if (data.data) {
+                //         localStorage.setItem("authToken", data.data);
+                //         // console.log("authToken", data.data);
+                //     }
+                // } else {
+                //     const errorData = await response.json();
+                //     console.error(errorData.message || "Login failed!");
+                //     // setErrorMessage(errorData.message || "Login failed!");
+                // }
             }
-            // if (response.ok) {
-            //     const data = await response.json();
-            //     // setSuccessMessage("Login successful!");
-            //     console.log("Login response:", data);
-            //     // Lưu token nếu cần thiết (ví dụ, trong localStorage)
-            //     if (data.data) {
-            //         localStorage.setItem("authToken", data.data);
-            //         // console.log("authToken", data.data);
-            //     }
-            // } else {
-            //     const errorData = await response.json();
-            //     console.error(errorData.message || "Login failed!");
-            //     // setErrorMessage(errorData.message || "Login failed!");
-            // }
-        }
-        catch (error) {
-            //     // setErrorMessage("An error occurred. Please try again.");
+            catch (error) {
+                //     // setErrorMessage("An error occurred. Please try again.");
                 console.error("Login error: An error occurred. Please try again");
+            }
         }
-        // try {
-        //     // const response = await fetch('http://localhost:3000/signin', {
-        //     //   method: 'POST',
-        //     //   headers: {
-        //     //     'Content-Type': 'application/json',
-        //     //   },
-        //     //   body: JSON.stringify({
-        //     //     userEmail: email,
-        //     //     userPassword: password,
-        //     //   }),
-        //     // });
-
-        //     const response = await fetch("http://localhost:3000/signin", {
-        //         method: "POST",
-        //         headers: {
-        //           "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({
-        //           userEmail: email,
-        //           userPassword: password,
-        //         }),
-        //         credentials: "include", // Để gửi và nhận cookie từ máy chủ
-        //       });
-
-        //     const data = await response.json();
-
-        //     if (data.isSucess) {
-        //       // Lưu JWT vào cookie
-        //     //   document.cookie = `jwt=${data.data}; path=/;`;
-        //     alert('thành công')
-        //       console.log('Đăng nhập thành công!');
-        //     } else {
-        //         console.log('Đăng nhập thất bại!');
-        //     }
-        //   } catch (error) {
-        //     console.error('Lỗi khi gọi API:', error);
-        //     console.log('Có lỗi xảy ra khi đăng nhập!');
-        //   }
-        // fetch("http://localhost:3000/signin", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         userEmail: email,
-        //         userPassword: password,
-        //     }),
-        //     // credentials: "include", // Để gửi cookie
-        // })
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             alert('hi')
-        //             throw new Error('Failed to fetch');
-        //         }
-        //         else alert('yeah');
-        //         alert('hi')
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         if (data.isSucess) {
-        //             const jwt = data.data; // Lấy JWT từ response
-        //             document.cookie = `jwt=${jwt}; path=/; expires=1d; secure; samesite=strict`;
-        //         } else {
-        //             throw new Error('Login failed');
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.error('Error:', error);
-        //     });
-
-
-
         console.log(localStorage.getItem("authToken"));
     };
 
@@ -152,7 +105,7 @@ function Login() {
                 <i class="fa-solid fa-angles-left"></i>
                 <span class="comeback_text"> Quay lại</span>
             </Link>
-            <form onSubmit={handleLogin} className="login_container">
+            <form className="login_container">
                 {/* <div className="login_container"> */}
                 <div class="login_title OpacityEffect">
                     <img class="login_logo" src="/images/logo.png" />
@@ -163,8 +116,8 @@ function Login() {
                 {showSecondText && (
                     <TypeWritting classNameValue={'login_desc_text'} content={'Vui lòng đăng nhập để tiếp tục'} />
                 )}
-                <FileInputEmail value={email} onChange={setEmail} />
-                <FileInputPasswork value={password} onChange={setPassword} />
+                <FileInputEmail value={email} onChange={setEmail} checkNull={checkEmail} setCheckEmail={setCheckEmail}/>
+                <FileInputPasswork value={password} onChange={setPassword} checkNull={checkPassword} setCheckPassword={setCheckPassword}/>
                 <div class="sub_input OpacityEffect">
                     <div class="remember_password">
                         <input type="checkbox" class="remember_password_checkbox" />
@@ -174,7 +127,7 @@ function Login() {
                         <a class="forgot_password_text">Quên mật khẩu?</a>
                     </div>
                 </div>
-                <button class="button_frame login_button Water_Drop_Effect OpacityEffect" onmouseover="createRipple(event)" onclick="createRipple(event)"> Đăng nhập ngay</button>
+                <button class="button_frame login_button Water_Drop_Effect OpacityEffect" onmouseover="createRipple(event)" onClick={handleLogin}> Đăng nhập ngay</button>
                 <div class="input_other OpacityEffect">
                     <hr />Hoặc<hr />
                 </div>
