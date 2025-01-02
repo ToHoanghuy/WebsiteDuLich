@@ -46,7 +46,6 @@ module.exports.createLocation = async (req, res, next) => {
     const {
         name,
         description,
-        rating,
         address,
         category,
     } = req.body;
@@ -55,30 +54,40 @@ module.exports.createLocation = async (req, res, next) => {
         url: file.path,
         publicId: file.filename
     }))
-    console.log(images)
     try {
+        const parseredCategory = JSON.parse(category)
+        console.log(parseredCategory)
         const locationData = new Location({
             name,
             description,
-            rating,
             address,
-            category,
+            category: parseredCategory,
             ownerId: res.locals.user._id,
             image: images
         });
+        
         const savedLocation = await locationSvc.createLocationWithImage(locationData); // Lưu địa điểm mới vào cơ sở dữ liệu
         res.status(201).json({
             isSuccess: true,
-            data: 'success',
+            data: savedLocation,
             error: null,
         });
-    } catch (error) {
-        for (let image of images) {
-            await cloudinary.uploader.destroy(image.url)
-        }
-        next(error)
+    } 
+    catch (error) {
+        req.files.map(async file => {
+            try {
+                await cloudinary.uploader.destroy(file.filename);
+                console.log(`Deleted: ${file.filename}`);
+                res.status(404).json({
+                isSuccess: true,
+                data: 'upload fail',
+                error: null,
+            });
+            } catch (err) {
+                console.error(`Failed to delete ${file.filename}:`, err.message);
+            }
+        })
     }
-
 }
 
 //--GET ALL LOCATION DATA--\\
