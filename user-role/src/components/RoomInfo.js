@@ -3,7 +3,7 @@ import { getFacilityIconClass } from '../function/functionEffect';
 import { formatPrice } from '../function/formatPrice';
 import Swal from "sweetalert2";
 
-function RoomInfo({room, services }) {
+function RoomInfo({room, quantityRoom, setQuantityRoom }) {
     const [quantity, setQuantity] = useState(0);
     // const maxRooms = 3; // Số phòng trống
     // const price=  ''
@@ -54,18 +54,27 @@ function RoomInfo({room, services }) {
     };
 
     const booking = () => {
-        if(quantity ==0)
-        {
-            Swal.fire({
-                title: 'Chọn phòng thất bại',
-                text: 'Bạn chưa chọn số lượng!',
-                icon: 'error',
-                confirmButtonText: 'Tiếp tục',
-                customClass: {
-                    confirmButton: 'custom_swal_button' 
-                }
-            });
-        }
+        // if(quantity ==0)
+        // {
+        //     Swal.fire({
+        //         title: 'Chọn phòng thất bại',
+        //         text: 'Bạn chưa chọn số lượng!',
+        //         icon: 'error',
+        //         confirmButtonText: 'Tiếp tục',
+        //         customClass: {
+        //             confirmButton: 'custom_swal_button' 
+        //         }
+        //     });
+        // }else{
+            console.log('ok: ',quantityRoom)
+            // alert(quantity)
+            // const newQuantity= quantity;
+            setQuantityRoom(quantityRoom.map(ele => 
+                ele.id === room._id ? { ...ele, quantity_value: quantity } : ele
+            ));
+            
+        // }
+
     };
 
     return (
