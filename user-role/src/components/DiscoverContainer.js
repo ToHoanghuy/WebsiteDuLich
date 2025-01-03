@@ -23,17 +23,23 @@ function DiscoverContainer() {
         { name: "Điện Biên", imgSrc: "/images/dienbien.jpg", region: "Bắc Bộ" },
 
         { name: "Thừa Thiên Huế", imgSrc: "/images/hue.jpg", region: "Trung Bộ" },
+        { name: "Lâm Đồng", imgSrc: "/images/lamdong.jpg", region: "Trung Bộ" },
         { name: "Đà Nẵng", imgSrc: "/images/danang.jpg", region: "Trung Bộ" },
-        { name: "Phú Yên", imgSrc: "/images/phuyen.jpg", region: "Trung Bộ" },        
+        { name: "Phú Yên", imgSrc: "/images/phuyen.jpg", region: "Trung Bộ" },
         { name: "Đắk Lắk", imgSrc: "/images/daklak.jpg", region: "Trung Bộ" },
         { name: "Quảng Nam", imgSrc: "/images/quangnam.jpg", region: "Trung Bộ" },
+        { name: "Bình Thuận", imgSrc: "/images/binhthuan.jpg", region: "Trung Bộ" },
 
         { name: "Vũng Tàu", imgSrc: "/images/vungtau.jpg", region: "Nam Bộ" },
-        { name: "Cần Thơ", imgSrc: "/images/cantho.jpg", region: "Nam Bộ" },
+        { name: "Thành phố Hồ Chí Minh", imgSrc: "/images/tphcm.jpg", region: "Nam Bộ" },
         { name: "Trà Vinh", imgSrc: "/images/travinh.jpg", region: "Nam Bộ" },
-        { name: "Đồng Tháp", imgSrc: "/images/dongthap.jpg", region: "Nam Bộ" },
+        { name: "Cần Thơ", imgSrc: "/images/cantho.jpg", region: "Nam Bộ" },
         { name: "Bạc Liêu", imgSrc: "/images/baclieu.jpg", region: "Nam Bộ" },
+        { name: "Đồng Tháp", imgSrc: "/images/dongthap.jpg", region: "Nam Bộ" },
+       
+        { name: "Cà Mau", imgSrc: "/images/camau.jpg", region: "Nam Bộ" },
         
+
     ];
 
     const endValue = 5;
@@ -85,7 +91,7 @@ function DiscoverContainer() {
 
             const filtered = province.filter((pro) => pro.region === selectedRegion);
             setFilteredProvinces(filtered);
-        } 
+        }
     }, [selectedRegion]);
 
 
@@ -132,6 +138,7 @@ function DiscoverContainer() {
                         />
                     ))}
                 </div>
+          
                 <div className="card_button OpacityEffect">
                     {showPrevButton && (
                         <button className="card_button_prev" onClick={handleMovePrev}>
