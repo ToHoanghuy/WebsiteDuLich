@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import '../styles/Detail.css';
 import GalleryPopUp from '../components/GalleryPopUp';
 import BookingSearchBar from '../components/BookingSearchBar';
 import RoomInfo from '../components/RoomInfo';
-import { getIconClass, toggleFavorite, formatRating } from '../function/functionEffect';
+import { getIconClass, toggleFavorite, formatRating, formatPrice } from '../function/functionEffect';
 import Boundary from '../components/Boundary';
 import RatingBar from '../components/RatingBar';
 import YourComment from '../components/YourComment';
@@ -23,6 +23,9 @@ function Detail() {
 
     const [services, setServices] = useState([]);
     const [reviews, setReviews] = useState([]);
+    const [checkInDate, setCheckInDate] = useState([]);
+    const [checkOutDate, setCheckOutDate] = useState([]);
+    // const [selectedRoom, setSelectedRoom] = useState([]);
 
     const getDetailLocation = async () => {
         try {
@@ -167,6 +170,7 @@ function Detail() {
         document.body.style.overflow = 'hidden'; // Tắt cuộn trang khi mở popup
     };
 
+
     //Click đọc nhiều hơn
     const [expanded, setExpanded] = useState(false);
     const handleReadMoreClick = () => {
@@ -212,6 +216,40 @@ function Detail() {
         };
     }, []);
 
+
+    const [quantity, setQuantity] = useState([]);
+    const [selected, setSelected] = useState(false);
+
+    useEffect(() => {
+        var array = [];
+
+        for (let i = 0; i < availableRooms.length; i++) {
+            var select = { id: availableRooms[i]._id, name: availableRooms[i].name, price: availableRooms[i].pricePerNight, quantity_value: 0 };
+            array.push(select)
+        }
+        setQuantity(array)
+    }, [availableRooms]);
+
+    const [total, setTotal] = useState(0);
+    useEffect(() => {
+        // alert('hi')
+        console.log('quantity :', quantity)
+        let totalPrice = 0;
+        for (let i = 0; i < quantity.length; i++) {
+            // alert('hi')
+            totalPrice += (quantity[i].price * quantity[i].quantity_value)
+        }
+        console.log('total ', totalPrice)
+        if (totalPrice > 0) {
+            setSelected(true);
+
+        } else {
+            setSelected(false);
+        }
+        setTotal(totalPrice)
+
+    }, [quantity]);
+
     //Hàm để xử lí click vào boundary
     const handleBoundaryClick = (index) => {
         if (index) {
@@ -228,10 +266,35 @@ function Detail() {
             setBoundary(index)
         }
     };
+    const navigate = useNavigate();
+    
+    const handleSubmit = (e) => { 
+        // e.preventDefault();
+        // //    alert('hi')
+        // const queryParams = new URLSearchParams(availableRooms).toString();
+        // navigate(`/booking?${queryParams}`);
+
+        const queryParams = new URLSearchParams();
+        
+        quantity.forEach(item => {
+            if (item.quantity_value > 0) {
+                queryParams.append('id', item.id);
+                queryParams.append('name', item.name);
+                queryParams.append('price', item.price);
+                queryParams.append('quantity_value', item.quantity_value);
+            }
+        });
+        queryParams.append('checkin', checkInDate)
+        queryParams.append('checkout', checkOutDate)
+        queryParams.append('totalprice', total)
+        queryParams.append('location', detailId)
+        navigate(`/booking?${queryParams.toString()}`);
+    };
+
 
     const detail = detailData[0];
-    // const ele = location;
-    // console.log('detail: ',ele);
+    
+    
 
     if (location) {
         return (
@@ -355,10 +418,10 @@ function Detail() {
                         </div>
                     </div>
                 </div>
-                <div className="booking_container" ref={bookingRef}>
+                <form onSubmit={handleSubmit} className="booking_container" ref={bookingRef}>
                     <div className="display_frame">
                         <h2 className="detail_container_tilte OpacityEffect">Thông tin phòng trống</h2>
-                        <BookingSearchBar setRooms={setAvailableRooms} setRoomStatus={setRoomStatus} />
+                        <BookingSearchBar setRooms={setAvailableRooms} setRoomStatus={setRoomStatus} setCheckInDate={setCheckInDate} setCheckOutDate={setCheckOutDate}/>
 
                         {roomStatus &&
                             <div className="room_status">
@@ -375,12 +438,41 @@ function Detail() {
                                 <RoomInfo
                                     key={index}
                                     room={room}
-                                    services={detail.services}
+                                    quantityRoom={quantity}
+                                    setQuantityRoom={setQuantity}
                                 />
                             ))}
+                            {selected &&
+                                <div className='choice_room'>
+                                    <div className='choice_room_header'>Phòng đã chọn</div>
+                                    <div className='choice_room_body'>
+                                        <div className='choice_room_left'>
+                                            {/* {quantity.map((room, index) => (
+                                                <div key={index} className='choice_room_ele'>
+                                                    <span className='room_name'>{room.name}</span>
+                                                    <span className='choice_room_quantity'>( {room.quantity_value} phòng )</span>
+                                                </div>
+                                            ))} */}
+                                            {quantity.map((room, index) => (
+                                                // Kiểm tra điều kiện
+                                                room.quantity_value > 0 && (
+                                                    <div key={index} className='choice_room_ele'>
+                                                        <span className='room_name'>{room.name}</span>
+                                                        <span className='choice_room_quantity'>( {room.quantity_value} phòng )</span>
+                                                    </div>
+                                                )
+                                            ))}
+                                        </div>
+                                        <div className='choice_room_right'>
+                                            <span class="total_price_value">VNĐ {formatPrice(total)}</span>
+                                            <button onClick={handleSubmit} type='submit' class="create_booking_btn">Đặt ngay</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
-                </div>
+                </form>
                 <div className="customer_reviews_container" ref={customerReviewsRef}>
                     <div className="display_frame">
                         <h2 className="detail_container_tilte OpacityEffect">Đánh giá của khách hàng</h2>
@@ -404,15 +496,6 @@ function Detail() {
                         </div>
                         <div className="comment_container">
                             <YourComment />
-                            {/* {comments.map((comment, index) => (
-                                <Comment
-                                    key={index}
-                                    userName={comment.userName}
-                                    userRating={comment.userRating}
-                                    commentContent={comment.commentContent}
-                                    avatarSrc={comment.avatarSrc}
-                                />
-                            ))} */}
                             {reviews.map((review, index) => (
                                 <Comment
                                     key={index}

@@ -117,7 +117,7 @@
     -webkit-text-fill-color: transparent; 
 }
 
-.booking_step1_frame{
+.booking_step_frame{
     width: 100%;
     height: auto;
     padding-top: 10px;
@@ -130,17 +130,20 @@
 .booking_info
 {
     background-color: white;
-    border: 2.5px solid #68a9e6;
-    border-radius: 12px;
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #F5F5F5;
+    border-radius: 5px;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-right: 20px;
     padding-left: 20px;
+    min-height: 40vh;
 }
 .booking_location_info
 {
     width: 55%;
 }
+
 .booking_location_top{
     width: 100%;
     display: grid;
@@ -279,7 +282,7 @@
 
 .booking_btn_frame{
     display: block;
-    margin-top: 33px;
+    margin-top: 35px;
     display: flex;
     justify-content: right;
 }
@@ -297,8 +300,64 @@
     color: white;
     font-size: 17px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
 }
 
 .booking_btn_frame button:hover{
     background: linear-gradient(45deg,#00dede, #00BABA); 
+}
+
+.booking_step_frame2{
+    width: 80%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0 auto;
+}
+.booking_user_info{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    padding-top: 25px;
+    gap: 20px;
+}
+.booking_user_title{
+    font-size: 23px;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(#4b87bf, #1F6CB4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.user_booking_input_frame{
+    /* background-color: #00BABA; */
+    width: 70%;
+}
+.user_booking_input_frame label{
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #465b68;
+    font-size: 19px;
+}
+.user_booking_input{
+    width: 100%;
+    background-color: white;
+    height: 40px;
+    border: 1px solid #52A6F3;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    /* justify-content: center; */
+}
+.user_booking_input input{
+    width: 90%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 5px;
 }

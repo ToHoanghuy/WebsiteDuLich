@@ -4,7 +4,7 @@ import DateTimeBar from '../components/DateTimeBar';
 import QuantityBar from '../components/QuantityBar';
 import Swal from "sweetalert2";
 
-function BookingSearchBar({ setRooms, setRoomStatus }) {
+function BookingSearchBar({ setRooms, setRoomStatus, setCheckInDate, setCheckOutDate }) {
     const { detailId } = useParams();
 
     const [showOptions, setShowOptions] = useState([false, false]); // Mảng trạng thái cho các dropdown
@@ -152,9 +152,12 @@ function BookingSearchBar({ setRooms, setRoomStatus }) {
 
                 const userCheckin = new Date(inputFrom);
                 userCheckin.setHours(userCheckin.getHours() + 13);
+                
                 const userCheckout = new Date(inputTo);
                 userCheckout.setHours(userCheckout.getHours() + 12);
 
+                setCheckInDate(userCheckin.toISOString())
+                setCheckOutDate(userCheckout.toISOString())
                 const filteredBookings = bookingData.filter(booking =>
                     (userCheckin >= new Date(booking.checkinDate) && userCheckin <= new Date(booking.checkoutDate)) ||
                     (userCheckout >= new Date(booking.checkinDate) && userCheckout <= new Date(booking.checkoutDate))
