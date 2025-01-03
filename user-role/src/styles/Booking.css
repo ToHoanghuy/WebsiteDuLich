@@ -153,9 +153,9 @@
     /* height: 30vh; */
 }
 .booking_location_bottom{
-    border-top: 2px solid #ebebeb;
+    /* border-top: 2px solid #ebebeb; */
     width: 100%;
-    height: 10vh;
+    height: auto;
 }
 /* .booking_location_top_left{
     background-color: aqua;
@@ -178,25 +178,140 @@
     font-size: 22px;
     letter-spacing: 0.3px;
     color: #424242;
+    
     display: inline-block;
     max-width: 95%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    /* margin-bottom: -3px; */
+}
+.booking_address i{
+    font-size: 14px;
+    color: #00BABA;
+    margin-right: 10px;
+}
+.booking_address span{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #7292A7;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.booking_rating{
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 20px;
+    width: 50px;
+    background-color: #99cbfa;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #FCD08F, #FDBD77, #FFAB5E);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+}
+.booking_rating i{
+    color: white;
+    font-size: 11px;
+}
+.booking_rating span{
+    font-weight: bold;
+    color: white;
+    font-size: 13px;
+    margin-bottom: 1px;
+}
+.booking_service{
+    max-width: 90%;
+    height: auto;
+    clear: both;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    overflow: hidden;
+    gap: 7px;
+    white-space: nowrap;
+}
+.booking_room_faclity{
+    max-width: 60%;
+    height: auto;
+    clear: both;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    overflow: hidden;
+    gap: 7px;
+    white-space: nowrap;
+    margin-top: 10px;
+}
+.booking_service_ele{
+    height: 21px;
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: white;
+    border: 0.5px solid #4d605c;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3px;
+    color: #4d605c;
+    gap: 5px;
+}
+.booking_service_ele span{
+    font-size: 12px;
+    /* color: #4d605c; */
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 400;
+}
+.booking_service_ele i{
+    font-size: 10px;
+    
 }
 .booking_location_price{
     position: absolute;
-    bottom: 0px;
+    bottom: 20px;
     right: 3px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 23px;
     background: linear-gradient(#2DD7A4, #1bdca2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.booking_room{
+    width: 100%;
+    height: auto;
+    padding-top: 15px;
+    padding-bottom: 25px;
+    padding-left: 5px;
+    /* border-bottom: 2px solid #FBFBFB; */
+    border-top: 2px solid #ebebeb;
+    position: relative;
+}
+.booking_room_booked{
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    
+}
+.booking_room_name{
+    background: linear-gradient(#4b82b6, #1F6CB4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 20px;
 
-
+}
+.booking_room_quantity{
+    color: #433939;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 1px;
+}
 .booking_detail_info
 {
     width: 43%;
@@ -210,6 +325,7 @@
     text-align: center;
     width: 100%; */
     margin-bottom: 15px;
+    
 }
 .booking_detail_time
 {
@@ -235,14 +351,23 @@
 {
     width: 95%;
     border-bottom: 2px solid #ebebeb;
-    padding-top: 17px;
     padding-bottom: 17px;
-    display: flex;
-    align-items: center;
-    gap: 10px
+    padding-top: 15px;
+    /* display: flex;
+    align-items: center; */
+    position: relative;
+}
+.booking_detail .booking_location_price{
+    bottom: 10px!important;
+    font-size: 20px!important;
 }
 .booking_detail span{
     font-size: 16px;
+}
+.booking_detail_flex{
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .booking_value{
     font-family: 'Inter', sans-serif;
@@ -321,6 +446,7 @@
     flex-direction: column;
     margin: 0 auto;
     padding-top: 25px;
+    padding-bottom: 25px;
     gap: 20px;
 }
 .booking_user_title{
@@ -331,15 +457,30 @@
     -webkit-text-fill-color: transparent;
 }
 
+.user_booking_input_frame_split{
+    width: 70%;
+    /* display: grid;
+    grid-template-columns: 50% 50%; */
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
 .user_booking_input_frame{
     /* background-color: #00BABA; */
     width: 70%;
 }
+/* .user_booking_input_frame_split .user_booking_input_frame{
+    width: 50%!important;
+    
+} */
+
+
 .user_booking_input_frame label{
     margin-bottom: 8px;
     font-weight: 600;
     color: #465b68;
-    font-size: 19px;
+    font-size: 16px;
 }
 .user_booking_input{
     width: 100%;
@@ -360,4 +501,61 @@
     padding-left: 10px;
     padding-bottom: 10px;
     padding-top: 5px;
+}
+
+.booking_bill
+{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 30vh;
+}
+
+.booking_payment{
+    width: 30%;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    padding-left: 35px;
+    padding-right: 35px;
+    text-align: center;
+}
+.booking_payment .booking_detail_top_title{
+    /* margin-left: auto; */
+}
+.booking_bill .booking_detail_top_title,
+.booking_payment .booking_detail_top_title{
+    margin-bottom: 5px!important;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ebebeb;
+    min-width: 60%;
+    text-align: center;
+}
+.booking_qr{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.payment_method_ele{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: auto;
+}
+.payment_method_ele i{
+    background: linear-gradient(#4b87bf, #1F6CB4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 7px;
+}
+.payment_method_ele div{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color: #424242;
 }

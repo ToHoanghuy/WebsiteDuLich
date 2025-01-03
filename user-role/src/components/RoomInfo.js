@@ -3,7 +3,7 @@ import { getFacilityIconClass } from '../function/functionEffect';
 import { formatPrice } from '../function/formatPrice';
 import Swal from "sweetalert2";
 
-function RoomInfo({room, quantityRoom, setQuantityRoom }) {
+function RoomInfo({ room, quantityRoom, setQuantityRoom, choiceRoom }) {
     const [quantity, setQuantity] = useState(0);
     // const maxRooms = 3; // Số phòng trống
     // const price=  ''
@@ -66,13 +66,14 @@ function RoomInfo({room, quantityRoom, setQuantityRoom }) {
         //         }
         //     });
         // }else{
-            console.log('ok: ',quantityRoom)
-            // alert(quantity)
-            // const newQuantity= quantity;
-            setQuantityRoom(quantityRoom.map(ele => 
-                ele.id === room._id ? { ...ele, quantity_value: quantity } : ele
-            ));
-            
+        console.log('ok: ', quantityRoom)
+        setQuantityRoom(quantityRoom.map(ele =>
+            ele.id === room._id ? { ...ele, quantity_value: quantity } : ele
+        ));
+        if(quantity >0)
+        {
+            choiceRoom()
+        }
         // }
 
     };
@@ -122,9 +123,9 @@ function RoomInfo({room, quantityRoom, setQuantityRoom }) {
             </div>
             <div class="book_now">
                 <div className='room_name'>
-                <i class="fa-solid fa-door-open"></i>
+                    <i class="fa-solid fa-door-open"></i>
                     {room.name}</div>
-                <div class="room_price">    
+                <div class="room_price">
                     <span class="room_price_text">Giá</span>
                     <span class="room_price_value">VNĐ {formatPrice(room.pricePerNight)}</span>
                     <button class="booking_btn" onClick={booking}>Chọn</button>

@@ -103,10 +103,13 @@ function Detail() {
     const [showChatPopUp, setChatPopUp] = useState(false);
 
     const [clickImg, setClickImg] = useState(0);
+
     const overviewInfoRef = useRef(null);
     const bookingRef = useRef(null);
     const customerReviewsRef = useRef(null);
     const scrollBoundaryRef = useRef(null);
+    const choiceRoomRef = useRef(null);
+
     const [boundary, setBoundary] = useState(1);
 
     const detailData = [
@@ -170,6 +173,17 @@ function Detail() {
         document.body.style.overflow = 'hidden'; // Tắt cuộn trang khi mở popup
     };
 
+    const choiceRoom = () => {
+
+        var targetPosition;
+        targetPosition = choiceRoomRef.current.offsetTop - 2*scrollBoundaryRef.current.offsetHeight;
+        if (targetPosition) {
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
 
     //Click đọc nhiều hơn
     const [expanded, setExpanded] = useState(false);
@@ -195,11 +209,6 @@ function Detail() {
     }, []);
 
     const [isVisible, setIsVisible] = useState(false);
-
-    //Tác vụ search
-    // const handleSearch = (searchTerm) => {
-    //     console.log('filter_data', searchTerm)
-    // };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -267,15 +276,15 @@ function Detail() {
         }
     };
     const navigate = useNavigate();
-    
-    const handleSubmit = (e) => { 
+
+    const handleSubmit = (e) => {
         // e.preventDefault();
         // //    alert('hi')
         // const queryParams = new URLSearchParams(availableRooms).toString();
         // navigate(`/booking?${queryParams}`);
 
         const queryParams = new URLSearchParams();
-        
+
         quantity.forEach(item => {
             if (item.quantity_value > 0) {
                 queryParams.append('id', item.id);
@@ -293,8 +302,8 @@ function Detail() {
 
 
     const detail = detailData[0];
-    
-    
+
+
 
     if (location) {
         return (
@@ -421,7 +430,7 @@ function Detail() {
                 <form onSubmit={handleSubmit} className="booking_container" ref={bookingRef}>
                     <div className="display_frame">
                         <h2 className="detail_container_tilte OpacityEffect">Thông tin phòng trống</h2>
-                        <BookingSearchBar setRooms={setAvailableRooms} setRoomStatus={setRoomStatus} setCheckInDate={setCheckInDate} setCheckOutDate={setCheckOutDate}/>
+                        <BookingSearchBar setRooms={setAvailableRooms} setRoomStatus={setRoomStatus} setCheckInDate={setCheckInDate} setCheckOutDate={setCheckOutDate} />
 
                         {roomStatus &&
                             <div className="room_status">
@@ -440,25 +449,22 @@ function Detail() {
                                     room={room}
                                     quantityRoom={quantity}
                                     setQuantityRoom={setQuantity}
+                                    choiceRoom={choiceRoom}
                                 />
                             ))}
+                            <div ref={choiceRoomRef}>
                             {selected &&
-                                <div className='choice_room'>
+                                
+                                <div className='choice_room' >
                                     <div className='choice_room_header'>Phòng đã chọn</div>
                                     <div className='choice_room_body'>
                                         <div className='choice_room_left'>
-                                            {/* {quantity.map((room, index) => (
-                                                <div key={index} className='choice_room_ele'>
-                                                    <span className='room_name'>{room.name}</span>
-                                                    <span className='choice_room_quantity'>( {room.quantity_value} phòng )</span>
-                                                </div>
-                                            ))} */}
                                             {quantity.map((room, index) => (
                                                 // Kiểm tra điều kiện
                                                 room.quantity_value > 0 && (
                                                     <div key={index} className='choice_room_ele'>
                                                         <span className='room_name'>{room.name}</span>
-                                                        <span className='choice_room_quantity'>( {room.quantity_value} phòng )</span>
+                                                        <span className='choice_room_quantity'>{room.quantity_value} phòng</span>
                                                     </div>
                                                 )
                                             ))}
@@ -469,7 +475,8 @@ function Detail() {
                                         </div>
                                     </div>
                                 </div>
-                            }
+                               
+                            } </div>
                         </div>
                     </div>
                 </form>

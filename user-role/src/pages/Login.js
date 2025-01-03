@@ -62,23 +62,8 @@ function Login() {
                     });
                     navigate("/");
                 }
-                // if (response.ok) {
-                //     const data = await response.json();
-                //     // setSuccessMessage("Login successful!");
-                //     console.log("Login response:", data);
-                //     // Lưu token nếu cần thiết (ví dụ, trong localStorage)
-                //     if (data.data) {
-                //         localStorage.setItem("authToken", data.data);
-                //         // console.log("authToken", data.data);
-                //     }
-                // } else {
-                //     const errorData = await response.json();
-                //     console.error(errorData.message || "Login failed!");
-                //     // setErrorMessage(errorData.message || "Login failed!");
-                // }
             }
             catch (error) {
-                //     // setErrorMessage("An error occurred. Please try again.");
                 console.error("Login error: An error occurred. Please try again");
             }
         }
