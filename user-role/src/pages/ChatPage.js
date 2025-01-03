@@ -13,9 +13,9 @@ function ChatPage() {
     const emojiPickerRef = useRef(null);
 
     const hotels = [
-        { id: 1, name: 'Hoàng Huy', messages: [{ text: 'Hello', type: 'hotel' }, { text: 'Call API chưa HN ơi', type: 'hotel' }] },
-        { id: 2, name: 'Phúc Thịnh iuuuu', messages: [{ text: 'Phúc Thịnh ngủ quên', type: 'hotel' }] },
-        { id: 3, name: 'Trúc Ngân', messages: [{ text: 'Chết rồi', type: 'hotel' }, { text: 'Bé quên nộp deadline', type: 'hotel' }] },
+        { id: 1, name: 'Khách sạn Hoàng Huy', messages: [{ text: 'Hello', type: 'hotel' }, { text: 'Call API chưa HN ơi', type: 'hotel' }] },
+        { id: 2, name: 'Khách sạn Thịnh Phúc', messages: [{ text: 'Bạn cần giúp đỡ điều gì', type: 'hotel' }] },
+        { id: 3, name: 'Khách sạn Trúc Mộng', messages: [{ text: 'Chết rồi', type: 'hotel' }, { text: 'Bé quên nộp deadline', type: 'hotel' }] },
     ];
 
     const handleIconClick = () => {
