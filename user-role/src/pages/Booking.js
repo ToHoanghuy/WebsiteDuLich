@@ -1,7 +1,7 @@
 import { Routes, Route, Link, useLocation, Outlet, useSearchParams } from 'react-router-dom';
 import React, { useState, useRef, useEffect } from 'react';
 import { getIconClass, formatRating, formatPrice } from '../function/functionEffect';
-
+import Swal from "sweetalert2";
 import '../styles/Booking.css';
 
 function Booking() {
@@ -87,14 +87,11 @@ function Booking() {
                 }
             }
         });
-        console.log(data)
         setBookingData(data);
 
         if (checkinValue && checkoutValue) {
             const differenceInHours = (new Date(checkoutValue) - new Date(checkinValue)) / (1000 * 60 * 60);
             const night_value = Math.round(differenceInHours / 24);
-            console.log('nights:', night_value)
-            console.log(checkinValue)
 
             setNight(night_value)
             setCheckInDate(checkinValue)
@@ -145,6 +142,75 @@ function Booking() {
         setSelectedPayment(index);
     };
 
+    const createBooking = async (localTime, items) => {
+        const url = "http://localhost:3000/booking/createbooking";
+        const body = {
+            checkinDate: checkInDate,
+            checkoutDate: checkOutDate,
+            dateBooking: localTime,
+            userId: localStorage.getItem("authToken"),
+            items: items
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body), // Chuyển body thành chuỗi JSON
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            else {
+                // alert('thành công')
+                Swal.fire({
+                    title: 'Hoàn thành đặt phòng',
+                    text: 'Bạn đã đặt phòng thành công',
+                    icon: 'success',
+                    timer: 1500, // Tự động đóng sau 2 giây
+                    showConfirmButton: false, // Ẩn nút xác nhận
+                });
+                window.history.back();
+                window.scrollTo(0, 0);
+            }
+            // const data = await response.json(); // Parse kết quả trả về JSON
+            // console.log("Booking created successfully:", data);
+        } catch (error) {
+            console.error("Error creating booking:", error.message);
+        }
+    };
+
+
+
+    const handleBooking = () => {
+        if(selectedPayment)
+        {
+            const now = new Date();
+            const offset = now.getTimezoneOffset() * 60000; // Offset tính bằng milliseconds
+            const localTime = new Date(now - offset).toISOString(); // Điều chỉnh theo giờ địa phương
+            const items = bookingData.map(item => ({
+                roomId: item.id,
+                quantity: parseInt(item.quantity_value, 10), // Chuyển quantity_value sang số nguyên
+                nights: night // Thêm giá trị mặc định
+            }));
+            createBooking(localTime, items)
+        }
+        // else{
+        //     Swal.fire({
+        //         title: 'Hoàn thành ',
+        //         text: 'Bạn đã đặt phòng thành công',
+        //         icon: 'success',
+        //         timer: 1500, // Tự động đóng sau 2 giây
+        //         showConfirmButton: false, // Ẩn nút xác nhận
+        //     });
+        // }
+        
+    };
+
+
     return (
         <div className='booking_section'>
             <div className='display_frame'>
@@ -155,11 +221,11 @@ function Booking() {
                         <span>Chi tiết đặt phòng</span>
                     </div>
                     <div className={`angles ${step >= 2 ? 'current_step' : 'next_step'}`}
-                        >
+                    >
                         <i class="fa-solid fa-angles-right"></i>
                     </div>
                     <div className={`step_circle_div ${step >= 2 ? 'taken_step' : 'untaken_step'}`}
-                          onClick={step > 2 ? () => setStep(2) : null}>
+                        onClick={step > 2 ? () => setStep(2) : null}>
                         <div className='step_circle '><i class="fa-regular fa-id-card"></i></div>
                         <span>Thông tin cá nhân</span>
                     </div>
@@ -337,27 +403,27 @@ function Booking() {
                                 <div className='payment_method'>
                                     <div className='payment_method_ele'>
                                         <i className={
-                                                selectedPayment === 1
-                                                    ? "fa-regular fa-circle-check"
-                                                    : "fa-regular fa-circle"}
+                                            selectedPayment === 1
+                                                ? "fa-regular fa-circle-check"
+                                                : "fa-regular fa-circle"}
                                             onClick={() => handleSelect(1)}
                                         ></i>
                                         <div>Thẻ ngân hàng</div>
                                     </div>
                                     <div className='payment_method_ele'>
-                                    <i className={
-                                                selectedPayment === 2
-                                                    ? "fa-regular fa-circle-check"
-                                                    : "fa-regular fa-circle"}
+                                        <i className={
+                                            selectedPayment === 2
+                                                ? "fa-regular fa-circle-check"
+                                                : "fa-regular fa-circle"}
                                             onClick={() => handleSelect(2)}
                                         ></i>
                                         <div>MOMO</div>
                                     </div>
                                     <div className='payment_method_ele'>
-                                    <i className={
-                                                selectedPayment === 3
-                                                    ? "fa-regular fa-circle-check"
-                                                    : "fa-regular fa-circle"}
+                                        <i className={
+                                            selectedPayment === 3
+                                                ? "fa-regular fa-circle-check"
+                                                : "fa-regular fa-circle"}
                                             onClick={() => handleSelect(3)}
                                         ></i>
                                         <div>Trực tiếp</div>
@@ -369,7 +435,7 @@ function Booking() {
                         </div>
                         <div className='booking_btn_frame'>
                             <button onClick={() => setStep(2)}>Quay lại</button>
-                            <button>Đặt phòng</button>
+                            <button onClick={handleBooking}>Đặt phòng</button>
                         </div>
                     </div>
                 }
