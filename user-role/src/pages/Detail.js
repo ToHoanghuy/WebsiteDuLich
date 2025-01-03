@@ -33,7 +33,6 @@ function Detail() {
             const result = await response.json();
 
             if (response.ok && result.isSuccess) {
-                console.log('Location: ', result.data);
                 setLocation(result.data);  // Gán dữ liệu vào state
             } else {
                 console.error(result.error || 'Failed to fetch data');
@@ -49,7 +48,6 @@ function Detail() {
             const result = await response.json();
 
             if (response.ok && result.isSuccess) {
-                console.log('Room: ', result.data);
                 setRooms(result.data);  // Gán dữ liệu vào state
             } else {
                 console.error(result.error || 'Failed to fetch data');
@@ -64,7 +62,6 @@ function Detail() {
             const response = await fetch(`http://localhost:3000/service/location/${detailId}`);
             const result = await response.json();
             if (response.ok && result.isSuccess) {
-                console.log('data: ', result.data);
                 setServices(result.data);  // Gán dữ liệu vào state
             } else {
                 console.error(result.error || 'Failed to fetch data');
@@ -80,7 +77,6 @@ function Detail() {
             const result = await response.json();
 
             if (response.ok && result.isSuccess) {
-                console.log('Review: ', result.data);
                 setReviews(result.data);  // Gán dữ liệu vào state
             } else {
                 console.error(result.error || 'Failed to fetch data');
@@ -241,14 +237,12 @@ function Detail() {
 
     const [total, setTotal] = useState(0);
     useEffect(() => {
-        // alert('hi')
-        console.log('quantity :', quantity)
+
         let totalPrice = 0;
         for (let i = 0; i < quantity.length; i++) {
             // alert('hi')
             totalPrice += (quantity[i].price * quantity[i].quantity_value)
         }
-        console.log('total ', totalPrice)
         if (totalPrice > 0) {
             setSelected(true);
 
