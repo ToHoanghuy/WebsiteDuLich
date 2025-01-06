@@ -42,6 +42,7 @@ function Login() {
                         "userEmail": email,
                         "userPassword": password,
                     }),
+                    // credentials: 'include', // Để gửi và nhận cookie
                 });
                 const data = await response.json();
                 console.log("data", data)

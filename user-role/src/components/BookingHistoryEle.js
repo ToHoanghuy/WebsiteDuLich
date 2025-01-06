@@ -1,47 +1,61 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../function/functionEffect';
 
-function PlaceEle({key, name, imgSrc ,startDate,endDate,status,path }) {
+function BookingHistoryEle({ booking, key, name, imgSrc, startDate, endDate, status, path }) {
     const handleClick = (event) => {
         event.stopPropagation();
         event.preventDefault();
+    };
+
+    const statusMessages = {
+        pending: "Đang chờ xử lý",
+        canceled: "Đã hủy",
+        complete: "Hoàn thành",
+        confirm: "Đã xác nhận"
     };
 
     return (
         <Link to={`/detail/${path}`} key={key} className='booking_ele'
         >
             <div className="booking_ele_left">
-                <img src={imgSrc} alt={name} />
+                <img src={booking.imageUrl} alt={booking.locationName} />
             </div>
             <div className="booking_ele_right">
-                <span className="history_booking_name">{name}</span>
+                <span className="history_booking_name">{booking.locationName}</span>
                 <div className="history_booking_date">
-                    <span>{startDate}</span>
-                    <span> - </span>
-                    <span>{endDate}</span>
+                    <span>{formatDate(booking.checkinDate)}</span>
+                    <span className='line'>-</span>
+                    <span>{formatDate(booking.checkoutDate)}</span>
                 </div>
                 <div className="history_booking_status">
                     <span>Tình trạng: </span>
                     <span
                         className={
-                            status === "Đang xử lý"
-                                ? "status_processing"
-                                : "status_completed"
+                            booking.status === "pending"
+                                ? "status_pending"
+                                : booking.status === "canceled"
+                                    ? "status_canceled"
+                                    : booking.status === "complete"
+                                        ? "status_complete"
+                                        : booking.status === "confirm"
+                                            ? "status_confirm"
+                                            : "status_processing" // Default to processing if none match
                         }
-                    >{status}</span>
+                    >{statusMessages[booking.status]}</span>
                 </div>
-                <button
+                {/* <button
                     className={`history_booking_btn ${status === "Đang xử lý" ? "btn_cancel" : "btn_rebook"
                         }`}
-                 
+
                     onClick={(e) => handleClick(e)}
                 >
                     {status === "Đang xử lý" ? "Hủy" : "Đặt lại"}
-                </button>
+                </button> */}
 
             </div>
         </Link>
     );
 }
 
-export default PlaceEle;
+export default BookingHistoryEle;

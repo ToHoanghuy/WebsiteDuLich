@@ -1,6 +1,6 @@
 import { Routes, Route, Link, useLocation, Outlet, useSearchParams } from 'react-router-dom';
 import React, { useState, useRef, useEffect } from 'react';
-import { getIconClass, formatRating, formatPrice } from '../function/functionEffect';
+import { getIconClass, formatRating, formatPrice, formatDate } from '../function/functionEffect';
 import Swal from "sweetalert2";
 import '../styles/Booking.css';
 
@@ -47,10 +47,6 @@ function Booking() {
         }
     };
 
-    function formatDate(dateStr) {
-        const date = new Date(dateStr);
-        return `${date.getDate()} tháng ${date.getMonth() + 1} năm ${date.getFullYear()}`;
-    }
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -142,13 +138,13 @@ function Booking() {
         setSelectedPayment(index);
     };
 
-    const createBooking = async (localTime, items) => {
+    const createBooking = async (localTime, items, userId) => {
         const url = "http://localhost:3000/booking/createbooking";
         const body = {
             checkinDate: checkInDate,
             checkoutDate: checkOutDate,
             dateBooking: localTime,
-            userId: localStorage.getItem("authToken"),
+            userId: userId,
             items: items
         };
 
@@ -176,8 +172,8 @@ function Booking() {
                 window.history.back();
                 window.scrollTo(0, 0);
             }
-            // const data = await response.json(); // Parse kết quả trả về JSON
-            // console.log("Booking created successfully:", data);
+            const data = await response.json(); // Parse kết quả trả về JSON
+            console.log("Booking created successfully:", data);
         } catch (error) {
             console.error("Error creating booking:", error.message);
         }
@@ -196,7 +192,8 @@ function Booking() {
                 quantity: parseInt(item.quantity_value, 10), // Chuyển quantity_value sang số nguyên
                 nights: night // Thêm giá trị mặc định
             }));
-            createBooking(localTime, items)
+            // alert(localStorage.getItem("authToken"))
+            createBooking(localTime, items, localStorage.getItem("authToken"))
         }
         // else{
         //     Swal.fire({
