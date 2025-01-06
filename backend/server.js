@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const authRoute = require('./routes/authRoute')
 const locationRoute = require('./routes/locationRoute')
 const businessRoute = require('./routes/businessRoute')
@@ -23,12 +24,24 @@ const PORT = process.env.PORT || 3000
 app.use(express.json());
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-  });
+const allowedOrigins = [
+    "http://localhost:3001",
+    "http://localhost:3002",
+    "http://localhost:3000"
+];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: "GET, POST, PUT, DELETE, OPTIONS",
+    credentials: true, // Cho phép gửi cookie
+    allowedHeaders: "Content-Type, Authorization"
+}));
 
 //View engine
 app.set('view engine', 'ejs')
