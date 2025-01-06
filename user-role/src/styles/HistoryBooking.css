@@ -56,7 +56,7 @@
     z-index: 2;
     overflow: hidden;
     right: 60px;
-    margin-top: 233px;
+    margin-top: 330px;
 }
 .filter_option{
     margin-bottom: 8px;
@@ -156,13 +156,25 @@
     font-weight: 500; 
     color: #1F6CB4;
 }
-.status_processing
+.line{
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: bold;
+}
+.status_canceled
+{
+    color: #d12d27;
+}
+.status_confirm{
+    color: #20c7a8;
+}
+.status_pending
 {
     color: #DAB249;
 }
-.status_completed
+.status_complete
 {
-    color: #F24B4B;
+    color: #2e9714;
 }
 .history_booking_btn
 {

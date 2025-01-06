@@ -84,3 +84,8 @@ export const formatRating = (rating) => {
 export const formatPrice = (price) => {
     return new Intl.NumberFormat('vi-VN').format(price);
 };
+
+export const  formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return `${date.getDate()} tháng ${date.getMonth() + 1} năm ${date.getFullYear()}`;
+}
