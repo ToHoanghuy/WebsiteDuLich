@@ -42,7 +42,7 @@ function Login() {
                         "userEmail": email,
                         "userPassword": password,
                     }),
-                    // credentials: 'include', // Để gửi và nhận cookie
+                    credentials: 'include', // Để gửi và nhận cookie
                 });
                 const data = await response.json();
                 console.log("data", data)
@@ -66,6 +66,7 @@ function Login() {
             }
             catch (error) {
                 console.error("Login error: An error occurred. Please try again");
+                console.error("Login error:", error);
             }
         }
         console.log(localStorage.getItem("authToken"));
