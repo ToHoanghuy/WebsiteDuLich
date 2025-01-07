@@ -60,6 +60,7 @@ module.exports.createLocation = async (req, res, next) => {
         const locationData = new Location({
             name,
             description,
+            slug: '',
             address,
             category: parseredCategory,
             ownerId: res.locals.user._id,
@@ -181,6 +182,22 @@ module.exports.updateLocation = async (req, res, next) => {
         });
     }
     catch(error) {
+        next(error)
+    }
+}
+
+module.exports.changeStatusLocation = async (req, res, next) => {
+    try {
+        const locationId = req.params.locationId;
+        const newStatus = req.body.status;
+        const updatedLocation = await locationSvc.changeStatusLocation(locationId, newStatus);
+        res.status(200).json({
+            isSuccess: true,
+            data: updatedLocation,
+            error: null,
+        });
+    }
+    catch (error) {
         next(error)
     }
 }
