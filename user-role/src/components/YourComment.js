@@ -5,6 +5,8 @@ function YourComment() {
     const [starClick, setStarClick] = useState(0);  // Quản lý trạng thái sao đã được click
     const [starValue, setStarValue] = useState(null);  // Quản lý giá trị sao đã chọn
     const [comment, setComment] = useState("");
+    const locationId = localStorage.getItem('locationId');
+    const senderId =localStorage.getItem('authToken');
 
     // Hàm xử lý sự kiện mouseover
     const handleMouseOver = (index) => {
@@ -53,7 +55,8 @@ function YourComment() {
         return stars;
     };
 
-    const handleSendComment = () => {
+    const handleSendComment = async () => {
+        console.log(starValue, comment, locationId)
         // Kiểm tra nếu người dùng chưa chọn sao
         if (starValue === null) {
             Swal.fire({
@@ -80,16 +83,74 @@ function YourComment() {
             });
             return;
         }
+
+    
+        const reviewData = {
+            locationId: locationId,
+            rating: parseFloat(starValue),
+            review: comment.trim(),
+        };
+        console.log(JSON.stringify(reviewData));
         // Hiển thị thông báo thành công
-        Swal.fire({
-            title: 'Đánh giá thành công',
-            text: 'Rất mong nhận được thêm phản hồi của bạn!',
-            icon: 'success',
-            confirmButtonText: 'Tiếp tục',
-            customClass: {
-                confirmButton: 'custom_swal_button' // Tên lớp tùy chỉnh
+        try {
+            const response = await fetch('http://localhost:3000/review', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                // Thêm Authorization header nếu cần
+                // 'Authorization': 'Bearer YOUR_TOKEN'
+              },
+              body: JSON.stringify({
+                senderId: senderId,
+                locationId: locationId,
+                rating: starValue,
+                review: comment
+            }),
+              credentials: 'include', 
+              //mode: 'no-cors',
+            });
+
+            console.log(senderId, locationId, starValue);
+        
+            if (response.ok) {
+              // Hiển thị thông báo thành công
+              Swal.fire({
+                title: 'Đánh giá thành công',
+                text: 'Rất mong nhận được thêm phản hồi của bạn!',
+                icon: 'success',
+                confirmButtonText: 'Tiếp tục',
+                customClass: {
+                  confirmButton: 'custom_swal_button'
+                }
+              });
+              // Reset sao và textarea
+              setStarValue(null);
+              setStarClick(0);
+              setComment(""); // Xóa nội dung textarea
+            } else {
+              // Xử lý lỗi nếu phản hồi không thành công
+              Swal.fire({
+                title: 'Đánh giá thất bại',
+                text: 'Đã xảy ra lỗi khi gửi đánh giá. Vui lòng thử lại sau.',
+                icon: 'error',
+                confirmButtonText: 'Tiếp tục',
+                customClass: {
+                  confirmButton: 'custom_swal_button'
+                }
+              });
             }
-        });
+          } catch (error) {
+            // Xử lý lỗi khi yêu cầu thất bại
+            Swal.fire({
+              title: 'Đánh giá thất bại',
+              text: 'Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng và thử lại.',
+              icon: 'error',
+              confirmButtonText: 'Tiếp tục',
+              customClass: {
+                confirmButton: 'custom_swal_button'
+              }
+            });
+          }
         // Reset sao và textarea
         setStarValue(null);
         setStarClick(0);
