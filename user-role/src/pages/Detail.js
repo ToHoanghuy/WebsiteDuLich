@@ -24,6 +24,7 @@ function Detail() {
     const [roomStatus, setRoomStatus] = useState('');
 
     const [services, setServices] = useState([]);
+    const [countReviews, setCountReviews] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [checkInDate, setCheckInDate] = useState([]);
     const [checkOutDate, setCheckOutDate] = useState([]);
@@ -77,9 +78,28 @@ function Detail() {
         try {
             const response = await fetch(`http://localhost:3000/review/location/${detailId}`);
             const result = await response.json();
-
+    
             if (response.ok && result.isSuccess) {
-                setReviews(result.data);  // Gán dữ liệu vào state
+                const reviews = result.data;
+                setReviews(reviews);
+                setCountReviews(reviews.length); // Gán tổng số đánh giá
+    
+                // Tính số lượng đánh giá cho từng mức sao
+                const ratingCounts = [0, 0, 0, 0, 0]; // Mảng lưu số lượng đánh giá từ 1 đến 5 sao
+                reviews.forEach(review => {
+                    if (review.rating >= 1 && review.rating <= 5) {
+                        ratingCounts[review.rating - 1] += 1; // Tăng số lượng đánh giá tương ứng
+                    }
+                });
+    
+                // Tính tỷ lệ phần trăm cho từng mức sao
+                const totalReviews = reviews.length;
+                const ratings = ratingCounts.map((count, index) => ({
+                    index: index + 1, // Số sao
+                    percentage: totalReviews > 0 ? ((count / totalReviews) * 100).toFixed(0) : 0, // Tỷ lệ phần trăm
+                }));
+    
+                setRatings(ratings); // Cập nhật state ratings
             } else {
                 console.error(result.error || 'Failed to fetch data');
             }
@@ -122,16 +142,18 @@ function Detail() {
     const customerReviewsRef = useRef(null);
     const scrollBoundaryRef = useRef(null);
     const choiceRoomRef = useRef(null);
+    const [showMap, setShowMap] = useState(false);
+
+    const handleMapClick = () => {
+        setShowMap(true);
+    };
+
+    const handleCloseMap = () => {
+        setShowMap(false);
+    };
 
     const [boundary, setBoundary] = useState(1);
 
-    const ratings = [
-        { value: 5, percentage: 50 },
-        { value: 4, percentage: 60 },
-        { value: 3, percentage: 30 },
-        { value: 2, percentage: 0 },
-        { value: 1, percentage: 0 },
-    ];
 
     const tongleChatPopUp = () => {
         setChatPopUp(!showChatPopUp);
@@ -367,6 +389,7 @@ function Detail() {
                     </div>
                     <Boundary boundary={boundary} onBoundaryClick={handleBoundaryClick} />
                 </div>
+
                 <div className="overview_info_container" ref={overviewInfoRef}>
                     <div className="display_frame">
                         <div className="travel_title_container OpacityEffect">
@@ -463,7 +486,8 @@ function Detail() {
 
                             </div>
                             <div className="map_container">
-                                <img src="/images/map.png" />
+
+                                <img style={{ cursor: "pointer", width: "100%", height: "auto" }} onClick={handleMapClick} src="/images/map.png" />
                             </div>
                         </div>
                         <div className="overview_service_container OpacityEffect">
@@ -545,19 +569,33 @@ function Detail() {
                         <h2 className="detail_container_tilte OpacityEffect">Đánh giá của khách hàng</h2>
                         <div className="rating_container OpacityEffect">
                             <div className="rating_overview OpacityEffect">
-                                <span className="raiting_value">4.0</span>
-                                <div className="raiting_star">
+                                <span className="raiting_value">{formatRating(location.rating)}</span>
+                                {/* <div className="raiting_star">
                                     <i className="fa-solid fa-star"></i>
                                     <i className="fa-solid fa-star"></i>
                                     <i className="fa-solid fa-star"></i>
                                     <i className="fa-solid fa-star"></i>
                                     <i className="fa-regular fa-star"></i>
+                                </div> */}
+                                <div className="raiting_star">
+                                    {Array.from({ length: 5 }, (_, index) => {
+                                        if (index < Math.floor(location.rating)) {
+                                            // Hiển thị sao đầy (solid)
+                                            return <i key={index} className="fa-solid fa-star"></i>;
+                                        } else if (index < location.rating) {
+                                            // Hiển thị sao nửa (half)
+                                            return <i key={index} className="fa-solid fa-star-half-stroke"></i>;
+                                        } else {
+                                            // Hiển thị sao rỗng (regular)
+                                            return <i key={index} className="fa-regular fa-star"></i>;
+                                        }
+                                    })}
                                 </div>
-                                <span className="number_of_reviews">100 lượt đánh giá</span>
+                                <span className="number_of_reviews">{countReviews} lượt đánh giá</span>
                             </div>
                             <div className="rating_detail">
                                 {ratings.map((rating, index) => (
-                                    <RatingBar key={index} value={rating.value} percentage={rating.percentage} />
+                                    <RatingBar key={index} value={rating.index} percentage={rating.percentage} />
                                 ))}
                             </div>
                         </div>
@@ -574,6 +612,23 @@ function Detail() {
                         </div>
                     </div>
                 </div>
+                {showMap && (
+                    <div className="modal_overlay" onClick={handleCloseMap}>
+                        <div className="modal_content" onClick={(e) => e.stopPropagation()}>
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31383.239171865847!2d107.48594181070591!3d10.508156585966674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175bd73c30f60a1%3A0x951e30bb705cd7c3!2zTcOAVSBDYW1waW5nIC0gQ-G6r20gVHLhuqFpIEjhu5MgQ-G7kWM!5e0!3m2!1sen!2s!4v1736102711020!5m2!1sen!2s"
+                                width="1000"
+                                height="650"
+                                allowFullScreen
+                                loading="lazy"
+                                style={{ border: 0 }}
+                            ></iframe>
+                            <button style={{ cursor: "pointer", width: "100%", height: "auto" }} onClick={handleCloseMap} >
+                                Close Map
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         )
     }

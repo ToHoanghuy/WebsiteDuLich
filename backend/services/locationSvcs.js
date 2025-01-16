@@ -27,6 +27,8 @@ const createLocation = async (locationData, imageFiles) => {
 }
 
 const createLocationWithImage = async (locationData) => {
+    const slug = createSlug(locationData.name, locationData.address);
+    locationData.slug = slug;
     const savedLocation = await locationData.save();
     if(savedLocation)
         return savedLocation;
@@ -34,7 +36,21 @@ const createLocationWithImage = async (locationData) => {
         throw new NotFoundException('Cannot create new location');
     }
 }
-        
+
+const createSlug = (name, address) => {
+    const removeDiacritics = (str) => {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    };
+
+    const normalize = (str) => {
+        return removeDiacritics(str)
+            .toLowerCase()
+            .replace(/\s+/g, '-') // Thay khoảng trắng bằng dấu "-"
+            .replace(/[^a-z0-9-]/g, ''); // Loại bỏ ký tự không hợp lệ
+    };
+
+    return `${normalize(name)}-${normalize(address)}`;
+};      
 
 const getAllLocation = async () => {
     const allLocation = await Location.find();
@@ -60,9 +76,21 @@ const getLocationByUserId = async (userId) => {
         throw new NotFoundException('Not found this user location');
 }
 
+const removeDiacritics = (str) => {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
+
 const getLocationByName = async (name) => {
-    const locations = await Location.find({ name: new RegExp(name, 'i') });
-    if(locations.length != 0)
+    const normalizedInput = removeDiacritics(name).toLowerCase();
+    console.log(normalizedInput);
+    const locations = await Location.find(
+            { 
+                slug: { 
+                    $regex: new RegExp(normalizedInput, 'i') 
+                } 
+            }
+        );
+    if(locations.length !== 0)
         return locations;
     else
         throw new NotFoundException('Not found this location');
@@ -85,6 +113,20 @@ const updateLocation = async(locationId, updateData) => {
         return updatedLocation
     else
         throw new NotFoundException('Not found location to update')
+}
+
+const changeStatusLocation = async(locationId, status) => {
+    const updatedLocation = await Location.findByIdAndUpdate(locationId, {status: status}, {new: true, runValidators: true})
+
+    if(status === 'active')
+        console.log('Send approve email to owner')
+    if(status === 'inactive')
+        console.log('Send reject email to owner')
+
+    if(updatedLocation)
+        return updatedLocation
+    else
+        throw new NotFoundException('Not found location to change status')
 }
 
 const deleteLocation = async(locationId) => {
@@ -124,6 +166,7 @@ module.exports = {
     getLocationByName,
     getLocationById,
     updateLocation,
+    changeStatusLocation,
     deleteLocation,
     getInfoOwnerByLocationId,
     sendAppoveEmailService

@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const authRoute = require('./routes/authRoute')
 const locationRoute = require('./routes/locationRoute')
 const businessRoute = require('./routes/businessRoute')
@@ -39,7 +40,9 @@ app.use(cors({
             callback(new Error('Not allowed by CORS'));
         }
     },
+
     methods: "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+
     credentials: true, // Cho phép gửi cookie
     allowedHeaders: "Content-Type, Authorization"
 }));
