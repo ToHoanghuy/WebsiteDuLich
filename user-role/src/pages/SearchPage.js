@@ -9,6 +9,7 @@ import ServiceFilter from '../components/ServiceFilter';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Slider from '@mui/material/Slider';
 import { formatPrice } from '../function/formatPrice';
+import { useLocation } from 'react-router-dom';
 
 
 function SearchPage() {
@@ -23,6 +24,8 @@ function SearchPage() {
         { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
     ];
 
+    const location = useLocation();
+    console.log('searchpage',location);
     const [cost, setCost] = useState([500000, 3000000]);
     const [raiting, setRaiting] = useState(1);
     const [selectedServices, setSelectedServices] = useState([]);
@@ -39,6 +42,15 @@ function SearchPage() {
             }
         });
     };
+
+    useEffect(() => {
+        
+        // Kiểm tra và gán dữ liệu từ state
+        if (location.state?.searchResults) {
+
+            setSearchQuery(location.state.searchResults.data);
+        }
+    }, [location.state]);
     const handleChange = (event, newValue) => {
         setCost(newValue);
 
@@ -174,7 +186,7 @@ function SearchPage() {
                     </div>
                     <div className='place_container'>
                         <div className='place_frame'>
-                        {searchQuery.map((ele, index) => (
+                        {searchQuery?.map((ele, index) => (
                                 <PlaceEle
                                     key={index}
                                     name={ele.name}
