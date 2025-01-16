@@ -164,10 +164,10 @@ function WhiteMenuBar() {
                                     <i class="fa-solid fa-angles-left"></i>
                                     <span>Đăng xuất</span>
                                 </div>
-                                <div className='sub_user_menu_row logout_user_menu'>
+                                {/* <div className='sub_user_menu_row logout_user_menu'>
                                     <i class="fa-solid fa-angles-left"></i>
                                     <span>Đăng xuất</span>
-                                </div>
+                                </div> */}
                             </div>
                         }
                     </div>
