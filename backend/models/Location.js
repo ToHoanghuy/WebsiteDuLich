@@ -23,15 +23,20 @@ const locationSchema = new Schema({
         type: String,
         required: true,
     },
+    slug: {type: String, required: true},
     description: {
         type: String,
         //required: true,
     },
-    slug: {type: String, required: true},
     rating: {
         type: Number,
         min: 0,
         max: 5,
+        default: 0,
+        set: value => Math.round(value * 10) / 10
+    },
+    numberOfRating: {
+        type: Number,
         default: 0,
     },
     image: {
@@ -60,7 +65,7 @@ const locationSchema = new Schema({
     longtitude: Number,
     status: {
         type: String,
-        enum: ['active', 'inactive'],
+        enum: ['active', 'inactive', 'rejected'],
         default: 'inactive'
     }
 },  

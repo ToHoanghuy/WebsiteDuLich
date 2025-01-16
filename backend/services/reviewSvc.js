@@ -11,8 +11,8 @@ const getAllReviews = async () => {
 
 const getReviewById = async (id) => {
     const result = await Review.findById(id)
-    if(result)
-        return result
+    if(result) 
+        return result 
     else 
         throw new NotFoundException('Can not found this review')
 }
@@ -26,6 +26,7 @@ const getReviewByLocationId = async (locationId) => {
 }
 
 const createReview = async (reviewData) => {
+    console.log('BE2: ');
     const result = await reviewData.save()
     if(result)
         return result

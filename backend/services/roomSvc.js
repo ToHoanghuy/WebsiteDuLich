@@ -1,7 +1,6 @@
 const Room = require("../models/Room")
 
 const {NotFoundException, ForbiddenError} = require("../errors/exception")
-const { findByIdAndUpdate } = require("../models/Business")
 const { default: mongoose } = require("mongoose")
 
 const getAllRoom = async () => {

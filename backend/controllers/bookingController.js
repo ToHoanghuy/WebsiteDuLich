@@ -100,6 +100,7 @@ module.exports.createBooking = async (req, res, next) => {
     
     try {
         const bookingData = new Booking({
+            userId: res.locals.user._id,
             dateBooking,
             checkinDate,
             checkoutDate,
@@ -125,6 +126,23 @@ module.exports.updateBooking = async (req, res, next) => {
         res.status(201).json({
             isSuccess: true,
             data: result,
+            error: null
+        })
+    }
+    catch (error) {
+        next(error)
+    }
+}
+
+module.exports.changStatusBooking = async (req, res, next) => {
+    const bookingData = req.body
+    const bookingId = req.params.id
+    try {
+        const result = await bookingSvc.updateBooking(bookingId, bookingData)
+        const resultEmail = emailSvc.transporter.sendMail(emailSvc.confirmBookingEmail)
+        res.status(201).json({
+            isSuccess: true,
+            data: result, resultEmail,
             error: null
         })
     }

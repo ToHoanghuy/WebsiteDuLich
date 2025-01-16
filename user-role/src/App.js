@@ -31,26 +31,26 @@ function App() {
   const location = useLocation();
   const backToTop = useRef(null);
 
-  const checkLoginStatus = () => {
-    const userData = localStorage.getItem('authToken');
-    if (userData) {
-      const { userId, expirationTime } = JSON.parse(userData);
-      const currentTime = new Date().getTime();
-      if (currentTime > expirationTime) {
-        // Xóa dữ liệu nếu hết hạn
-        localStorage.removeItem('authToken');
-        console.log('Session expired. Please log in again.');
-      } else {
-        console.log('User is logged in with ID:', userId);
-      }
-    } else {
-      console.log('User is not logged in.');
-    }
-  };
+  // const checkLoginStatus = () => {
+  //   const userData = localStorage.getItem('authToken');
+  //   if (userData) {
+  //     const { userId, expirationTime } = JSON?.parse(userData);
+  //     const currentTime = new Date().getTime();
+  //     if (currentTime > expirationTime) {
+  //       // Xóa dữ liệu nếu hết hạn
+  //       localStorage.removeItem('authToken');
+  //       console.log('Session expired. Please log in again.');
+  //     } else {
+  //       console.log('User is logged in with ID:', userId);
+  //     }
+  //   } else {
+  //     console.log('User is not logged in.');
+  //   }
+  // };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    checkLoginStatus();
+    //checkLoginStatus();
   }, [location]);
 
   useEffect(() => {
