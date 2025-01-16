@@ -41,7 +41,7 @@ const CardInfo = forwardRef(({ ele, favrorited }, ref) => {
     }, [rooms]);
 
     return (
-        <Link to={`/detail/${ele._id}`} className="card_ele OpacityEffect" ref={ref}>
+        <Link to={`/detail/${ele._id}`} className="card_ele OpacityEffect" ref={ref} >
             <div className="card_info">
                 <span className="card_discount">
                     <span className="card_discount_value">

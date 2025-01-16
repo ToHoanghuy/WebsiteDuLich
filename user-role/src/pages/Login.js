@@ -50,6 +50,7 @@ function Login() {
                 if (response.ok)
                 {
                     if (data.data) {
+
                         const expirationTime = new Date().getTime() + 30 * 60 * 1000;
                         const userId = data.data;
                         // localStorage.setItem('authToken', data.data);
@@ -57,6 +58,7 @@ function Login() {
                             'authToken',
                             JSON.stringify({ userId, expirationTime })
                           );
+
                     }
                     Swal.fire({
                         title: 'Đăng nhập',

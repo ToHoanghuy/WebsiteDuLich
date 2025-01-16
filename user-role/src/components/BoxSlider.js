@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '../components/Box';
 import TypeWritting from '../components/TypeWritting';
 
@@ -6,6 +7,7 @@ function BoxSlider() {
     const [focusIndex, setFocusIndex] = useState(0);//lưu vị trí của focus hiện tại
     const [boxWidth, setBoxWidth] = useState(0);//lưu độ rộng của box bình thường
 
+    const navigate = useNavigate();
     const boxRefs = useRef([]); // Để lưu trữ các ref cho từng Box
 
     const boxData = [
@@ -84,6 +86,11 @@ function BoxSlider() {
         setFocusIndex((prev) => prev - 1);
     };
 
+    const handleBoxClick = (name) => {
+        console.log('navigate to search');
+        navigate(`/search`, { state: { locationName: name } });
+    };
+
     return (
         <div>
             <div className="all">
@@ -113,6 +120,7 @@ function BoxSlider() {
                             imgSrc={box.imgSrc}
                             isFocus={index === focusIndex} // Nếu là focusIndex thì isFocus = true
                             onHover={() => moveBox(index)}
+                            onClick={() => handleBoxClick(box.name)}
                             ref={(el) => (boxRefs.current[index] = el)}
                         />
                     ))}

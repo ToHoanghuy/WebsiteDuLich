@@ -182,6 +182,10 @@
     font-size: 7px;
     font-weight: 500;
 }
+
+/* .menu_bar .left_side .logo img {
+    height: 10% !important;
+} */
 .user_frame
 {
     /* width: 75%; */
@@ -640,6 +644,9 @@
         align-items: center;
         margin: 0px 5%;
     }
+
+
+
     .logo img
     {
         height: 35%;
