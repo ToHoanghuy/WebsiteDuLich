@@ -10,7 +10,8 @@ function User() {
     const [user, setUser] = useState([]);
     const getUser = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
+            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
+            const response = await fetch(`http://localhost:3000/user/getbyid/${userId}`);
             const data = await response.json();
             // console.log('User :',data.data)
             if (data.isSuccess) {
@@ -30,24 +31,6 @@ function User() {
     }, []);
 
     const LogOut = async () => {
-        // alert('hi')
-        // try {
-        //     const response = await fetch("http://localhost:3000/logout", {
-        //       method: "GET", // hoặc "GET" tùy thuộc vào API
-        //     });
-
-        //     if (response.ok) {
-        //       alert('hi')
-        //       console.log("Đăng xuất thành công!");
-        //       navigate("/"); // Điều hướng về trang chủ
-        //       localStorage.removeItem('authToken');
-        //     } else {
-        //       console.error("Đăng xuất thất bại!");
-        //     }
-        //   } catch (error) {
-        //     console.error("Lỗi:", error);
-        //   }
-        // setActiveSubMenu((prev) => (prev === index ? null : index));
         localStorage.removeItem("authToken");
         navigate("/");
     };
