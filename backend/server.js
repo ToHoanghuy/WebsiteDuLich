@@ -18,7 +18,7 @@ const reviewRoute = require('./routes/reviewRoute')
 const {requireAuth, checkUser} = require('./middleware/authMiddleware');
 const {errorHandler} = require('./middleware/errorMiddleware')
 
-const cors = require('cors')
+// const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000
 
