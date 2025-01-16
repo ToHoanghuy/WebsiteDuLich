@@ -22,6 +22,7 @@ function Detail() {
     const [collections, setCollections] = useState([]);
     const [availableRooms, setAvailableRooms] = useState([]);
     const [roomStatus, setRoomStatus] = useState('');
+    const [ratings, setRatings] = useState([]);
 
     const [services, setServices] = useState([]);
     const [countReviews, setCountReviews] = useState([]);
@@ -129,6 +130,7 @@ function Detail() {
         getService();
         getRooms();
         getCollections();
+        localStorage.setItem('locationId', detailId);
     }, []);
 
     const [isFavorited, setIsFavorited] = useState(false);
@@ -299,9 +301,43 @@ function Detail() {
         // alert('hi')
         setShowModal(!showModal)
     }
-    const handleChoiceCollection = () => {
-        alert('gọi API')
-        // setShowModal(!showModal)
+    const handleChoiceCollection = async (id) => {
+
+        try {
+            const itemId = detailId; 
+
+            const response = await fetch(`http://localhost:3000/collection/createitem/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ locationId: itemId }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                Swal.fire({
+                    title: 'Thêm vào danh sách thành công',
+                    text: 'Thêm vào danh sách thành công',
+                    icon: 'success',
+                    timer: 1500, // Tự động đóng sau 2 giây
+                    showConfirmButton: false, // Ẩn nút xác nhận
+                });
+                console.log('Response data:', data);
+            } else {
+                const errorData = await response.json();
+                console.error('Error:', errorData);
+                Swal.fire({
+                                    title: 'Phòng đã có trong danh sách',
+                                    text: 'Phòng đã có trong danh sách',
+                                    icon: 'warning',
+                                    timer: 1500, // Tự động đóng sau 2 giây
+                                    showConfirmButton: false, // Ẩn nút xác nhận
+                                });
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+            alert('Không thể kết nối đến máy chủ. Vui lòng thử lại sau!');
+        }
     }
     const [isInputVisible, setIsInputVisible] = useState(false); // Quản lý trạng thái hiển thị ô nhập
     const [collectionName, setCollectionName] = useState(''); // Quản lý giá trị ô nhập
@@ -436,7 +472,7 @@ function Detail() {
                                             </li>
                                             {collections.map((ele, index) => (
                                                 <li >
-                                                    <i class="fa-regular fa-circle" onClick={handleChoiceCollection}></i>
+                                                    <i class="fa-regular fa-circle" onClick={ () => handleChoiceCollection(ele._id)}></i>
                                                     <span>{ele.name}</span>
                                                 </li>
                                             ))}

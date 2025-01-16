@@ -9,6 +9,7 @@ import ServiceFilter from '../components/ServiceFilter';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Slider from '@mui/material/Slider';
 import { formatPrice } from '../function/formatPrice';
+import { useLocation } from 'react-router-dom';
 
 
 function SearchPage() {
@@ -23,10 +24,37 @@ function SearchPage() {
         { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
     ];
 
+    const location = useLocation();
+    console.log('searchpage',location);
     const [cost, setCost] = useState([500000, 3000000]);
     const [raiting, setRaiting] = useState(1);
+    const [selectedServices, setSelectedServices] = useState([]);
+    const [searchQuery, setSearchQuery] = useState([]);
+    const handleToggleService = (serviceName, isSelected) => {
+        setSelectedServices((prevServices) => {
+            console.log(selectedServices);
+            if (isSelected) {
+                // Thêm dịch vụ nếu được chọn
+                return [...prevServices, serviceName];
+            } else {
+                // Loại bỏ dịch vụ nếu bị bỏ chọn
+                return prevServices.filter((service) => service !== serviceName);
+            }
+        });
+    };
+
+    useEffect(() => {
+        
+        // Kiểm tra và gán dữ liệu từ state
+        if (location.state?.searchResults) {
+
+            setSearchQuery(location.state.searchResults.data);
+        }
+    }, [location.state]);
     const handleChange = (event, newValue) => {
         setCost(newValue);
+
+        console.log('cost: ',cost);
     };
 
     const valuetext = (value) => {
@@ -40,6 +68,7 @@ function SearchPage() {
             setStarValue(index + 1); // Thay đổi giá trị sao khi hover
         }
         setRaiting(index + 1);
+        console.log(index+ 1);
     };
 
     const renderStars = () => {
@@ -70,11 +99,41 @@ function SearchPage() {
         return stars;
     };
 
+    const handleSearch = (searchParams) => {
+        console.log('Search Params:', searchParams); // Debug xem searchParams gửi gì
+    
+        // Chuyển searchParams thành query string
+        const queryString = new URLSearchParams(searchParams).toString();
+    
+        // Gọi API với phương thức GET
+        fetch(`http://localhost:3000/search?${queryString}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Xử lý kết quả API
+                setSearchQuery(data);
+                console.log('Search Results:', data);
+            })
+            .catch((error) => {
+                console.error('Error during fetch:', error);
+            });
+    };
+    
+
     return (
         <div className='search_page_root'>
             <div className='search_page_bar_container'>
                 <div className='search_bar_frame_container'>
-                    <SearchBar />
+                <SearchBar
+                    cost={cost} 
+                    rating={raiting} 
+                    services={selectedServices} 
+                    onSearch={handleSearch} 
+                    />
                 </div>
                 <div class="breadcrumb_container">
                     <Link to='/' class="breadcrumb_ele">Trang Chủ</Link>
@@ -99,7 +158,7 @@ function SearchPage() {
                                     getAriaLabel={() => 'Temperature range'}
                                     value={cost}
                                     onChange={handleChange}
-                                    valueLabelDisplay="off"
+                                    //valueLabelDisplay="off"
                                     min={0}
                                     max={10000000}
                                     step={100000}
@@ -112,9 +171,9 @@ function SearchPage() {
                                 {/* <div className='service_filter_row'><i class="fa-regular fa-square"></i><span>Wifi miễn phí</span></div>
                                 <div className='service_filter_row'><i class="fa-regular fa-square"></i><span>Hủy phòng hoàn tiền 24h</span></div>
                                 <div className='service_filter_row'><i class="fa-regular fa-square"></i><span>Hệ thống cách âm</span></div> */}
-                                <ServiceFilter name='Wifi miễn phí' />
-                                <ServiceFilter name='Hủy phòng hoàn tiền 24h' />
-                                <ServiceFilter name='Hệ thống cách âm' />
+                                <ServiceFilter name='Wifi miễn phí' onToggleService={handleToggleService} />
+                                <ServiceFilter name='Hủy phòng hoàn tiền 24h' onToggleService={handleToggleService} />
+                                <ServiceFilter name='Hệ thống cách âm' onToggleService={handleToggleService}/>
                             </div>
                         </div>
                         <div className='filter_row'>
@@ -127,7 +186,7 @@ function SearchPage() {
                     </div>
                     <div className='place_container'>
                         <div className='place_frame'>
-                            {element.map((ele, index) => (
+                        {searchQuery?.map((ele, index) => (
                                 <PlaceEle
                                     key={index}
                                     name={ele.name}
@@ -139,8 +198,8 @@ function SearchPage() {
                                     originalPrice={ele.originalPrice}
                                     discountPrice={ele.discountPrice}
                                     favrorited={ele.favrorited}
-                                    path={ele.path}
-
+                                    path={ele._id}
+                                    ele = {ele.matchingRooms}
                                     showHert={false}
                                 // ref={(el) => (cardRefs.current[index] = el)}
                                 />
