@@ -232,14 +232,16 @@ body {
     transform: scale(1.2); /* Phóng to 120% thay vì 200% */
     transform: scale(1.06) !important;
 }
-.note img{
-    /* width: 30%; */
+/* .note img{
     height: 90%;
-}
+} */
 .note span{
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     font-weight: bold;
+    background: linear-gradient(#4b82b6, #1F6CB4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .residence_note
 {

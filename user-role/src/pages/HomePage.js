@@ -73,18 +73,20 @@ function HomePage() {
             <div class="note_container">
                 <div class="speacial_note">
                     <div class="note zoomEffect">
-                        <img src='/images/voucher_note.gif'/>
+                        <img style={{ height: '85%' }} src='/images/voucher_note.gif'/>
                         <span>Ưu đãi bất ngờ</span>
                     </div>
                     <div class="note zoomEffect">
-                        <img src='/images/payment_note.gif'/>
+                        <img style={{ height: '95%' }} src='/images/payment_note.gif'/>
                         <span>Giao dịch nhanh chóng</span>
                     </div>
                     <div class="note zoomEffect">
-                        <img src='/images/review_note.gif'/>
+                        <img style={{ height: '100%' }} src='/images/review_note.gif'/>
                         <span>Chia sẽ trãi nghiệm</span>
                     </div>
                     <div class="note zoomEffect">
+                        <img style={{ height: '100%' }} src="/images/customerserv_note.gif" />
+                        <span>Hỗ trợ tư vấn 24/7</span>
                     </div>
                 </div>
             </div>

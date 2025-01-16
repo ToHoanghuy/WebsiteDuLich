@@ -6,7 +6,7 @@ function YourComment() {
     const [starValue, setStarValue] = useState(null);  // Quản lý giá trị sao đã chọn
     const [comment, setComment] = useState("");
     const locationId = localStorage.getItem('locationId');
-    const senderId =localStorage.getItem('authToken');
+    // const senderId =localStorage.getItem('authToken');
 
     // Hàm xử lý sự kiện mouseover
     const handleMouseOver = (index) => {
@@ -93,6 +93,7 @@ function YourComment() {
         console.log(JSON.stringify(reviewData));
         // Hiển thị thông báo thành công
         try {
+            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
             const response = await fetch('http://localhost:3000/review', {
               method: 'POST',
               headers: {
@@ -101,16 +102,16 @@ function YourComment() {
                 // 'Authorization': 'Bearer YOUR_TOKEN'
               },
               body: JSON.stringify({
-                senderId: senderId,
+                senderId: userId,
                 locationId: locationId,
                 rating: starValue,
                 review: comment
             }),
               credentials: 'include', 
-              //mode: 'no-cors',
+            //   mode: 'no-cors',
             });
 
-            console.log(senderId, locationId, starValue);
+            console.log(userId, locationId, starValue);
         
             if (response.ok) {
               // Hiển thị thông báo thành công

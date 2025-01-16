@@ -35,7 +35,7 @@ function DiscoverContainer() {
         { name: "Bình Thuận",slug: "binh-thuan", imgSrc: "/images/binhthuan.jpg", region: "Trung Bộ" },
 
         { name: "Vũng Tàu",slug: "vung-tau", imgSrc: "/images/vungtau.jpg", region: "Nam Bộ" },
-        { name: "Thành phố Hồ Chí Minh",slug: "thanh-pho-ho-chi-minh-hcm-tphcm", imgSrc: "/images/tphcm.jpg", region: "Nam Bộ" },
+        { name: "Thành phố Hồ Chí Minh",slug: "TP.HCM", imgSrc: "/images/tphcm.jpg", region: "Nam Bộ" },
         { name: "Trà Vinh",slug: "tra-vinh", imgSrc: "/images/travinh.jpg", region: "Nam Bộ" },
         { name: "Cần Thơ",slug: "can-tho", imgSrc: "/images/cantho.jpg", region: "Nam Bộ" },
         { name: "Bạc Liêu",slug: "bac-lieu", imgSrc: "/images/baclieu.jpg", region: "Nam Bộ" },
@@ -101,14 +101,18 @@ function DiscoverContainer() {
 
     const handleBoxClick = async (pro) => {
         try {
+            // alert(pro)
             const response = await fetch(`http://localhost:3000/locationbyname?name=${pro}`);
             if (!response.ok) {
                 console.log('sai')
                 throw new Error('Failed to fetch location data');
             }
-            const data = await response.json();
-            console.log('Location data:', data);
-            navigate('/search', { state: { searchResults: data } }); // Xử lý dữ liệu trả về từ API
+            else{
+                const data = await response.json();
+                console.log('Location data:', data);
+                navigate('/search', { state: { searchResults: data } }); // Xử lý dữ liệu trả về từ API
+            }
+            
         } catch (error) {
             console.error('Error fetching location data:', error);
         }

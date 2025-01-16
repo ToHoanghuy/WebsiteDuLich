@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SearchPage.css';
 import SearchBar from '../components/SearchBar';
 import PlaceEle from '../components/PlaceEle';
@@ -13,23 +13,26 @@ import { useLocation } from 'react-router-dom';
 
 
 function SearchPage() {
-    const element = [
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false, path: "Ho-Coc-Camping-Vung-Tau-Ho-Coc-Camping-Vung-Tau" },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: true },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-        { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-    ];
+    const navigate = useNavigate();
+    // const element = [
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false, path: "Ho-Coc-Camping-Vung-Tau-Ho-Coc-Camping-Vung-Tau" },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: true },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
+    // ];
 
     const location = useLocation();
-    console.log('searchpage',location);
+    console.log('searchpage', location);
+
     const [cost, setCost] = useState([500000, 3000000]);
     const [raiting, setRaiting] = useState(1);
     const [selectedServices, setSelectedServices] = useState([]);
     const [searchQuery, setSearchQuery] = useState([]);
+
     const handleToggleService = (serviceName, isSelected) => {
         setSelectedServices((prevServices) => {
             console.log(selectedServices);
@@ -44,17 +47,17 @@ function SearchPage() {
     };
 
     useEffect(() => {
-        
         // Kiểm tra và gán dữ liệu từ state
         if (location.state?.searchResults) {
-
             setSearchQuery(location.state.searchResults.data);
+            console.log('data', location.state.searchResults.data)
         }
     }, [location.state]);
+
     const handleChange = (event, newValue) => {
         setCost(newValue);
-
-        console.log('cost: ',cost);
+        search()
+        console.log('cost: ', newValue);
     };
 
     const valuetext = (value) => {
@@ -68,7 +71,13 @@ function SearchPage() {
             setStarValue(index + 1); // Thay đổi giá trị sao khi hover
         }
         setRaiting(index + 1);
-        console.log(index+ 1);
+        console.log(index + 1);
+    };
+    const handleClick= (index) => {
+        if (starClick === 0) {
+            setStarValue(index + 1);
+            search();
+        }
     };
 
     const renderStars = () => {
@@ -91,20 +100,35 @@ function SearchPage() {
                     key={i}
                     className={starClass + " user_star"}
                     onMouseOver={() => handleMouseOver(i)}
-                // onClick={() => handleClick(i)}
+                    onClick={() => handleClick(i)}
                 ></i>
             );
 
         }
         return stars;
     };
+    
+    const search = () => {
+        const searchParams = {
+            costMin: cost[0],
+            costMax: cost[1],
+            rating: raiting,
+        };
+        const filteredParams = Object.fromEntries(
+            Object.entries(searchParams).filter(([_, value]) => value !== null && value !== undefined)
+        );
+        const queryString = new URLSearchParams(filteredParams).toString();
+        // navigate(`/search?${queryString}`, { replace: true });
+        window.history.replaceState(null, '', `/search?${queryString}`);
+    };
 
     const handleSearch = (searchParams) => {
+        alert(searchParams)
         console.log('Search Params:', searchParams); // Debug xem searchParams gửi gì
-    
         // Chuyển searchParams thành query string
         const queryString = new URLSearchParams(searchParams).toString();
-    
+        // alert('hi')
+
         // Gọi API với phương thức GET
         fetch(`http://localhost:3000/search?${queryString}`)
             .then((response) => {
@@ -122,17 +146,33 @@ function SearchPage() {
                 console.error('Error during fetch:', error);
             });
     };
-    
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0.5, // Vị trí cuộn (px)
+            behavior: 'smooth', // Hiệu ứng cuộn mượt
+        });
+        setTimeout(() => {
+            window.scrollBy({
+                top: 0, // Cuộn ngược lên 1px
+                behavior: 'smooth',
+            });
+        }, 50);
+    }, [searchQuery]);
+
+    useEffect(()=>{
+        search();
+    },[])
 
     return (
         <div className='search_page_root'>
             <div className='search_page_bar_container'>
                 <div className='search_bar_frame_container'>
-                <SearchBar
-                    cost={cost} 
-                    rating={raiting} 
-                    services={selectedServices} 
-                    onSearch={handleSearch} 
+                    <SearchBar
+                        cost={cost}
+                        rating={raiting}
+                        services={selectedServices}
+                        onSearch={handleSearch}
                     />
                 </div>
                 <div class="breadcrumb_container">
@@ -173,7 +213,7 @@ function SearchPage() {
                                 <div className='service_filter_row'><i class="fa-regular fa-square"></i><span>Hệ thống cách âm</span></div> */}
                                 <ServiceFilter name='Wifi miễn phí' onToggleService={handleToggleService} />
                                 <ServiceFilter name='Hủy phòng hoàn tiền 24h' onToggleService={handleToggleService} />
-                                <ServiceFilter name='Hệ thống cách âm' onToggleService={handleToggleService}/>
+                                <ServiceFilter name='Hệ thống cách âm' onToggleService={handleToggleService} />
                             </div>
                         </div>
                         <div className='filter_row'>
@@ -186,24 +226,13 @@ function SearchPage() {
                     </div>
                     <div className='place_container'>
                         <div className='place_frame'>
-                        {searchQuery?.map((ele, index) => (
+                            {searchQuery?.map((ele, index) => (
                                 <PlaceEle
-                                    key={index}
-                                    name={ele.name}
-                                    imgSrc={ele.imgSrc}
-                                    pro={ele.pro}
-                                    rating={ele.rating}
-                                    reviews={ele.reviews}
-                                    discount={ele.discount}
-                                    originalPrice={ele.originalPrice}
-                                    discountPrice={ele.discountPrice}
-                                    favrorited={ele.favrorited}
                                     path={ele._id}
-                                    ele = {ele.matchingRooms}
+                                    ele={ele}
                                     showHert={false}
                                 // ref={(el) => (cardRefs.current[index] = el)}
                                 />
-
                             ))}
                         </div>
                     </div>
