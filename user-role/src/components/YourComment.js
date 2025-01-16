@@ -101,7 +101,7 @@ function YourComment() {
                 // 'Authorization': 'Bearer YOUR_TOKEN'
               },
               body: JSON.stringify({
-                senderId: senderId,
+                //senderId: senderId,
                 locationId: locationId,
                 rating: starValue,
                 review: comment

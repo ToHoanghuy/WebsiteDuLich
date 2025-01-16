@@ -3,7 +3,7 @@ import '../styles/WhiteMenuBar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie'
-import Cookies from 'js-cookie'
+
 
 function WhiteMenuBar() {
     const location = useLocation();
@@ -75,11 +75,6 @@ function WhiteMenuBar() {
         const handleScroll = () => {
             if (subUserMenu) setSubUserMenu(false);
             if (window.scrollY >= screenHeight) menu.style.transform = `translateY(0)`
-            else
-            {
-                setSubUserMenu(false)
-                menu.style.transform = `translateY(-100%)`
-            }
             else
             {
                 setSubUserMenu(false)
@@ -171,10 +166,10 @@ function WhiteMenuBar() {
                                     <i class="fa-solid fa-angles-left"></i>
                                     <span>Đăng xuất</span>
                                 </div>
-                                <div className='sub_user_menu_row logout_user_menu'>
+                                {/* <div className='sub_user_menu_row logout_user_menu'>
                                     <i class="fa-solid fa-angles-left"></i>
                                     <span>Đăng xuất</span>
-                                </div>
+                                </div> */}
                             </div>
                         }
                     </div>
