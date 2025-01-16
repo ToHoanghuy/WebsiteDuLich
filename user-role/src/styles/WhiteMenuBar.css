@@ -824,6 +824,7 @@
     background-color: rgba(255, 255, 255, 0.195);
     align-items: center;
 }
+
 .sub_user_menu_row:hover {
     background-color: rgba(255, 255, 255, 0.459);
 }
@@ -836,6 +837,10 @@
     font-size: 15px;
     padding-right: 15px;
 }
+.logout_user_menu i, .logout_user_menu span{
+    color: #d23232!important;
+}
+
 .white_menu_bar .sub_user_menu{
     top: 11.5vh!important;
     padding-left: 2px!important;
@@ -874,4 +879,18 @@
     -webkit-text-fill-color: transparent;
     font-size: 15px !important;
     padding-right: 15px!important;
+}
+
+.white_menu_bar .logout_user_menu i, 
+.white_menu_bar .logout_user_menu span{
+    background: linear-gradient( #d23232, #bf2121);
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;  
+}
+
+.white_menu_bar .logout_user_menu:hover span,
+.white_menu_bar .logout_user_menu:hover i{
+    background: linear-gradient( #db5050, #bf2121);
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;   
 }
