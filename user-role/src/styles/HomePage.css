@@ -295,6 +295,7 @@ body {
 
 .card_ele_slider
 {
+    pointer-events: auto;
     /* margin-left: 6%; */
     display: flex; /* Sử dụng flexbox để bố trí thẻ */
     width: 100%;
@@ -307,6 +308,7 @@ body {
 
 .card_ele
 {   
+    pointer-events: auto;
     transition: transform 2s ease, opacity  1s ease-out !important;
 }
 .province_card{

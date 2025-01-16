@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 // import {Link} from 'react-router-dom';
 import Card from '../components/Card';
+import { useNavigate } from 'react-router-dom'; 
 import HomePage from '../pages/HomePage';
+
+
 
 function DiscoverContainer() {
 
@@ -12,32 +15,33 @@ function DiscoverContainer() {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [selectedRegion, setSelectedRegion] = useState('Bắc Bộ');
     const [filteredProvinces, setFilteredProvinces] = useState([]);
+    const navigate = useNavigate(); 
 
     const province = [
-        { name: "Hà Nội", imgSrc: "/images/hanoi.jpg", region: "Bắc Bộ" },
-        { name: "Ninh Bình", imgSrc: "/images/ninhbinh.jpg", region: "Bắc Bộ" },
-        { name: "Quảng Ninh", imgSrc: "/images/quangninh.jpg", region: "Bắc Bộ" },
-        { name: "Nghệ An", imgSrc: "/images/nghean.jpg", region: "Bắc Bộ" },
-        { name: "Lào Cai", imgSrc: "/images/laocai.jpg", region: "Bắc Bộ" },
-        { name: "Nam Định", imgSrc: "/images/namdinh.jpg", region: "Bắc Bộ" },
-        { name: "Điện Biên", imgSrc: "/images/dienbien.jpg", region: "Bắc Bộ" },
+        { name: "Hà Nội",slug: "Ha-Noi", imgSrc: "/images/hanoi.jpg", region: "Bắc Bộ" },
+        { name: "Ninh Bình",slug: "Ninh-Binh", imgSrc: "/images/ninhbinh.jpg", region: "Bắc Bộ" },
+        { name: "Quảng Ninh",slug: "Quang-ninh", imgSrc: "/images/quangninh.jpg", region: "Bắc Bộ" },
+        { name: "Nghệ An",slug: "nghe-an", imgSrc: "/images/nghean.jpg", region: "Bắc Bộ" },
+        { name: "Lào Cai",slug: "lao-cai", imgSrc: "/images/laocai.jpg", region: "Bắc Bộ" },
+        { name: "Nam Định",slug: "nam-dinh", imgSrc: "/images/namdinh.jpg", region: "Bắc Bộ" },
+        { name: "Điện Biên",slug: "dien-bien", imgSrc: "/images/dienbien.jpg", region: "Bắc Bộ" },
 
-        { name: "Thừa Thiên Huế", imgSrc: "/images/hue.jpg", region: "Trung Bộ" },
-        { name: "Lâm Đồng", imgSrc: "/images/lamdong.jpg", region: "Trung Bộ" },
-        { name: "Đà Nẵng", imgSrc: "/images/danang.jpg", region: "Trung Bộ" },
-        { name: "Phú Yên", imgSrc: "/images/phuyen.jpg", region: "Trung Bộ" },
-        { name: "Đắk Lắk", imgSrc: "/images/daklak.jpg", region: "Trung Bộ" },
-        { name: "Quảng Nam", imgSrc: "/images/quangnam.jpg", region: "Trung Bộ" },
-        { name: "Bình Thuận", imgSrc: "/images/binhthuan.jpg", region: "Trung Bộ" },
+        { name: "Thừa Thiên Huế",slug: "thua-thien-hue", imgSrc: "/images/hue.jpg", region: "Trung Bộ" },
+        { name: "Lâm Đồng",slug: "lam-dong", imgSrc: "/images/lamdong.jpg", region: "Trung Bộ" },
+        { name: "Đà Nẵng",slug: "da-nang", imgSrc: "/images/danang.jpg", region: "Trung Bộ" },
+        { name: "Phú Yên",slug: "phu-yen", imgSrc: "/images/phuyen.jpg", region: "Trung Bộ" },
+        { name: "Đắk Lắk",slug: "dak-lak", imgSrc: "/images/daklak.jpg", region: "Trung Bộ" },
+        { name: "Quảng Nam",slug: "quang-nam", imgSrc: "/images/quangnam.jpg", region: "Trung Bộ" },
+        { name: "Bình Thuận",slug: "binh-thuan", imgSrc: "/images/binhthuan.jpg", region: "Trung Bộ" },
 
-        { name: "Vũng Tàu", imgSrc: "/images/vungtau.jpg", region: "Nam Bộ" },
-        { name: "Thành phố Hồ Chí Minh", imgSrc: "/images/tphcm.jpg", region: "Nam Bộ" },
-        { name: "Trà Vinh", imgSrc: "/images/travinh.jpg", region: "Nam Bộ" },
-        { name: "Cần Thơ", imgSrc: "/images/cantho.jpg", region: "Nam Bộ" },
-        { name: "Bạc Liêu", imgSrc: "/images/baclieu.jpg", region: "Nam Bộ" },
-        { name: "Đồng Tháp", imgSrc: "/images/dongthap.jpg", region: "Nam Bộ" },
+        { name: "Vũng Tàu",slug: "vung-tau", imgSrc: "/images/vungtau.jpg", region: "Nam Bộ" },
+        { name: "Thành phố Hồ Chí Minh",slug: "thanh-pho-ho-chi-minh-hcm-tphcm", imgSrc: "/images/tphcm.jpg", region: "Nam Bộ" },
+        { name: "Trà Vinh",slug: "tra-vinh", imgSrc: "/images/travinh.jpg", region: "Nam Bộ" },
+        { name: "Cần Thơ",slug: "can-tho", imgSrc: "/images/cantho.jpg", region: "Nam Bộ" },
+        { name: "Bạc Liêu",slug: "bac-lieu", imgSrc: "/images/baclieu.jpg", region: "Nam Bộ" },
+        { name: "Đồng Tháp",slug: "dong-thap", imgSrc: "/images/dongthap.jpg", region: "Nam Bộ" },
        
-        { name: "Cà Mau", imgSrc: "/images/camau.jpg", region: "Nam Bộ" },
+        { name: "Cà Mau",slug: "ca-mau", imgSrc: "/images/camau.jpg", region: "Nam Bộ" },
         
 
     ];
@@ -83,6 +87,7 @@ function DiscoverContainer() {
 
     const handleRegionSelect = (region) => {
         setSelectedRegion(region);
+        
     };
 
     useEffect(() => {
@@ -94,6 +99,22 @@ function DiscoverContainer() {
         }
     }, [selectedRegion]);
 
+    const handleBoxClick = async (pro) => {
+        try {
+            const response = await fetch(`http://localhost:3000/locationbyname?name=${pro}`);
+            if (!response.ok) {
+                console.log('sai')
+                throw new Error('Failed to fetch location data');
+            }
+            const data = await response.json();
+            console.log('Location data:', data);
+            navigate('/search', { state: { searchResults: data } }); // Xử lý dữ liệu trả về từ API
+        } catch (error) {
+            console.error('Error fetching location data:', error);
+        }
+
+        //navigate(`/search`);
+    };
 
 
     return (
@@ -128,9 +149,10 @@ function DiscoverContainer() {
 
                 </div>
 
-                <div className="card_ele_slider " ref={sliderRef}>
+                <div className="card_ele_slider" ref={sliderRef}>
                     {filteredProvinces.map((pro, index) => (
                         <Card
+                            onClick={() => handleBoxClick(pro.slug)}
                             key={index}
                             name={pro.name}
                             imgSrc={pro.imgSrc}
