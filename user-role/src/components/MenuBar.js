@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/WhiteMenuBar.css';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function MenuBar() {
     const [user, setUser] = useState([]);
@@ -10,7 +11,8 @@ function MenuBar() {
 
     const getUser = async (e) => {
         try {
-            const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
+            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
+            const response = await fetch(`http://localhost:3000/user/getbyid/${userId}`);
             const data = await response.json();
             // console.log('User :',data.data)
             if (data.isSuccess) {
@@ -48,6 +50,8 @@ function MenuBar() {
         setIsLoggedIn(localStorage.getItem("authToken"));
         getUser();
     }, [localStorage.getItem("authToken")]);
+
+
 
     return (
         <div className="menu_bar">
@@ -96,6 +100,10 @@ function MenuBar() {
                                         <i class="fa-solid fa-clipboard"></i>
                                         <span>Lịch sử đặt phòng</span>
                                     </Link>
+                                    <div className='sub_user_menu_row logout_user_menu'>
+                                    <i class="fa-solid fa-angles-left"></i>
+                                        <span>Đăng xuất</span>
+                                    </div>
                                 </div>
                             }
                         </div>

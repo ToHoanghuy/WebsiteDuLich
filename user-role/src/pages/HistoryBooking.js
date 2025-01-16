@@ -44,11 +44,8 @@ function HistoryBooking() {
     useEffect(() => {
         const fetchTickets = async () => {
             try {
-                const response = await fetch(
-                    `http://localhost:3000/booking/getbyuserid/${localStorage.getItem(
-                        "authToken"
-                    )}`
-                );
+                const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
+                const response = await fetch(`http://localhost:3000/booking/getbyuserid/${userId}`);
                 const result = await response.json();
 
                 if (result.isSuccess && result.data) {
