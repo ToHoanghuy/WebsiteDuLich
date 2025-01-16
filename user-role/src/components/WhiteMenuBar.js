@@ -2,8 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import '../styles/WhiteMenuBar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import Cookies from 'js-cookie'
-
+import Cookies from 'js-cookie';
 
 function WhiteMenuBar() {
     const location = useLocation();
@@ -120,10 +119,9 @@ function WhiteMenuBar() {
         >
             <div className="left_side">
                 <div className="logo">
-                    <img src="/images/logo.png" />
+                    <img src="/images/logobackground.png" />
                 </div>
                 <Link to='/' className={`menu_bar_text ${location.pathname === "/" ? "current_page" : ""}`}>Trang Chủ</Link>
-                <Link className={`menu_bar_text ${location.pathname === "/detail" ? "current_page" : ""}`}>Địa điểm</Link>
                 <span className="menu_bar_text">Giới thiệu</span>
             </div>
             <div className="right_side">

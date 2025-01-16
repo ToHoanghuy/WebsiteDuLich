@@ -47,6 +47,18 @@ function HistoryBooking() {
             return null;
         }
     };
+    useEffect(() => {
+        window.scrollTo({
+            top: 0.5, // Vị trí cuộn (px)
+            behavior: 'smooth', // Hiệu ứng cuộn mượt
+        });
+        setTimeout(() => {
+            window.scrollBy({
+                top: 0, // Cuộn ngược lên 1px
+                behavior: 'smooth',
+            });
+        }, 50);
+    }, [tickets]);
 
     useEffect(() => {
         const fetchTickets = async () => {

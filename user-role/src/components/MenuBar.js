@@ -30,6 +30,7 @@ function MenuBar() {
     const handleOpenSubUserMenu = () => {
         setSubUserMenu(!subUserMenu);
     };
+    
     const handleClickOutside = (e) => {
         e.preventDefault();
         // Kiểm tra nếu click không nằm trong menu
@@ -56,11 +57,11 @@ function MenuBar() {
         <div className="menu_bar">
             <div className="left_side">
                 <div className="logo">
-                    <img src="/images/logo.png" />
+                    <img src="/images/logobackground.png" />
                 </div>
                 <Link to='/' className="menu_bar_text current_page">Trang Chủ</Link>
-                <Link className="menu_bar_text">Địa điểm</Link>
-                <span className="menu_bar_text">Giới thiệu</span>
+                {/* <Link className="menu_bar_text">Địa điểm</Link> */}
+                <div className="menu_bar_text">Giới thiệu</div>
             </div>
             <div className="right_side">
                 <div className="round_frame">
@@ -100,7 +101,7 @@ function MenuBar() {
                                         <span>Lịch sử đặt phòng</span>
                                     </Link>
                                     <div className='sub_user_menu_row logout_user_menu'>
-                                    <i class="fa-solid fa-angles-left"></i>
+                                        <i class="fa-solid fa-angles-left"></i>
                                         <span>Đăng xuất</span>
                                     </div>
                                 </div>

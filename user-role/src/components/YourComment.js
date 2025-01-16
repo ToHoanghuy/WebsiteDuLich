@@ -1,3 +1,4 @@
+// export default YourComment;
 import React, { useState } from 'react';
 import Swal from "sweetalert2";
 
@@ -101,10 +102,9 @@ function YourComment() {
                 // 'Authorization': 'Bearer YOUR_TOKEN'
               },
               body: JSON.stringify({
-                //senderId: senderId,
                 locationId: locationId,
-                rating: starValue,
-                review: comment
+                rating: parseFloat(starValue),
+                review: comment.trim()
             }),
               credentials: 'include', 
               //mode: 'no-cors',

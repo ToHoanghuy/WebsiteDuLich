@@ -279,7 +279,6 @@ function Detail() {
 
     const handleSubmit = (e) => {
         const queryParams = new URLSearchParams();
-
         quantity.forEach(item => {
             if (item.quantity_value > 0) {
                 queryParams.append('id', item.id);
@@ -302,7 +301,6 @@ function Detail() {
         setShowModal(!showModal)
     }
     const handleChoiceCollection = async (id) => {
-
         try {
             const itemId = detailId; 
 
@@ -595,7 +593,6 @@ function Detail() {
                                             </div>
                                         </div>
                                     </div>
-
                                 } </div>
                         </div>
                     </div>

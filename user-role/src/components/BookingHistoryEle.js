@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../function/functionEffect';
 
@@ -15,8 +15,9 @@ function BookingHistoryEle({ booking, key, name, imgSrc, startDate, endDate, sta
         confirm: "Đã xác nhận"
     };
 
+
     return (
-        <Link to={`/detail/${path}`} key={key} className='booking_ele'
+        <Link to={`/detail/${path}`} key={key} className='booking_ele OpacityEffect'
         >
             <div className="booking_ele_left">
                 <img src={booking.imageUrl} alt={booking.locationName} />

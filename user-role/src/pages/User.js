@@ -33,6 +33,7 @@ function User() {
     }, []);
 
     const LogOut = async () => {
+        
         localStorage.removeItem("authToken");
         navigate("/");
     };

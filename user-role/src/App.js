@@ -28,7 +28,6 @@ import './styles/styleForAll.css';
 import WhiteMenuBar from './components/WhiteMenuBar';
 
 function App() {
-
   const location = useLocation();
   const backToTop = useRef(null);
 
