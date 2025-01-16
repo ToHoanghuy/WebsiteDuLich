@@ -50,14 +50,15 @@ function Login() {
                 if (response.ok)
                 {
                     if (data.data) {
+                        localStorage.setItem('authToken', data.data._id);
 
-                        const expirationTime = new Date().getTime() + 30 * 60 * 1000;
-                        const userId = data.data;
-                        // localStorage.setItem('authToken', data.data);
-                        localStorage.setItem(
-                            'authToken',
-                            JSON.stringify({ userId, expirationTime })
-                          );
+                        // const expirationTime = new Date().getTime() + 30 * 60 * 1000;
+                        // const userId = data.data;
+                        // // localStorage.setItem('authToken', data.data);
+                        // localStorage.setItem(
+                        //     'authToken',
+                        //     JSON.stringify({ userId, expirationTime })
+                        //   );
 
                     }
                     Swal.fire({
