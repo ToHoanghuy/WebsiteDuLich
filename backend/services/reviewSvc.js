@@ -26,6 +26,7 @@ const getReviewByLocationId = async (locationId) => {
 }
 
 const createReview = async (reviewData) => {
+    console.log('BE2: ');
     const result = await reviewData.save()
     if(result)
         return result

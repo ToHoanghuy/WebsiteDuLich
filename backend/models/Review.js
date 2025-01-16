@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Location = require('./Location')
+const Location = require('../models/Location')
 const Schema = mongoose.Schema;
 
 
@@ -12,7 +12,7 @@ const ReviewSchema = new Schema({
     locationId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Location",
-        require: false,
+        require: true,
     },
     date: {
         type: Date,
@@ -36,12 +36,13 @@ const reCaculateRating = async (oldRating, numberOfRating, newRating) => {
 
 ReviewSchema.pre('save', async function(next) {
     const location = await Location.findById(this.locationId)
+    if(!location)
+        throw new Error('Location not found')
     const rate = await reCaculateRating(location.rating, location.numberOfRating, this.rating)
     location.rating = rate
     location.numberOfRating += 1
     await location.save()
     next()
 })
-
 const Review = mongoose.model('Review', ReviewSchema)
 module.exports = Review

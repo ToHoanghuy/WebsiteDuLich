@@ -17,6 +17,7 @@ router.get('/locationbyuserid/:userId', locationController.getLocationByUserId);
 router.get('/locationbyname', locationController.getLocationByName);
 
 router.get('/locationbyid/:locationId', locationController.getLocationById);
+router.get('/search', locationController.searchLocationsAndRooms);
 //update
 router.put('/updatelocation/:locationId', checkLocationOwner, locationController.updateLocation);
 router.patch('/location/:locationId', locationController.changeStatusLocation);
@@ -24,6 +25,6 @@ router.patch('/location/:locationId', locationController.changeStatusLocation);
 router.delete('/detelelocation/:locationId', checkLocationOwner, locationController.deleteLocation);
 
 //MAIL SERVICES
-router.get('/location/approve/email/:locationId', locationController.sendApproveEmail)
+//router.get('/location/approve/email/:locationId', locationController.sendApproveEmail)
 
 module.exports = router;
