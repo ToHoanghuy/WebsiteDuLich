@@ -1,3 +1,4 @@
+// export default YourComment;
 import React, { useState } from 'react';
 import Swal from "sweetalert2";
 
@@ -6,7 +7,7 @@ function YourComment() {
     const [starValue, setStarValue] = useState(null);  // Quản lý giá trị sao đã chọn
     const [comment, setComment] = useState("");
     const locationId = localStorage.getItem('locationId');
-    // const senderId =localStorage.getItem('authToken');
+    const senderId =localStorage.getItem('authToken');
 
     // Hàm xử lý sự kiện mouseover
     const handleMouseOver = (index) => {
@@ -93,7 +94,6 @@ function YourComment() {
         console.log(JSON.stringify(reviewData));
         // Hiển thị thông báo thành công
         try {
-            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
             const response = await fetch('http://localhost:3000/review', {
               method: 'POST',
               headers: {
@@ -102,16 +102,16 @@ function YourComment() {
                 // 'Authorization': 'Bearer YOUR_TOKEN'
               },
               body: JSON.stringify({
-                senderId: userId,
+                // senderId: senderId,
                 locationId: locationId,
-                rating: starValue,
-                review: comment
+                rating: parseFloat(starValue),
+                review: comment.trim()
             }),
               credentials: 'include', 
-            //   mode: 'no-cors',
+              //mode: 'no-cors',
             });
 
-            console.log(userId, locationId, starValue);
+            console.log(senderId, locationId, starValue);
         
             if (response.ok) {
               // Hiển thị thông báo thành công
