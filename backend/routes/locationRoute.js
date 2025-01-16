@@ -2,12 +2,13 @@ const {Router} = require('express');
 const locationController = require('../controllers/locationController');
 const {checkLocationOwner} = require('../middleware/authMiddleware');
 const uploadMiddleware = require('../middleware/cloudinaryMiddleware')
+const authMiddleware = require('../middleware/authMiddleware')
 const upload = uploadMiddleware('travel-social')
 const router = Router();
 //create
 //router.post('/createlocation', checkLocationOwner, locationController.createNewLocation);
 //create with image
-router.post('/createlocation', checkLocationOwner, upload.array('images', 10), locationController.createLocation);
+router.post('/createlocation', checkLocationOwner, upload.array('file', 10), authMiddleware.checkUser,locationController.createLocation);
 //read
 router.get('/alllocation', locationController.getAllLocation);
 router.get('/locationbycategory/:categoryId', locationController.getLocationByCategory);

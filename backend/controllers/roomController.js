@@ -1,5 +1,6 @@
 const Room = require('../models/Room')
 const roomSvc = require('../services/roomSvc')
+//const cloudinary = require('../config/cloudinaryConfig')
 
 module.exports.getAllRoom = async (req, res, next) => {
     try {
@@ -14,6 +15,7 @@ module.exports.getAllRoom = async (req, res, next) => {
         next(error)
     }
 }
+
 module.exports.getRoomById = async (req, res, next) => {
     const roomId = req.params.roomId
     try{
@@ -50,33 +52,56 @@ module.exports.createRoom = async (req, res, next) => {
         locationId,
         name,
         quantity,
-        rating,
-        price,
+        capacity,
+        area,
+        pricePerNight,
         description,
         facility,
         bed,
-        image, 
+        image,
     } = req.body
-    const roomData =  new Room({
-        locationId,
-        name,
-        quantity,
-        rating,
-        price,
-        description,
-        facility,
-        bed,
-        image, 
-    })
+    // const images = req.files.map((file) => ({
+    //     url: file.path,
+    //     publicId: file.filename
+    // }))
+    // const facilityParsered = JSON.parse(facility)
+    // const bedParsered = JSON.parse(bed)
+    // console.log(facilityParsered, bedParsered)
     try{
+        const roomData =  new Room({
+            locationId,
+            name,
+            quantity,
+            capacity,
+            area,
+            pricePerNight,
+            description,
+            facility, //facilityParsered
+            bed, //bedParsered
+            image,
+            //image: images, 
+        })
         const savedRoom = await roomSvc.createRoom(roomData)
         res.status(201).json({
             isSuccess: true,
-            data: roomData,
+            data: savedRoom,
             error: null
         })
     }
     catch (error) {
+        // req.files.map(async file => {
+        //     try {
+        //         await cloudinary.uploader.destroy(file.filename);
+        //         console.log(`Deleted: ${file.filename}`);
+        //         res.status(404).json({
+        //         isSuccess: true,
+        //         data: 'upload fail',
+        //         error: null,
+        //     });
+        //     } catch (err) {
+        //         next(err)
+        //     }
+        // })
         next(error)
     }
 }

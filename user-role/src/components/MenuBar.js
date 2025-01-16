@@ -11,8 +11,7 @@ function MenuBar() {
 
     const getUser = async (e) => {
         try {
-            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
-            const response = await fetch(`http://localhost:3000/user/getbyid/${userId}`);
+            const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
             const data = await response.json();
             // console.log('User :',data.data)
             if (data.isSuccess) {

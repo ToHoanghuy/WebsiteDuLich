@@ -12,8 +12,10 @@ function CollectionLayout() {
 
     const getCollections = async () => {
         try {
-            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
-            const response = await fetch(`http://localhost:3000/collection/getbyuserid/${userId}`);
+            // const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
+            // const response = await fetch(`http://localhost:3000/collection/getbyuserid/${userId}`);
+            const response = await fetch(`http://localhost:3000/collection/getbyuserid/${localStorage.getItem("authToken")}`);
+
             const result = await response.json();
 
             if (response.ok && result.isSuccess) {

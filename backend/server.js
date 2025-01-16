@@ -1,24 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose')
-const cookieParser = require('cookie-parser')
-const cors = require('cors')
 const authRoute = require('./routes/authRoute')
-const locationRoute = require('./routes/locationRoute')
-const businessRoute = require('./routes/businessRoute')
 const roomRoute = require('./routes/roomRoute')
 const bookingRoute = require('./routes/bookingRoute')
-const recommendationRoute = require('./routes/recommendationRoute')
 const userCollectionRoute = require('./routes/userCollectionRoute')
-const uploadImageRoute = require('./routes/uploadImageRoute')
-const invoiceRoute = require('./routes/invoiceRoute')
-const paymentRoute = require('./routes/paymentRoute')
+const locationRoute = require('./routes/locationRoute')
 const serviceRoute = require('./routes/serviceRoute')
-const messageRoute = require('./routes/messageRoute')
+const paymentRoute = require('./routes/paymentRoute')
 const reviewRoute = require('./routes/reviewRoute')
-const {requireAuth, checkUser} = require('./middleware/authMiddleware');
-const {errorHandler} = require('./middleware/errorMiddleware')
-
+const invoiceRoute = require('./routes/invoiceRoute')
 const cors = require('cors')
+const {errorHandler} = require('./middleware/errorMiddleware')
+const cookieParser = require('cookie-parser')
+
 const app = express();
 const PORT = process.env.PORT || 3000
 
@@ -40,9 +34,7 @@ app.use(cors({
             callback(new Error('Not allowed by CORS'));
         }
     },
-
     methods: "GET, POST, PUT, PATCH, DELETE, OPTIONS",
-
     credentials: true, // Cho phép gửi cookie
     allowedHeaders: "Content-Type, Authorization"
 }));

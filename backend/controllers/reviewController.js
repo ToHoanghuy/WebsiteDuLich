@@ -47,13 +47,15 @@ module.exports.getReviewByLocationId = async (req, res, next) => {
 
 module.exports.createReview = async (req, res, next) => {
     try {
-        const {locationId, rating, review} = req.body
+        const {locationId, rating, review, userId} = req.body
+        console.log(res.locals.user._id)
         const reviewData = new Review({
-            locationId: locationId,
             senderId: res.locals.user._id,
+            locationId: locationId,
             rating: rating,
             review: review
         })
+        console.log('BE1: ',locationId, rating, review)
         const result = await reviewSvc.createReview(reviewData)
         res.status(200).json({
             isSuccess: true,
@@ -62,6 +64,7 @@ module.exports.createReview = async (req, res, next) => {
         });
     }
     catch(error) {
+        console.log('loi o day')
         next(error)
     }
 }
