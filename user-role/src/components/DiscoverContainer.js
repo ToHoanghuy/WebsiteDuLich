@@ -102,7 +102,7 @@ function DiscoverContainer() {
     const handleBoxClick = async (pro) => {
         try {
             // alert(pro)
-            const response = await fetch(`http://localhost:3000/locationbyname?name=${pro}`);
+            const response = await fetch(`http://localhost:3000/locationbyname?name=${pro.slug}`);
             if (!response.ok) {
                 console.log('sai')
                 throw new Error('Failed to fetch location data');
@@ -110,7 +110,8 @@ function DiscoverContainer() {
             else{
                 const data = await response.json();
                 console.log('Location data:', data);
-                navigate('/search', { state: { searchResults: data } }); // Xử lý dữ liệu trả về từ API
+                //navigate('/search', { state: { searchResults: data, pro:pro.name } }); // Xử lý dữ liệu trả về từ API
+                navigate('/search', { state: { searchResults: data, pro: pro.name } });
             }
             
         } catch (error) {
@@ -126,12 +127,6 @@ function DiscoverContainer() {
             <div className="display_frame">
                 <h2 className="container_tilte OpacityEffect">Khám phá Việt Nam</h2>
                 <div className="region_btn OpacityEffect">
-                    {/* <button class="selected_region_btn Water_Drop_Effect" onclick="SelectRegion(this)"
-                        onmouseover="createRipple(event)">Bắc Bộ</button>
-                    <button class="unselected_region_btn Water_Drop_Effect" onclick="SelectRegion(this)"
-                        onmouseover="createRipple(event)">Trung Bộ</button>
-                    <button class="unselected_region_btn Water_Drop_Effect" onclick="SelectRegion(this)">Nam Bộ</button>
-                     */}
                     <button
                         className={selectedRegion === 'Bắc Bộ' ? 'selected_region_btn Water_Drop_Effect' : 'unselected_region_btn Water_Drop_Effect'}
                         onClick={() => handleRegionSelect('Bắc Bộ')}
@@ -156,7 +151,7 @@ function DiscoverContainer() {
                 <div className="card_ele_slider" ref={sliderRef}>
                     {filteredProvinces.map((pro, index) => (
                         <Card
-                            onClick={() => handleBoxClick(pro.slug)}
+                            onClick={() => handleBoxClick(pro)}
                             key={index}
                             name={pro.name}
                             imgSrc={pro.imgSrc}

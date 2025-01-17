@@ -105,7 +105,7 @@ function PlaceEle({ ele, showHeart, path, favrorited }) {
     }, [rooms]);
 
     return (
-        <Link to={`/detail/${path}`} className='place_ele OpacityEffect'>
+        <Link to={`/detail/${path}`} className='place_ele'>
             <div className='place_ele_img'>
                 <img src={location.image?.[0]?.url} />
 

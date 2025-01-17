@@ -14,24 +14,16 @@ import { useLocation } from 'react-router-dom';
 
 function SearchPage() {
     const navigate = useNavigate();
-    // const element = [
-    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false, path: "Ho-Coc-Camping-Vung-Tau-Ho-Coc-Camping-Vung-Tau" },
-    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: true },
-    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-    //     { name: "Ho Coc Camping Vung Tau Ho Coc Camping Vung Tau", imgSrc: "/images/detail/detail2.jpg", pro: "Vũng Tàu", rating: "4.0", reviews: 123, discount: 10, originalPrice: "500000", discountPrice: "450000", favrorited: false },
-    // ];
 
     const location = useLocation();
     console.log('searchpage', location);
 
-    const [cost, setCost] = useState([500000, 3000000]);
-    const [raiting, setRaiting] = useState(1);
+    const [cost, setCost] = useState();
+    const [costRange, setCostRange] = useState([]);
+    const [raiting, setRaiting] = useState(0);
     const [selectedServices, setSelectedServices] = useState([]);
     const [searchQuery, setSearchQuery] = useState([]);
+    const [filterQuery, setFilterQuery] = useState([]);
 
     const handleToggleService = (serviceName, isSelected) => {
         setSelectedServices((prevServices) => {
@@ -53,8 +45,9 @@ function SearchPage() {
 
             if (data.isSuccess) {
                 const sortedLocations = data.data.sort((a, b) => b.rating - a.rating); // Sắp xếp theo rating giảm dần
-
+                // const queryData=data.data;
                 setSearchQuery(data.data); // Set data locations
+                setFilterQuery(data.data);
                 console.log('data', data.data)
             } else {
                 console.error(data.error);
@@ -66,25 +59,68 @@ function SearchPage() {
         }
     };
 
+    const setPrice = () => {
+        const fetchRoomDataByLocation = async () => {
+            // Tạo một mảng mới để chứa thông tin giá của các địa điểm
+            const updatedPriceRanges = await Promise.all(
+                searchQuery.map(async (location) => {
+                    try {
+                        const response = await fetch(
+                            `http://localhost:3000/room/getbylocationid/${location._id}`
+                        );
+                        const data = await response.json();
+                        let minPrice = 0;
+                        let maxPrice = 0;
+                        if (data.isSuccess) {
+                            const prices = data.data.map((room) => room.pricePerNight);
+                            minPrice = Math.min(...prices);
+                            maxPrice = Math.max(...prices);
+                        }
+                        return {
+                            ...location,
+                            minPrice,
+                            maxPrice,
+                        };
+    
+                    } catch (error) {
+                        console.error(`Error fetching rooms for location ${location._id}:`, error);
+                        return {
+                            ...location,
+                            minPrice: 0,
+                            maxPrice: 0,
+                        };
+                    }
+                })
+            );
+    
+            // Tính giá min/max toàn bộ
+            const allMinPrices = updatedPriceRanges.map((range) => range.minPrice);
+            const allMaxPrices = updatedPriceRanges.map((range) => range.maxPrice);
+    
+            setCostRange([Math.min(...allMinPrices), Math.max(...allMaxPrices)]);
+            //setCost([Math.min(...allMinPrices), Math.max(...allMaxPrices)]);
+            setSearchQuery(updatedPriceRanges)
+        };
+        if (searchQuery.length > 0) {
+            fetchRoomDataByLocation();
+        }
+    };
+
     useEffect(() => {
         // Kiểm tra và gán dữ liệu từ state
         if (location.state?.searchResults) {
             setSearchQuery(location.state.searchResults.data);
+            setFilterQuery(location.state.searchResults.data);
             console.log('data', location.state.searchResults.data)
         }
         else {
             getAllLocations();
         }
-    }, [location.state]);
+    }, [location.state, location]);
 
     const handleChange = (event, newValue) => {
         setCost(newValue);
-        search()
         console.log('cost: ', newValue);
-    };
-
-    const valuetext = (value) => {
-        return `VNĐ ${value}`;
     };
 
     const [starClick, setStarClick] = useState(0);  // Quản lý trạng thái sao đã được click
@@ -94,21 +130,29 @@ function SearchPage() {
             setStarValue(index + 1); // Thay đổi giá trị sao khi hover
         }
         setRaiting(index + 1);
+
         console.log(index + 1);
     };
-    const handleClick = (index) => {
-        if (starClick === 0) {
-            setStarValue(index + 1);
+
+    useEffect(() => {
+        if(raiting&&cost)
+        { 
             search();
         }
-    };
+       
+    }, [raiting, cost]);
+
+    useEffect(() => {
+        setPrice();
+    }, [searchQuery]);    
+
 
     const renderStars = () => {
         let stars = [];
         for (let i = 0; i < 5; i++) {
             // Xác định trạng thái sao dựa vào starValue
             let starClass
-            if (i > 0) {
+            if (i >= 0) {
                 starClass = 'fa-regular fa-star';
                 if (starValue !== null && i < starValue) {
                     starClass = 'fa-solid fa-star'; // Sao solid
@@ -123,80 +167,49 @@ function SearchPage() {
                     key={i}
                     className={starClass + " user_star"}
                     onMouseOver={() => handleMouseOver(i)}
-                    onClick={() => handleClick(i)}
                 ></i>
             );
 
         }
         return stars;
     };
-
-    const [priceRanges, setPriceRanges] = useState([]); // Giá min/max của từng location
-    const [overallPrices, setOverallPrices] = useState({ min: null, max: null }); // Giá toàn bộ
-
-    useEffect(() => {
-        const fetchRoomDataByLocation = async () => {
-            const priceRanges = [];
-            const promises = searchQuery.map(async (location) => {
-                try {
-                    const response = await fetch(
-                        `http://localhost:3000/room/getbylocationid/${location._id}`
-                    );
-                    const { rooms } = await response.json();
-
-                    const prices = rooms.map((room) => room.price);
-                    const minPrice = Math.min(...prices);
-                    const maxPrice = Math.max(...prices);
-
-                    priceRanges.push({
-                        location_id: location._id,
-                        minPrice,
-                        maxPrice,
-                    });
-                } catch (error) {
-                    console.error(`Error fetching rooms for location ${location._id}:`, error);
-                }
-            });
-
-            await Promise.all(promises);
-
-            // Tìm giá min/max toàn bộ
-            const allMinPrices = priceRanges.map((range) => range.minPrice);
-            const allMaxPrices = priceRanges.map((range) => range.maxPrice);
-
-            setPriceRanges(priceRanges);
-            setOverallPrices({
-                min: Math.min(...allMinPrices),
-                max: Math.max(...allMaxPrices),
-            });
-        };
-
-        if (searchQuery.length > 0) {
-            fetchRoomDataByLocation();
+        
+    const filterLocation = () => {
+        // Khởi tạo mảng tạm để lọc
+        let filteredItems = searchQuery;
+        console.log('query', searchQuery)
+        // Lọc theo raiting (xếp hạng)
+        if (raiting) {
+            if (raiting > 1) {
+                filteredItems = filteredItems.filter(item => item.rating >= raiting);
+            }
+            // Nếu raiting == 1, giữ nguyên mảng ban đầu
         }
-    }, [searchQuery]);
-
-
+        // Lọc theo cost (giá cả)
+        // if (cost) {
+        //     filteredItems = filteredItems.filter(
+        //         item => item.minPrice >= cost[0] && item.minPrice <= cost[1]
+        //     );
+        // }
+    
+        // Cập nhật state với danh sách đã lọc
+        setFilterQuery(filteredItems);
+    };
+    
 
     const search = () => {
         const searchParams = {
-            costMin: cost[0],
-            costMax: cost[1],
+            costMin: cost?.[0], // Nếu cost là null hoặc undefined, sẽ lấy costRange[0]
+            costMax: cost?.[1], // Nếu cost là null hoặc undefined, sẽ lấy costRange[1]
             rating: raiting,
         };
         const filteredParams = Object.fromEntries(
             Object.entries(searchParams).filter(([_, value]) => value !== null && value !== undefined)
         );
         const queryString = new URLSearchParams(filteredParams).toString();
-        // navigate(`/search?${queryString}`, { replace: true });
-        // if (location.state?.searchResults) {
-        //     // alert('hi')
-        //     window.history.replaceState(null, '', `/search?${queryString}`, { state: { searchResults: location.state.searchResults.data } });
-        // }
-        // else{
         window.history.replaceState(null, '', `/search?${queryString}`);
+        filterLocation();
         // }
-
     };
 
     const handleSearch = (searchParams) => {
@@ -204,9 +217,6 @@ function SearchPage() {
         console.log('Search Params:', searchParams); // Debug xem searchParams gửi gì
         // Chuyển searchParams thành query string
         const queryString = new URLSearchParams(searchParams).toString();
-
-        // alert('hi')
-        // Gọi API với phương thức GET
         fetch(`http://localhost:3000/search?${queryString}`)
             .then((response) => {
                 if (!response.ok) {
@@ -225,21 +235,11 @@ function SearchPage() {
     };
 
     useEffect(() => {
-        window.scrollTo({
-            top: 0.5, // Vị trí cuộn (px)
-            behavior: 'smooth', // Hiệu ứng cuộn mượt
-        });
-        setTimeout(() => {
-            window.scrollBy({
-                top: 0, // Cuộn ngược lên 1px
-                behavior: 'smooth',
-            });
-        }, 50);
-    }, [searchQuery]);
+        if (cost === null && costRange) {
+            setCost([...costRange]); // Gán giá trị costRange cho cost
+        }
+    }, [costRange, cost]);
 
-    useEffect(() => {
-        search();
-    }, [])
 
     return (
         <div className='search_page_root'>
@@ -253,9 +253,15 @@ function SearchPage() {
                     />
                 </div>
                 <div class="breadcrumb_container">
-                    <Link to='/' class="breadcrumb_ele">Trang Chủ</Link>
+                    <Link to='/' class="breadcrumb_ele">Địa điểm</Link>
                     <i class="fa-solid fa-angle-right breadcrumb_angle current_breadcumb"></i>
-                    <a class="breadcrumb_ele current_breadcumb">Vũng Tàu</a>
+                    { location.state && 
+                        <a class="breadcrumb_ele current_breadcumb">{location.state.pro}</a>
+                    }
+                    { !location.state && 
+                        <a class="breadcrumb_ele current_breadcumb">Tất cả</a>
+                    }
+                    
                 </div>
             </div>
             <div className='search_page_body_cotainer'>
@@ -269,15 +275,15 @@ function SearchPage() {
                             <span className='filter_row_name'>Ngân sách của bạn</span>
                             <div className='cost_filter'>
                                 <div className='filter_value'>
-                                    <span className='cost_from'>VNĐ {formatPrice(cost[0])}</span>-<span className='cost_to'>VNĐ {formatPrice(cost[1])}</span>
+                                    <span className='cost_from'>VNĐ {formatPrice(costRange[0])}</span>-<span className='cost_to'>VNĐ {formatPrice(costRange[1])}</span>
                                 </div>
                                 <Slider
                                     getAriaLabel={() => 'Temperature range'}
-                                    value={cost}
+                                     value={cost || costRange}
                                     onChange={handleChange}
                                     //valueLabelDisplay="off"
-                                    min={0}
-                                    max={10000000}
+                                    min={parseFloat(costRange[0])}
+                                    max={parseFloat(costRange[1])}
                                     step={100000}
                                 />
                             </div>
@@ -303,7 +309,7 @@ function SearchPage() {
                     </div>
                     <div className='place_container'>
                         <div className='place_frame'>
-                            {searchQuery?.map((ele, index) => (
+                            {filterQuery?.map((ele, index) => (
                                 <PlaceEle
                                     path={ele._id}
                                     ele={ele}

@@ -111,7 +111,8 @@ function Detail() {
 
     const getCollections = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/collection/getbyuserid/${localStorage.getItem("authToken")}`);
+            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
+            const response = await fetch(`http://localhost:3000/collection/getbyuserid/${userId}`);
             const result = await response.json();
 
             if (response.ok && result.isSuccess) {
@@ -570,6 +571,14 @@ function Detail() {
                                     choiceRoom={choiceRoom}
                                 />
                             ))}
+                            {
+                                availableRooms?.length === 0 &&(
+                                    <div className='available_mess'>
+                                        <img src='/images/detail.gif'/>
+                                        <span>Hãy chọn thời gian mà bạn muốn thuê phòng</span>
+                                    </div>
+                                )    
+                            }
                             <div ref={choiceRoomRef}>
                                 {selected &&
 

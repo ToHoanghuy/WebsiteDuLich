@@ -127,7 +127,7 @@ function SearchBar({ cost, rating, services, onSearch }) {
 
     return (
         <div className="search_bar">
-            <div></div>
+            <div className='sbsp'></div>
             <LocationBar 
                 toggleOption={() => toggleOption(0,0)} 
                 showOptions={showOptions[0]} 

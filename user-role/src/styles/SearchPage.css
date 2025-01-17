@@ -74,6 +74,7 @@
     width: 72%;
     /* background-color: aquamarine; */
     height: auto;
+    min-height: 100vh;
     float: right;
     display: flex;
     align-items: center;
@@ -206,12 +207,13 @@
 }
 
 .place_ele_province {
-    width: 95%;
+    width: 90%;
     margin-top: 12px;
     padding-left: 2px;
     display: flex;
     gap: 9px;
     align-items: center;
+
 }
 
 .place_ele_province i {
@@ -225,6 +227,9 @@
     font-family: 'Fira Sans', sans-serif;
     font-weight: 500;
     color: #69ACE7;
+    overflow: hidden; /* Ẩn nội dung tràn */
+    white-space: nowrap; /* Không cho phép xuống dòng */
+    text-overflow: ellipsis; /* Hiển thị dấu "..." nếu nội dung vượt quá */
 }
 
 .place_ele_service_frame {

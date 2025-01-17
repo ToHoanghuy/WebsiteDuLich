@@ -19,8 +19,8 @@ function HomePage() {
     const [randomLocations, setRandomLocations] = useState([]); // State để lưu 16 location ngẫu nhiên
     const images = [
         ["/images/family1.jpg", "/images/family2.jpg", "/images/family3.jpg"],  // Nhóm 1
-        [ "/images/view3.jpg", "/images/view1.jpg", "/images/view2.jpg"],  // Nhóm 2
-        [ "/images/hotel3.jpg", "/images/hotel1.jpg", "/images/hotel2.jpg"]   // Nhóm 3
+        ["/images/view3.jpg", "/images/view1.jpg", "/images/view2.jpg"],  // Nhóm 2
+        ["/images/hotel3.jpg", "/images/hotel1.jpg", "/images/hotel2.jpg"]   // Nhóm 3
     ];
 
     const getAllLocations = async () => {
@@ -73,15 +73,15 @@ function HomePage() {
             <div class="note_container">
                 <div class="speacial_note">
                     <div class="note zoomEffect">
-                        <img style={{ height: '85%' }} src='/images/voucher_note.gif'/>
+                        <img style={{ height: '85%' }} src='/images/voucher_note.gif' />
                         <span>Ưu đãi bất ngờ</span>
                     </div>
                     <div class="note zoomEffect">
-                        <img style={{ height: '95%' }} src='/images/payment_note.gif'/>
+                        <img style={{ height: '95%' }} src='/images/payment_note.gif' />
                         <span>Giao dịch nhanh chóng</span>
                     </div>
                     <div class="note zoomEffect">
-                        <img style={{ height: '100%' }} src='/images/review_note.gif'/>
+                        <img style={{ height: '100%' }} src='/images/review_note.gif' />
                         <span>Chia sẽ trãi nghiệm</span>
                     </div>
                     <div class="note zoomEffect">
@@ -94,7 +94,7 @@ function HomePage() {
             <div class="note_container">
                 <div class="residence_frame">
                     {images.map((imgs, index) => (
-                        <ResidenceNote images={imgs}/>
+                        <ResidenceNote images={imgs} />
                     ))
                     }
                 </div>
@@ -109,11 +109,21 @@ function HomePage() {
             <div class="platform_container">
                 <span class="container_tilte">Nền tảng của Travel Social</span>
                 <div class="platform_box_container zoomEffect">
-                    <div class="platform_box zoomEffect"></div>
-                    <div class="platform_box zoomEffect"></div>
-                    <div class="platform_box zoomEffect"></div>
-                    <div class="platform_box zoomEffect"></div>
-                    <div class="platform_box zoomEffect"></div>
+                    <div class="platform_box zoomEffect facebook">
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+                    <div class="platform_box zoomEffect tiktok">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </div>
+                    <div class="platform_box zoomEffect youtube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                    <div class="platform_box zoomEffect ig">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div class="platform_box zoomEffect in">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </div>
                 </div>
             </div>
             <br /><br /><br />

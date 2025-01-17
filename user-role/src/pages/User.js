@@ -10,9 +10,9 @@ function User() {
     const [user, setUser] = useState([]);
     const getUser = async () => {
         try {
-            // const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
-            // const response = await fetch(`http://localhost:3000/user/getbyid/${userId}`);
-            const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
+            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
+            const response = await fetch(`http://localhost:3000/user/getbyid/${userId}`);
+            //const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
 
             const data = await response.json();
             // console.log('User :',data.data)
@@ -34,8 +34,29 @@ function User() {
 
     const LogOut = async () => {
         
-        localStorage.removeItem("authToken");
-        navigate("/");
+        // const response = await fetch("http://localhost:3000/logout", {
+        //     method: "GET",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     // body: JSON.stringify({
+        //     //     "userEmail": email,
+        //     //     "userPassword": password,
+        //     // }),
+        //     credentials: 'include', // Để gửi và nhận cookie
+        // });
+        const response = await fetch(`http://localhost:3000/logout`);
+        const data = await response.json();
+        if (response.ok )
+        {
+            alert('ok')
+            localStorage.removeItem("authToken");
+            navigate("/");
+        }
+        else{
+            alert('no')
+        }
+       
     };
 
     const toggleSubMenu = (index) => {

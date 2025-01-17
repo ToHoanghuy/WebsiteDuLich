@@ -5,16 +5,16 @@ import PlaceEle from '../components/PlaceEle';
 
 function CollectionLayout() {
     const { id } = useParams();
-     const navigate = useNavigate();
+    const navigate = useNavigate();
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [location, setLocation] = useState(null);
     const [collections, setCollections] = useState([]);
 
     const getCollections = async () => {
         try {
-            // const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
-            // const response = await fetch(`http://localhost:3000/collection/getbyuserid/${userId}`);
-            const response = await fetch(`http://localhost:3000/collection/getbyuserid/${localStorage.getItem("authToken")}`);
+            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
+            const response = await fetch(`http://localhost:3000/collection/getbyuserid/${userId}`);
+            //const response = await fetch(`http://localhost:3000/collection/getbyuserid/${localStorage.getItem("authToken")}`);
 
             const result = await response.json();
 
@@ -75,9 +75,9 @@ function CollectionLayout() {
         navigate(`/user/storage/collection/${collectionId}`);
     };
 
-    
+
     if (location) {
-        console.log(location.item)
+    //     console.log(location.item)
         return (
             <div>
                 <div className='collection_header'>
@@ -110,6 +110,15 @@ function CollectionLayout() {
                                 favrorited={true}
                             />
                         ))}
+                    {
+                        location.item.length===0 && (
+                            <div className='finding_mess'
+                            >
+                                <img src='/images/album.png' />
+                                <span>Chưa có địa điểm nào trong bộ sưu tập này</span>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         );

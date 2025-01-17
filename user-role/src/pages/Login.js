@@ -52,14 +52,13 @@ function Login() {
                     if (data.data) {
                         localStorage.setItem('authToken', data.data._id);
 
-                        // const expirationTime = new Date().getTime() + 30 * 60 * 1000;
-                        // const userId = data.data;
-                        // // localStorage.setItem('authToken', data.data);
-                        // localStorage.setItem(
-                        //     'authToken',
-                        //     JSON.stringify({ userId, expirationTime })
-                        //   );
-
+                        const expirationTime = new Date().getTime() + 30 * 60 * 1000;
+                        const userId = data.data._id;
+                        // localStorage.setItem('authToken', data.data);
+                        localStorage.setItem(
+                            'authToken',
+                            JSON.stringify({ userId, expirationTime })
+                          );
                     }
                     Swal.fire({
                         title: 'Đăng nhập',
@@ -103,7 +102,7 @@ function Login() {
             <form className="login_container">
                 {/* <div className="login_container"> */}
                 <div class="login_title OpacityEffect">
-                    <img class="login_logo" src="/images/logo.png" />
+                    <img class="login_logo" src="/images/logo1.png" />
                     <span class="login_title_text">Đăng nhập</span>
                 </div>
                 <TypeWritting classNameValue={'login_welcome_text'} content={'Chào mừng bạn trở lại với Travel Social'} />

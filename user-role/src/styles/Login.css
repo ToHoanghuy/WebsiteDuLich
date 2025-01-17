@@ -59,7 +59,7 @@ body
 }
 .login_logo
 {
-    width: 70%;
+    width: 80%;
     height: auto;
     margin-left: 15%;
     text-align: center;
@@ -315,6 +315,12 @@ body
     height: 70%;
     background-color: white;
     box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+}
+.left_side_frame img{
+    margin-left: 20%;
+    width: 75%;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1023px)

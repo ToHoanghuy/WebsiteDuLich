@@ -3,10 +3,73 @@ import React, { useState, useRef, useEffect } from 'react';
 import { getIconClass, formatRating, formatPrice, formatDate } from '../function/functionEffect';
 import Swal from "sweetalert2";
 import '../styles/Booking.css';
+import axios from 'axios';
 
 function Booking() {
     const location = useLocation();
     const [step, setStep] = useState(1);
+    const [qrImage, setQrImage] = useState(null);
+
+    // const VietQRGenerator = () => {
+
+    const generateVietQR = async () => {
+
+        try {
+            const response = await axios.post(
+                'https://api.vietqr.io/v2/generate',
+                {
+                    accountNo: "9386441295",
+                    accountName: "TO HOANG HUY",
+                    acqId: "970436",
+                    addInfo: "chuyen tien dat cho",
+                    amount: "2000",
+                    template: "compact",
+                },
+                {
+                    headers: {
+                        'x-client-id': 'f905c745-0625-48e1-8468-e9d47ebb861c',
+                        'x-api-key': '527eee5f-326f-4dd4-91ab-df80ba43329e',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+            // console.log(response.data.data.qrDataURL)
+            setQrImage(response.data.data.qrDataURL);
+            return response.data;
+        } catch (error) {
+            console.error('Error generating VietQR:', error.response?.data || error.message);
+        }
+    };
+
+    useEffect(() => {
+        handleGenerateQR();
+    }, []);
+
+    const handleGenerateQR = async () => {
+
+        const qrData = await generateVietQR();
+        if (qrData && qrData.qrDataURL) {
+            setQrImage(qrData.qrDataURL);
+        }
+    };
+
+    const saveQRImageToGallery = () => {
+        if (!qrImage) {
+            alert('QR Code không có dữ liệu!');
+            return;
+        }
+
+        const link = document.createElement('a');
+        link.href = qrImage;
+        link.download = 'vietqr.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        alert('Thành công! Ảnh QR đã được tải về.');
+    };
+    // }
+
+
 
     //Step 1:
     const [bookingData, setBookingData] = useState([]);
@@ -139,14 +202,17 @@ function Booking() {
     };
 
     const createBooking = async (localTime, items, userId) => {
+       
         const url = "http://localhost:3000/booking/createbooking";
         const body = {
             checkinDate: checkInDate,
             checkoutDate: checkOutDate,
             dateBooking: localTime,
-            userId: userId,
-            items: items
+            // userId: userId,
+            items: items,
+            // services: null
         };
+        // console.log(checkInDate, checkOutDate, localTime)
 
         try {
             const response = await fetch(url, {
@@ -154,11 +220,19 @@ function Booking() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(body), 
+                body: JSON.stringify(body),
                 credentials: 'include',
             });
 
             if (!response.ok) {
+                // alert('hi')
+                Swal.fire({
+                    title: 'Đặt phòng không thành công',
+                    text: 'Đặt phòng không thành công',
+                    icon: 'error',
+                    timer: 1500, // Tự động đóng sau 2 giây
+                    showConfirmButton: false, // Ẩn nút xác nhận
+                });
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             else {
@@ -183,8 +257,7 @@ function Booking() {
 
 
     const handleBooking = () => {
-        if(selectedPayment)
-        {
+        if (selectedPayment) {
             const now = new Date();
             const offset = now.getTimezoneOffset() * 60000; // Offset tính bằng milliseconds
             const localTime = new Date(now - offset).toISOString(); // Điều chỉnh theo giờ địa phương
@@ -194,6 +267,7 @@ function Booking() {
                 nights: night // Thêm giá trị mặc định
             }));
             // alert(localStorage.getItem("authToken"))
+          
             createBooking(localTime, items, localStorage.getItem("authToken"))
         }
         // else{
@@ -205,12 +279,15 @@ function Booking() {
         //         showConfirmButton: false, // Ẩn nút xác nhận
         //     });
         // }
-        
-    };
 
+    };
+    const divStyle = {
+
+      };
+    
 
     return (
-        <div className='booking_section'>
+        <div className='booking_section' style={divStyle}>
             <div className='display_frame'>
                 <div className='step_circle_frame'>
                     <div className='step_circle_div taken_step'
@@ -429,6 +506,11 @@ function Booking() {
                                 </div>
                             </div>
                             <div className='booking_info booking_qr'>
+                                {qrImage && selectedPayment ? (
+                                    <img src={qrImage} alt="QR Code" />
+                                ) : (
+                                    <img className='booking_gif' src='/images/payment_note.gif' alt="QR Code" />
+                                )}
                             </div>
                         </div>
                         <div className='booking_btn_frame'>

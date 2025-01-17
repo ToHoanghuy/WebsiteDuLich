@@ -11,14 +11,7 @@ function HistoryBooking() {
 
     const fetchRoomDetails = async (roomId) => {
         try {
-            // const response = await fetch(`http://localhost:3000/room/getbyid/${roomId}`);
-            // const result = await response.json();
-
-            const response = await fetch(
-                `http://localhost:3000/booking/getbyuserid/${localStorage.getItem(
-                    "authToken"
-                )}`
-            );
+            const response = await fetch(`http://localhost:3000/room/getbyid/${roomId}`);
             const result = await response.json();
 
             if (result && result.isSuccess) {

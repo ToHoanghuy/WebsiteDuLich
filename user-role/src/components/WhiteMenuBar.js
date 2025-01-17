@@ -18,9 +18,9 @@ function WhiteMenuBar() {
 
     const getUser = async () => {
         try {
-            // const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
-            // const response = await fetch(`http://localhost:3000/user/getbyid/${userId}`);
-            const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
+            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
+            const response = await fetch(`http://localhost:3000/user/getbyid/${userId}`);
+            //const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
 
             const data = await response.json();
             // console.log('User :',data.data)
@@ -122,6 +122,7 @@ function WhiteMenuBar() {
                     <img src="/images/logobackground.png" />
                 </div>
                 <Link to='/' className={`menu_bar_text ${location.pathname === "/" ? "current_page" : ""}`}>Trang Chủ</Link>
+                <Link to='/search' className={`menu_bar_text ${location.pathname === "/search" ? "current_page" : ""}`}>Địa điểm</Link>
                 <span className="menu_bar_text">Giới thiệu</span>
             </div>
             <div className="right_side">
