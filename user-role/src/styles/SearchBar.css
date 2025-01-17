@@ -1,5 +1,4 @@
-.search_bar_container
-{
+.search_bar_container {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -8,23 +7,23 @@
     padding-top: 15px;
     padding-bottom: 15px;
 }
-.search_bar
-{
+
+.search_bar {
     width: 91%;
     height: auto;
     display: grid;
     grid-template-columns: 1% 23% 19% 28% 18% 4% 1%;
-    gap: 1%; 
+    gap: 1%;
     align-items: center;
 }
-.location
-{
+
+.location {
     position: relative;
     cursor: pointer;
     width: 100%;
 }
-.selection_btn
-{
+
+.selection_btn {
     width: 100%;
     height: 50px;
     border: 2px solid #5BA3E2;
@@ -36,44 +35,44 @@
     display: grid;
     place-items: center;
 }
-.location .selection_btn
-{
+
+.location .selection_btn {
     grid-template-columns: 15% 72% 13%;
 }
-.residence .selection_btn
-{
+
+.residence .selection_btn {
     grid-template-columns: 20% 63% 17%;
 }
-.quantity .selection_btn
-{
+
+.quantity .selection_btn {
     grid-template-columns: 20% 62% 18%;
 }
-.date_time .selection_btn
-{
+
+.date_time .selection_btn {
     grid-template-columns: 15% 30% 14% 30% 11%;
 }
-.location .selection_btn img
-{
+
+.location .selection_btn img {
     width: 36%;
 }
-.residence .selection_btn img
-{
+
+.residence .selection_btn img {
     width: 46%;
 }
-.quantity .selection_btn img
-{
+
+.quantity .selection_btn img {
     width: 36%;
 }
-.date_time .selection_btn img
-{
+
+.date_time .selection_btn img {
     width: 37%;
 }
-.selection_btn img
-{
+
+.selection_btn img {
     height: auto;
 }
-.selection_btn input
-{
+
+.selection_btn input {
     height: 100%;
     width: 100%;
     border: none;
@@ -84,36 +83,41 @@
     background-color: transparent;
     cursor: pointer;
 }
+
 /* .residence .selection_btn input, .quantity .selection_btn input
 {
     cursor: pointer;
 } */
-.selection_btn input:focus
-{
+.selection_btn input:focus {
     outline: none;
 }
-.selection_btn i
-{
+
+.selection_btn i {
     height: auto;
     margin-left: 0px;
     background: linear-gradient(45deg, #AAD6FF, #5BA3E2);
-    -webkit-background-clip: text; /* để set màu áp dụng cho icon chứ không phải cho nền */
+    -webkit-background-clip: text;
+    /* để set màu áp dụng cho icon chứ không phải cho nền */
     -webkit-text-fill-color: transparent;
 }
-.selection_btn .fa-x
-{
+
+.selection_btn .fa-x {
     font-size: 16px;
 }
-.selection_btn .fa-angle-down, .selection_btn .fa-angle-up
-{
+
+.selection_btn .fa-angle-down,
+.selection_btn .fa-angle-up {
     font-size: 19px;
 }
-.location .selection_btn i:hover, .residence .selection_btn i:hover
-{
-    background: linear-gradient(45deg,#00dede, #00BABA); 
-    -webkit-background-clip: text; /* để set màu áp dụng cho icon chứ không phải cho nền */
+
+.location .selection_btn i:hover,
+.residence .selection_btn i:hover {
+    background: linear-gradient(45deg, #00dede, #00BABA);
+    -webkit-background-clip: text;
+    /* để set màu áp dụng cho icon chứ không phải cho nền */
     -webkit-text-fill-color: transparent;
 }
+
 .selection_option {
     display: none;
     position: absolute;
@@ -126,8 +130,9 @@
     cursor: pointer;
     z-index: 2;
 }
+
 .option {
-    margin-bottom: 8px; 
+    margin-bottom: 8px;
     background-color: #f9f9f9;
     color: #47687D;
     font-family: 'Inter', sans-serif;
@@ -139,36 +144,36 @@
     align-items: center;
     cursor: pointer;
 }
-.option:hover, .option.selected 
-{
-    background-color: #e6e6e6;  
+
+.option:hover,
+.option.selected {
+    background-color: #e6e6e6;
 }
 
-.location .option
-{
+.location .option {
     text-indent: 12px;
 }
-.location .option img
-{
+
+.location .option img {
     width: 14px;
     margin-left: 15px;
     height: auto;
 }
-.residence .option i
-{
+
+.residence .option i {
     font-size: 15px;
     text-indent: 13px;
 }
-.residence .option
-{
+
+.residence .option {
     text-indent: 10px;
 }
-.quantity .option
-{
+
+.quantity .option {
     text-indent: 16px;
 }
-.option_describe
-{
+
+.option_describe {
     font-size: 14px;
     color: #47687D;
     font-family: 'Inter', sans-serif;
@@ -176,38 +181,37 @@
     height: 40px;
     display: flex;
     align-items: center;
-    text-indent: 15px;   
+    text-indent: 15px;
 }
-.residence
-{
+
+.residence {
     position: relative;
     cursor: pointer;
     width: 100%;
     cursor: pointer;
 }
 
-.date_time
-{
+.date_time {
     position: relative;
     cursor: pointer;
     width: 100%;
     cursor: pointer;
 }
-.quantity
-{
+
+.quantity {
     position: relative;
     cursor: pointer;
     width: 100%;
     cursor: pointer;
 }
-.search
-{
+
+.search {
     position: relative;
     cursor: pointer;
     width: 100%;
 }
-.search_button
-{
+
+.search_button {
     width: 100%;
     height: 49px;
     border: 2px solid #5BA3E2;
@@ -215,40 +219,41 @@
     background-image: linear-gradient(135deg, #AAD6FF, #5BA3E2);
     cursor: pointer;
 }
-.search_button:hover
-{
-    background-image: linear-gradient(45deg,#AAD6FF, #5BA3E2); 
+
+.search_button:hover {
+    background-image: linear-gradient(45deg, #AAD6FF, #5BA3E2);
 }
-.search_button i
-{
+
+.search_button i {
     font-size: 22px;
     color: white;
 }
 
-.input_date
-{
+.input_date {
     border: none;
     cursor: pointer;
 }
-.date_time .selection_btn div
-{
+
+.date_time .selection_btn div {
     font-size: 30px;
     background: linear-gradient(45deg, #AAD6FF, #5BA3E2);
-    -webkit-background-clip: text; /* để set màu áp dụng cho icon chứ không phải cho nền */
+    -webkit-background-clip: text;
+    /* để set màu áp dụng cho icon chứ không phải cho nền */
     -webkit-text-fill-color: transparent;
     /* line-height: 1px; */
     /* margin-bottom: 7%; */
 }
+
 .date_time .selection_btn hr {
     border: 0;
     height: 2.5px;
     background-color: #5BA3E2;
     /* background: linear-gradient(to right, #5BA3E2, #AAD6FF, #5BA3E2); */
-    width: 25%; /* Độ dài của đường */
+    width: 25%;
+    /* Độ dài của đường */
 }
 
-.selection_option_layout
-{
+.selection_option_layout {
     font-family: 'Inter', sans-serif;
     width: 100%;
     /* height: 400px; */
@@ -256,8 +261,8 @@
     display: grid;
     grid-template-columns: 50% 50%;
 }
-.date_time .selection_option
-{
+
+.date_time .selection_option {
 
     width: 130%;
     padding: 10px;
@@ -303,14 +308,13 @@
     line-height: 13px;
 }
 
-.day_today
-{
-    color:#5BA3E2!important;
+.day_today {
+    color: #5BA3E2 !important;
 }
 
 .selected_date {
-    background: linear-gradient(45deg, #AAD6FF, #5BA3E2)!important;
-    color: white!important;
+    background: linear-gradient(45deg, #AAD6FF, #5BA3E2) !important;
+    color: white !important;
     border-radius: 3px 3px 3px 3px;
 }
 
@@ -334,40 +338,272 @@
 }
 
 /* #prev-month, #next-month */
-.month_btn
-{
+.month_btn {
     border: none;
     background: transparent;
     padding: 0px;
     cursor: pointer;
 }
 
-.calendar-header .fa-angle-left, .calendar-header .fa-angle-right
-{
+.calendar-header .fa-angle-left,
+.calendar-header .fa-angle-right {
     font-size: 17.5px;
 }
-.icon-move
-{
+
+.icon-move {
     background: linear-gradient(45deg, #AAD6FF, #5BA3E2);
-    -webkit-background-clip: text; 
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.icon-move:hover
-{
-    background: linear-gradient(45deg,#00dede, #00BABA); 
-    -webkit-background-clip: text; /* để set màu áp dụng cho icon chứ không phải cho nền */
+
+.icon-move:hover {
+    background: linear-gradient(45deg, #00dede, #00BABA);
+    -webkit-background-clip: text;
+    /* để set màu áp dụng cho icon chứ không phải cho nền */
     -webkit-text-fill-color: transparent;
 }
-.icon-hidden
-{
+
+.icon-hidden {
     background: linear-gradient(45deg, #f5f5f5, #9f9f9f);
-    -webkit-background-clip: text; 
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.month-year
-{
+
+.month-year {
     margin-left: 10%;
     font-size: 13px;
     font-weight: 600;
     color: #757575;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .selection_btn {
+        height: 45px;
+        border: 2px solid #5BA3E2;
+        border-radius: 8px;
+    }
+
+    .location .selection_btn {
+        grid-template-columns: 20% 60% 20%;
+    }
+
+    .residence .selection_btn {
+        grid-template-columns: 25% 55% 20%;
+    }
+
+    .date_time .selection_btn {
+        grid-template-columns: 15% 30% 10% 30% 15%;
+    }
+
+    .quantity .selection_btn {
+        grid-template-columns: 20% 60% 20%;
+    }
+
+    .location .selection_btn img {
+        width: 35%;
+    }
+
+    .residence .selection_btn img {
+        width: 55%;
+    }
+
+    .date_time .selection_btn img {
+        width: 50%;
+    }
+
+    .quantity .selection_btn img {
+        width: 45%;
+    }
+
+    .selection_btn input {
+        font-size: 13px;
+    }
+
+    .selection_btn .fa-x {
+        font-size: 15px;
+    }
+
+    .selection_btn .fa-angle-down,
+    .selection_btn .fa-angle-up {
+        font-size: 17px;
+    }
+
+    .option {
+        margin-bottom: 8px;
+
+        font-size: 11px;
+        height: 30px;
+    }
+
+    .location .option img {
+        width: 11px;
+        margin-left: 15px;
+    }
+
+    .option_describe {
+        font-size: 10px;
+        text-indent: 5px;
+        height: 30px;
+    }
+
+    .date_time .selection_option {
+        width: 160%;
+        padding: 10px;
+        margin-left: -15%;
+    }
+
+    .date_time .selection_btn div {
+        font-size: 20px;
+
+    }
+
+    .calendar {
+        width: 100%;
+    }
+
+    .calendar-header {
+        height: 30px;
+    }
+
+    .calendar-body {
+        padding: 5px;
+        height: 170px;
+    }
+
+    .weekdays span {
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 11px;
+    }
+
+    .days span {
+        padding: 8px 3px;
+        font-size: 11px;
+        cursor: pointer;
+        line-height: 10px;
+    }
+
+    .search_button {
+        width: 120%;
+        height: 45px;
+        border-radius: 10px;
+    }
+
+    .search_button i {
+        font-size: 18px;
+
+    }
+
+}
+
+@media only screen and (max-width: 767px) {
+    .search_bar {
+        width: 90%;
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+    .sbsp{
+        display: none;
+    }
+    .selection_btn {
+        height: 38px;
+        border: 2px solid #5BA3E2;
+        border-radius: 8px;
+        margin-bottom: 8px;
+    }
+
+    .location .selection_btn {
+        grid-template-columns: 20% 60% 20%;
+    }
+
+    .residence .selection_btn {
+        grid-template-columns: 20% 60% 20%;
+    }
+
+    .date_time .selection_btn {
+        grid-template-columns: 20% 25% 10% 25% 20%;
+    }
+
+    .quantity .selection_btn {
+        grid-template-columns: 20% 60% 20%;
+    }
+
+    .location .selection_btn img {
+        width: 23%;
+    }
+
+    .residence .selection_btn img {
+        width: 35%;
+    }
+
+    .date_time .selection_btn img {
+        width: 30%;
+    }
+
+    .quantity .selection_btn img {
+        width: 26%;
+    }
+    .selection_btn input {
+        font-size: 11px;
+    }
+
+    .selection_btn .fa-x {
+        font-size: 13px;
+    }
+
+    .selection_btn .fa-angle-down,
+    .selection_btn .fa-angle-up {
+        font-size: 16px;
+    }
+
+    .option {
+        margin-bottom: 5px;
+        font-size: 9px;
+        height: 30px;
+    }
+
+    .location .option img {
+        width: 10px;
+        margin-left: 15px;
+    }
+
+    .option_describe {
+        font-size: 10px;
+        text-indent: 10px;
+        height: 30px;
+    }
+    .date_time .selection_option {
+        width: 140%;
+        padding: 10px;
+        margin-left: 0%;
+    }
+
+    .date_time .selection_btn div {
+        font-size: 18px;
+    }
+    .calendar {
+        width: 100%;
+    }
+
+    .calendar-header {
+        height: 25px;
+    }
+
+    .calendar-body {
+        padding: 5px;
+        height: 160px;
+    }
+
+    .weekdays span {
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 10px;
+    }
+
+    .days span {
+        padding: 8px 3px;
+        font-size: 10px;
+        cursor: pointer;
+        line-height: 10px;
+    }
 }

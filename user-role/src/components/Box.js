@@ -6,7 +6,7 @@ const Box = forwardRef(({ name, imgSrc, isFocus, onHover }, ref) => {
         <div
             ref={ref} // Gán ref đúng cách
             className={isFocus ? 'box-focus' : 'box'}
-            onMouseOver={onHover}
+            // onMouseOver={onHover}
         >
             <div className="box-inner zoomEffect">
                 <span className="province-name">{name}</span>

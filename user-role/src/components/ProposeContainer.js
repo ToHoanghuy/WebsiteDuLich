@@ -113,7 +113,6 @@ function ProposeContainer({ title, locations }) {
                 setShowNextButton(false);
             }
             setShowPrevButton(true);
-    
             cardRefs.current.forEach((card) => {
                 card.style.transform = `translateX(-${newIndex * cardWidth}px)`;
             });

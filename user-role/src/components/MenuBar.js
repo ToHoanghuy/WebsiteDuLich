@@ -11,7 +11,9 @@ function MenuBar() {
 
     const getUser = async (e) => {
         try {
-            const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
+            const { userId, expirationTime } = JSON.parse(localStorage.getItem('authToken'));
+            const response = await fetch(`http://localhost:3000/user/getbyid/${userId}`);
+            // const response = await fetch(`http://localhost:3000/user/getbyid/${localStorage.getItem("authToken")}`);
             const data = await response.json();
             // console.log('User :',data.data)
             if (data.isSuccess) {
@@ -60,7 +62,8 @@ function MenuBar() {
                     <img src="/images/logobackground.png" />
                 </div>
                 <Link to='/' className="menu_bar_text current_page">Trang Chủ</Link>
-                {/* <Link className="menu_bar_text">Địa điểm</Link> */}
+                <Link to='/search' className="menu_bar_text">Địa điểm</Link> 
+            
                 <div className="menu_bar_text">Giới thiệu</div>
             </div>
             <div className="right_side">
